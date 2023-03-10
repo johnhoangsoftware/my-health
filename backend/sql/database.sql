@@ -157,32 +157,32 @@ create table message (
     constraint msg_user_key foreign key(sender_id) references user(user_id)  on update cascade on delete cascade
 );
 
-drop table if exists schedule;
-create table schedule(
-	schedule_id varchar(36) primary key not null,
-    name varchar(30),
-	image varchar(100),
-    date datetime not null,
-    currentPatients int default 0,
-    maxPatients int not null,
-    price double default 0,
+drop table if exists service;
+create table service(
+	service_id varchar(36) primary key not null,
+	price DOUBLE,
+    description TEXT,
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp,
-    doctor_id varchar(36),
-    constraint sche_user_key foreign key(doctor_id) references user(user_id)  on update cascade on delete cascade
+    hospital_id varchar(36),
+	foreign key (hospital_id) references hospital(hospital_id) on update cascade on delete cascade
 );
-
 
 drop table if exists appointment;
 create table appointment(
 	appointment_id varchar(36) primary key not null,
     status varchar(10),
+    time DATETIME,
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp,
     patient_id varchar(36),
-    schedule_id varchar(36),
-    constraint appointment_user_key foreign key(patient_id) references user(user_id)  on update cascade on delete cascade,
-    constraint appointment_sche_key foreign key(schedule_id) references schedule(schedule_id)  on update cascade on delete cascade
+    doctor_id varchar(36),
+    service_id varchar(36),
+    address_id varchar(36),
+    foreign key(patient_id) references user(user_id)  on update cascade on delete cascade,
+    foreign key(doctor_id) references user(user_id)  on update cascade on delete cascade,
+    foreign key(service_id) references service(service_id)  on update cascade on delete cascade,
+    foreign key (address_id) references address(address_id) on update cascade on delete cascade
 );
 
 drop table if exists post;
