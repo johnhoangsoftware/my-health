@@ -4,39 +4,23 @@ create schema my_health;
 
 use my_health;
 
-drop table if exists address;
-create table address (
-	address_id varchar(36) primary key not null,
-    city varchar(30),
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp
-);
-
-insert into address(address_id, city) 
-values
-("37f8a986-355a-4c11-bde2-8f543e257b83", "Thành phố Hồ Chí Minh"),
-("0062503a-8f9d-46cf-b6ce-793984f98779", "Thành phố Hà Nội"),
-("b8a0c705-1a84-4d2e-8311-794a64628e4c", "Đà Nẵng")
-;
-
 drop table if exists hospital;
 create table hospital (
 	hospital_id varchar(36) primary key not null,
     name varchar(100),
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp,
-    address_id varchar(36),
-    constraint hostpital_address_key foreign key (address_id) references address(address_id)
+    address varchar(255)
 );
 
-insert into hospital(hospital_id, name, address_id) 
+insert into hospital(hospital_id, name, address) 
 values
-("f7fdfaf0-7f60-44b6-8d37-69c47c2c21cd", "Bệnh viện Hồng Đức 2", "37f8a986-355a-4c11-bde2-8f543e257b83"),
-("8e8e67e0-b971-4efc-b563-587d6e5675d3", "Bệnh viện Hồng Đức 3", "37f8a986-355a-4c11-bde2-8f543e257b83"),
-("cca2c6dc-f9dc-4560-ab75-154fcfeb529c", "Phòng khám Bệnh Viện Quốc Tế Dr.Khoa", "37f8a986-355a-4c11-bde2-8f543e257b83"),
-("4ef9c725-d451-473a-b9bd-b0b6e05db155","Bệnh viện phụ sản Hà Nội","0062503a-8f9d-46cf-b6ce-793984f98779"),
-("4fab9aca-acd3-4956-8e83-cabf6213559f","Bệnh viện Quân Y 354","0062503a-8f9d-46cf-b6ce-793984f98779"),
-("35dd30c7-41f0-436d-8c3e-56089d2d03f1","Bệnh viện Bình Dân Đà Nẵng","b8a0c705-1a84-4d2e-8311-794a64628e4c")
+("f7fdfaf0-7f60-44b6-8d37-69c47c2c21cd", "Bệnh viện Hồng Đức 2", "Thành phố Hồ Chí Minh"),
+("8e8e67e0-b971-4efc-b563-587d6e5675d3", "Bệnh viện Hồng Đức 3", "Thành phố Hồ Chí Minh"),
+("cca2c6dc-f9dc-4560-ab75-154fcfeb529c", "Phòng khám Bệnh Viện Quốc Tế Dr.Khoa", "Thành phố Hồ Chí Minh"),
+("4ef9c725-d451-473a-b9bd-b0b6e05db155","Bệnh viện phụ sản Hà Nội","Thành phố Hà Nội"),
+("4fab9aca-acd3-4956-8e83-cabf6213559f","Bệnh viện Quân Y 354","Thành phố Hà Nội"),
+("35dd30c7-41f0-436d-8c3e-56089d2d03f1","Bệnh viện Bình Dân Đà Nẵng","Đà Nẵng")
 ;
 
 drop table if exists department_detail;
@@ -110,16 +94,15 @@ create table user (
     password varchar(100) not null,
     firstName varchar(30),
     lastName varchar(30),
-    age int,
+    birthDay DATE,
     avatar varchar(100),
     phone varchar(11),
     `role` enum("PATIENT", "DOCTOR"),
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp,
     department_id varchar(36),
-    address_id varchar(36),
-    constraint user_department_key foreign key (department_id) references department(department_id),
-    constraint user_address_key foreign key (address_id) references address(address_id)
+    address varchar(255),
+    constraint user_department_key foreign key (department_id) references department(department_id)
 );
 
 drop table if exists notification;
@@ -160,7 +143,8 @@ create table message (
 drop table if exists service;
 create table service(
 	service_id varchar(36) primary key not null,
-	price DOUBLE,
+	price DOUBLE unsigned not null,
+    name varchar(100) not null,
     description TEXT,
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp,
@@ -178,11 +162,10 @@ create table appointment(
     patient_id varchar(36),
     doctor_id varchar(36),
     service_id varchar(36),
-    address_id varchar(36),
+    address varchar(255),
     foreign key(patient_id) references user(user_id)  on update cascade on delete cascade,
     foreign key(doctor_id) references user(user_id)  on update cascade on delete cascade,
-    foreign key(service_id) references service(service_id)  on update cascade on delete cascade,
-    foreign key (address_id) references address(address_id) on update cascade on delete cascade
+    foreign key(service_id) references service(service_id)  on update cascade on delete cascade
 );
 
 drop table if exists post;
