@@ -6,10 +6,10 @@ const { mysql } = DATA_SOURCE
 
 const db = new Sequelize({
     dialect: "mysql",
-    host: mysql.DB_HOST,
-    username: mysql.DB_USER,
-    password: mysql.DB_PASSWORD,
-    database: mysql.DB_DATABASE,
+    host: "localhost",
+    username: "root",
+    password: "taodeobiet",
+    database: "my_health",
     logging: false,
 });
 

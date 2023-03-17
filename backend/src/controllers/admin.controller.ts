@@ -17,7 +17,8 @@ export const createUser = ErrorWrapperHandler(async (req: Request, res: Response
     const userDTO = validateCreateUser(data as CreateUserDTO)
     const user = await userService.create(userDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create user successfully. ID: ${user.user_id}`
+        message: `Create user successfully.`,
+        data: user.user_id
     })
 })
 
@@ -25,7 +26,8 @@ export const deleteUserByID = ErrorWrapperHandler(async (req: Request, res: Resp
     const userId = req.params.id
     await userService.deleteByID(userId)
     return res.status(StatusCodes.OK).json({
-        message: `Delete user successfully. ID: ${userId}`
+        message: `Delete user successfully.`,
+        data: userId
     })
 })
 
@@ -34,7 +36,8 @@ export const createHospital = ErrorWrapperHandler(async (req: Request, res: Resp
     const hospitalDTO = validateCreateHospital(data as CreateHospitalDTO)
     const hospital = await hospitalService.create(hospitalDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create hospital successfully. ID: ${hospital.hospital_id}`
+        message: `Create hospital successfully`,
+        data: hospital.hospital_id
     })
 })
 
@@ -44,7 +47,8 @@ export const updateHospital = ErrorWrapperHandler(async (req: Request, res: Resp
     const hospitalDTO = validateUpdateHospital(data as UpdateHospitalDTO)
     await hospitalService.updateByID(id, hospitalDTO);
     return res.status(StatusCodes.OK).json({
-        message: `Update hospital successfully. ID: ${id}`
+        message: `Update hospital successfully.`,
+        data: id
     })
 })
 
@@ -52,7 +56,8 @@ export const deleteHospitalByID = ErrorWrapperHandler(async (req: Request, res: 
     const {id} = req.params
     await hospitalService.deleteByID(id)
     return res.status(StatusCodes.OK).json({
-        message: `Delete hospital successfully. ID: ${id}`
+        message: `Delete hospital successfully.`,
+        data: id
     })
 })
 
@@ -61,7 +66,8 @@ export const createService = ErrorWrapperHandler(async (req: Request, res: Respo
     const serviceDTO = validateCreateService(data as CreateServiceDTO)
     const service = await serviceService.create(serviceDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create service successfully. ID: ${service.service_id}`
+        message: `Create service successfully.`,
+        data: service.service_id
     })
 })
 
@@ -71,7 +77,8 @@ export const updateService = ErrorWrapperHandler(async (req: Request, res: Respo
     const serviceDTO = validateUpdateService(data as UpdateServiceDTO)
     await serviceService.updateByID(id, serviceDTO);
     return res.status(StatusCodes.OK).json({
-        message: `Update service successfully. ID: ${id}`
+        message: `Update service successfully.`,
+        data: id,
     })
 })
 
@@ -79,6 +86,6 @@ export const deleteServiceByID = ErrorWrapperHandler(async (req: Request, res: R
     const {id} = req.params
     await serviceService.deleteByID(id)
     return res.status(StatusCodes.OK).json({
-        message: `Delete service successfully. ID: ${id}`
+        message: `Delete service successfully.`
     })
 })

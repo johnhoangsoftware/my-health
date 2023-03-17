@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, Sequelize } = require('sequelize')
 
 const {APPOINTMENT, USER, SERVICE} = require("./table_name")
 
@@ -17,7 +17,7 @@ module.exports =  {
 
             time: {
                 type: DataTypes.DATE,
-                defaultValue: DataTypes.NOW
+                defaultValue: Sequelize.fn('now')
             },
 
             description: {
@@ -33,12 +33,12 @@ module.exports =  {
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
             updated_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
 
             patient_id: {
