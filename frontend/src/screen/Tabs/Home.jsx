@@ -104,7 +104,7 @@ export default function Home({navigation}) {
                         }
                     
                         <TextInput 
-                        className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viên'
+                        className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
                         onChangeText={(val) => searchChange(val)}
                         onEndEditing={() => searchInfo()}
                         />
@@ -162,15 +162,3 @@ const Item = (props) => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    scrollView: {
-        top: 100,
-        height: 100,
-    },
-    img: {
-        borderRadius: 40,
-        overflow: "hidden",
-        resizeMode: "cover"
-    }
-  });

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStackScreen from './src/screen/RootStackScreen'
@@ -143,8 +143,28 @@ export default function App() {
             }}
           >
               <Tab.Screen name="Trang chủ" component={Home} options={{headerShown: false}} />
-              <Tab.Screen name="Cộng đồng" component={Community} />
-              <Tab.Screen name="Chat" component={Chat} options={{title: 'Đoạn chat'}} />
+              <Tab.Screen name="Cộng đồng" component={Community} 
+                options={{
+                  headerRight: () => (
+                    <View className="space-x-2 flex-row mx-3">
+                      <TouchableOpacity> 
+                        <Ionicons name="search" size={24}/>
+                      </TouchableOpacity>
+                      <TouchableOpacity> 
+                        <Ionicons name="notifications" size={24}/>
+                      </TouchableOpacity>
+                    </View>
+                  ),
+                  headerStyle: {borderBottomWidth: 1, borderColor: "gray"}
+                }}
+                
+              />
+              <Tab.Screen name="Chat" component={Chat} 
+                options={{
+                  headerTitle:"Đoạn chat",
+                  headerStyle: {borderBottomWidth: 1, borderColor: "gray"}
+                  }}
+              />
               <Tab.Screen name="Tài khoản" component={Account} options={{headerShown: false}} />
           </Tab.Navigator> 
         )
