@@ -31,7 +31,7 @@ export default function Packages({navigation}) {
 
     PackageBrief = (props) => {
         return (
-        <View className="mt-2 bg-white rounded-xl w-full max-w-s shadow-sm">
+        <View className="mt-2 ml-1 mr-1 bg-white rounded-xl w-fit max-w-s shadow-sm">
             <View className="w-fit m-2 -mb-4 h-56">
                 <Image
                     source={props.image}
@@ -46,7 +46,7 @@ export default function Packages({navigation}) {
                 <Text className="text-slate-900 text-base -mt-1 font-normal">
                     Giá đặt khám: {props.price}đ
                 </Text>
-                <View style={{ flexDirection: 'row'}}>
+                <View className="flex-row">
                     <TouchableOpacity style={styles.borderColor} className="mt-2 p-2 text-center rounded-lg border float-left"
                         onPress={goToPackageDetails}
                         >

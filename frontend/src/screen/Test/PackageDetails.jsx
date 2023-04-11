@@ -35,7 +35,7 @@ export default function PackageDetails({navigation}) {
                     <Text className="text-slate-900 text-base font-normal">
                     Địa chỉ: {props.address}
                     </Text>
-                    <View style={{flex: 1, height: 1}} className="h-px my-2 bg-gray-300 dark:bg-gray-700" />
+                    <View className="h-px my-2 bg-gray-300" />
                     <Text className="text-slate-900 text-base font-normal">
                         Giá đặt khám: {props.price}đ
                     </Text>
@@ -69,14 +69,8 @@ export default function PackageDetails({navigation}) {
 }
 
 const styles = StyleSheet.create({ 
-    textColor: {
-      color: "#24DCE2"
-    },
     bgColor: {
       backgroundColor: "#24DCE2",
       borderColor: "#24DCE2"
-    },
-    borderColor: {
-        borderColor: "#24DCE2"
     },
   });

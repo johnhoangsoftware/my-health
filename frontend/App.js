@@ -15,6 +15,7 @@ import Account from './src/screen/Tabs/Account';
 import Packages from './src/screen/Test/Packages';
 import PackageDetails from './src/screen/Test/PackageDetails';
 import DoctorList from './src/screen/Doctors/DoctorList';
+import DoctorDetails from './src/screen/Doctors/DoctorDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -149,9 +150,10 @@ export default function App() {
               <Tab.Screen name="Cộng đồng" component={Community} />
               <Tab.Screen name="Chat" component={Chat} options={{title: 'Đoạn chat'}} />
               <Tab.Screen name="Tài khoản" component={Account} options={{headerShown: false}} />
-              <Tab.Screen name="Xét nghiệm tại nhà" component={Packages} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} onPress={() => {Navigator.goBack()}}/>}} />
-              <Tab.Screen name="Chi tiết gói khám" component={PackageDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} onPress={() => {Navigator.goBack()}}/>}} />
-              <Tab.Screen name="Danh sách bác sĩ" component={DoctorList} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} onPress={() => {Navigator.goBack()}}/>}} />
+              <Tab.Screen name="Xét nghiệm tại nhà" component={Packages} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+              <Tab.Screen name="Chi tiết gói khám" component={PackageDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+              <Tab.Screen name="Danh sách bác sĩ" component={DoctorList} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+              <Tab.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}} />
           </Tab.Navigator> 
         )
         : <RootStackScreen /> }
