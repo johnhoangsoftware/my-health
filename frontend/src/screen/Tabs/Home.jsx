@@ -3,7 +3,6 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient";
 
-
 export default function Home({navigation}) {
     const [search, setSearch] = React.useState({
         inputSearch: null,
@@ -46,21 +45,24 @@ export default function Home({navigation}) {
     const items = [
         {
             title: "Xét nghiệm tại nhà",
-            image: require("./../../assets/home-icon/blood-test.png")
+            image: require("./../../assets/home-icon/blood-test.png"),
+            onPress: () => {navigation.navigate("Xét nghiệm tại nhà")}
         },
         {
             title: "Xem lịch khám",
-            image: require("./../../assets/home-icon/calendar.png")
+            image: require("./../../assets/home-icon/calendar.png"),
+            onPress: () => {navigation.navigate("")}
         },
         {
             title: "Danh sách bác sĩ",
-            image: require("./../../assets/home-icon/shortlist.png")
+            image: require("./../../assets/home-icon/shortlist.png"),
+            onPress: () => {navigation.navigate("Danh sách bác sĩ")}
         },
     ];
     const itemList=[];
 
     items.forEach((item) => {
-        itemList.push(<Item key={item.title} title={item.title} image={item.image} />)
+        itemList.push(<Item key={item.title} title={item.title} image={item.image} onPress={item.onPress}/>)
     })
     
     const searchChange = (val) => {
@@ -151,15 +153,17 @@ const InfoHospital = (props) => {
 
 const Item = (props) => {
     return (
-        <View className="bg-white mx-5 mb-5 h-24 flex-row items-center rounded-lg">
-            <View className="ml-2 bg-cyan-100 h-16 w-16 rounded-full items-center justify-center">
-                <Image source={props.image} className='object-scale-down h-10 w-10' />
+        <TouchableOpacity className="bg-white mx-5 mb-5 h-24 flex-row items-center rounded-lg" onPress={props.onPress}>
+            <View className="w-full h-full flex-row items-center rounded-lg">
+                <View className="ml-2 bg-cyan-100 h-16 w-16 rounded-full items-center justify-center">
+                    <Image source={props.image} className='object-scale-down h-10 w-10' />
+                </View>
+                <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
+                <View className="right-3 absolute">
+                    <Ionicons name="caret-forward" size={24} color="#24DCE2" />
+                </View>
             </View>
-            <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
-            <View className="right-3 absolute">
-                <Ionicons name="caret-forward" size={24} color="#24DCE2" />
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
