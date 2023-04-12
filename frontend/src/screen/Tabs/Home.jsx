@@ -47,21 +47,24 @@ export default function Home({ navigation }) {
     const items = [
         {
             title: "Xét nghiệm tại nhà",
-            image: require("./../../assets/home-icon/blood-test.png")
+            image: require("./../../assets/home-icon/blood-test.png"),
+            onPress: () => {navigation.navigate("Xét nghiệm tại nhà")}
         },
         {
             title: "Xem lịch khám",
-            image: require("./../../assets/home-icon/calendar.png")
+            image: require("./../../assets/home-icon/calendar.png"),
+            onPress: () => {navigation.navigate("")}
         },
         {
             title: "Danh sách bác sĩ",
-            image: require("./../../assets/home-icon/shortlist.png")
+            image: require("./../../assets/home-icon/shortlist.png"),
+            onPress: () => {navigation.navigate("Danh sách bác sĩ")}
         },
     ];
     const itemList = [];
 
     items.forEach((item) => {
-        itemList.push(<Item key={item.title} title={item.title} image={item.image} />)
+        itemList.push(<Item key={item.title} title={item.title} image={item.image} onPress={item.onPress}/>)
     })
 
     const searchChange = (val) => {
@@ -155,7 +158,7 @@ const InfoHospital = (props) => {
 
 const Item = (props) => {
     return (
-        <View className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item}>
+        <TouchableOpacity className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item} onPress={props.onPress}>
             <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
                 <Image source={props.image} className='object-scale-down h-10 w-10' />
             </View>
@@ -163,7 +166,7 @@ const Item = (props) => {
             <View className="right-3 absolute">
                 <Ionicons name="caret-forward" size={24} color="#24DCE2" />
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
