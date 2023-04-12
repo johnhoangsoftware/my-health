@@ -44,7 +44,7 @@ export default function Community() {
     return (
         <>
             <StatusBar />
-            <View className="flex-row items-center pt-10 pb-2 px-5 bg-white border border-gray-300">
+            <View className="flex-row items-center pt-12 pb-2 px-5 bg-white border border-gray-300">
                 <View>
                     <Text className="font-bold text-2xl">Cộng đồng</Text>
                 </View>

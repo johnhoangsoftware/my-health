@@ -88,8 +88,8 @@ export default function Home({ navigation }) {
 
     return (<>
         <StatusBar />
-        <View className="flex-row items-center pt-10 pb-2 px-5 space-x-2 bg-white">
-            <View className='bg-gray-200 rounded-full px-3 py-2 w-80 flex-row items-center'>
+        <View className="flex-row pt-10 pb-2 px-5 space-x-2 bg-white">
+            <View className='bg-gray-200 rounded-full px-3 py-2 w-11/12 flex-row items-center'>
                 {search.isSearch ?
                     <Ionicons name='search' size={20} color="black" />
                     : <Ionicons name='search' size={20} color="gray" />
@@ -101,7 +101,9 @@ export default function Home({ navigation }) {
                     onEndEditing={() => searchInfo()}
                 />
             </View>
-            <TouchableOpacity onPress={() => notification()}>
+            <TouchableOpacity 
+                className="w-1/12 justify-center items-center"
+                onPress={() => notification()}>
                 <Ionicons name="notifications-outline" size={28} />
             </TouchableOpacity>
         </View>
@@ -113,19 +115,17 @@ export default function Home({ navigation }) {
                 colors={['#ffffff', 'rgba(36, 220, 226, 0.5)']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 1 }}
-                className="w-100"
+                className="w-100 min-h-screen"
             >
-
-
                 <Text className="font-bold mx-5 mt-5 text-xl" >Đặt khám</Text>
                 <ScrollView
-                    className="flex-1 m-5 mt-3"
+                    className="flex-1 m-5 mt-3 h-2/5 min-h-fit"
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
                     {hospitalList}
                 </ScrollView>
-                <View>
+                <View className="h-3/5">
                     {itemList}
                 </View>
 
@@ -137,16 +137,16 @@ export default function Home({ navigation }) {
 
 const InfoHospital = (props) => {
     return (
-        <View className="bg-white rounded-xl w-40 h-64 mr-4">
+        <View className="bg-white rounded-xl w-40 h-full mr-4 pb-3">
             <Image
                 src={props.imageURL}
                 className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
-            />
+            />  
             <View className="px-2 py-1 space-y-1">
                 <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
                 <Text className="text-gray-500 text-xs h-12" numberOfLines={3}>{props.address}</Text>
-                <TouchableOpacity className="rounded-full bg-cyan-400">
-                    <Text className="font-semibold text-base text-center text-white m-1 p-1">Đặt khám</Text>
+                <TouchableOpacity className="rounded-full bg-cyan-400 mb-5">
+                    <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -155,8 +155,8 @@ const InfoHospital = (props) => {
 
 const Item = (props) => {
     return (
-        <View className="bg-white mx-5 mb-5 h-24 flex-row items-center rounded-lg">
-            <View className="ml-2 bg-cyan-100 h-16 w-16 rounded-full items-center justify-center">
+        <View className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item}>
+            <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
                 <Image source={props.image} className='object-scale-down h-10 w-10' />
             </View>
             <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
@@ -166,3 +166,9 @@ const Item = (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    item: {
+        minHeight: 96,
+    }
+})
