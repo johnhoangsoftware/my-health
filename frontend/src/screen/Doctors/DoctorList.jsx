@@ -178,7 +178,7 @@ export default function DoctorList({navigation}) {
     
     const doctorList=[];
     doctors.forEach((item) => {
-        doctorList.push(<DoctorBrief name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>)
+        doctorList.push(<DoctorBrief key={item.name} name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>)
     })
 
     return (
