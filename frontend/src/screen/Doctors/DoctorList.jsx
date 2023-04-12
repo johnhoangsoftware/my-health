@@ -239,11 +239,11 @@ export default function DoctorList({navigation}) {
 
     const departmentOptions=[];
     departments.forEach((item) => {
-        departmentOptions.push(<DepartmentOption tittle={item.tittle} name={item.name} image={item.image}/>)
+        departmentOptions.push(<DepartmentOption key={item.tittle} tittle={item.tittle} name={item.name} image={item.image}/>)
     })
     const departmentOptions2=[];
     departments2.forEach((item) => {
-        departmentOptions2.push(<DepartmentOption tittle={item.tittle} name={item.name} image={item.image}/>)
+        departmentOptions2.push(<DepartmentOption key={item.tittle} tittle={item.tittle} name={item.name} image={item.image}/>)
     })
     
     const doctorList=[];
@@ -309,7 +309,6 @@ const styles = StyleSheet.create({
     focus: {
         borderColor: "#24DCE2",
         color: "#24DCE2",
-        borderWidth: "4px"
     },
     none: {
         fontWeight: "normal"

@@ -17,6 +17,7 @@ import PackageDetails from './src/screen/Test/PackageDetails';
 import DoctorList from './src/screen/Doctors/DoctorList';
 import DoctorDetails from './src/screen/Doctors/DoctorDetails';
 import HospitalDetails from './src/screen/Hospital/HospitalDetails';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
 
@@ -122,6 +123,28 @@ export default function App() {
       </View>
     );
   }
+
+  const Stack = createStackNavigator();
+  const HomeStack = () => {    
+      return (
+        <Stack.Navigator initialRoutName="Home">
+          <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+          <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+          {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
+          //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
+          //     onPress={() => {
+          //       navigation.goBack();
+          //     }}
+          //   />)
+          // })} /> */}
+          <Stack.Screen name="Chi tiết gói khám" component={PackageDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+          <Stack.Screen name="Danh sách bác sĩ" component={DoctorList} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+          <Stack.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}}/>
+          <Stack.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+        </Stack.Navigator>
+      )
+  }
+
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
@@ -147,16 +170,11 @@ export default function App() {
               });
             }}
           >
-              <Tab.Screen name="Trang chủ" component={Home} options={{headerShown: false}} />
+              <Tab.Screen name="Trang chủ" component={HomeStack} options={{headerShown: false}} />
               <Tab.Screen name="Cộng đồng" component={Community} />
               <Tab.Screen name="Chat" component={Chat} options={{title: 'Đoạn chat'}} />
               <Tab.Screen name="Tài khoản" component={Account} options={{headerShown: false}} />
-              <Tab.Screen name="Xét nghiệm tại nhà" component={Packages} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-              <Tab.Screen name="Chi tiết gói khám" component={PackageDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-              <Tab.Screen name="Danh sách bác sĩ" component={DoctorList} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-              <Tab.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}} />
-              <Tab.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-          </Tab.Navigator> 
+            </Tab.Navigator> 
         )
         : <RootStackScreen /> }
       </NavigationContainer>
@@ -173,4 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  Color: {
+    color: "#24dce2",
+  }
 });
