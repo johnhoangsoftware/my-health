@@ -17,7 +17,7 @@ export default function Home({navigation}) {
         },
         {
             name: "Bệnh viện Bạch Mai",
-            address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội, ",
+            address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội",
             imageURL: "https://bcp.cdnchinhphu.vn/Uploaded/hoangtrongdien/2020_02_18/kh%C3%A1m-b%E1%BB%87nh-%E1%BB%9F-b%E1%BB%87nh-vi%E1%BB%87n-B%E1%BA%A1ch-Mai-1-1024x449.jpg"
         },
         {
@@ -84,7 +84,7 @@ export default function Home({navigation}) {
     }
 
     const notification = () => {
-        // todo: notification screen
+        navigation.navigate("Thông báo");
     }
 
     return ( 
@@ -117,8 +117,8 @@ export default function Home({navigation}) {
                 </View>
                 
                 <Text className="font-bold mx-5 mt-5 text-xl" >Đặt khám</Text>
-                <ScrollView 
-                    className="flex-1 m-5 mt-3" 
+                <ScrollView
+                    className="flex-1 m-5 mt-3 h-fit"
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     >
@@ -135,16 +135,16 @@ export default function Home({navigation}) {
 
 const InfoHospital = (props) => {
     return (
-        <View className="bg-white rounded-xl w-40 h-64 mr-4">
-            <Image 
+        <View className="bg-white rounded-xl w-40 h-full mr-4 mb-3">
+            <Image
                 src={props.imageURL}
-                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"                
-                />
-            <View className="px-2 py-1 space-y-1">
+                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
+            />  
+            <View className="px-2 py-1 space-y-1 mb-2">
                 <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
-                <Text className="text-gray-500 text-xs h-12" numberOfLines={3}>{props.address}</Text>
-                <TouchableOpacity >
-                    <Text className="font-semibold text-base bg-cyan-400 rounded-full text-center text-white m-1 p-1">Đặt khám</Text>
+                <Text className="text-gray-500 text-xs h-14" numberOfLines={3}>{props.address}</Text>
+                <TouchableOpacity className="rounded-full mb-3" style={{backgroundColor: "#24DCE2"}}>
+                    <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
                 </TouchableOpacity>
             </View>
         </View>

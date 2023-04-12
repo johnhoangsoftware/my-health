@@ -18,6 +18,7 @@ import DoctorList from './src/screen/Doctors/DoctorList';
 import DoctorDetails from './src/screen/Doctors/DoctorDetails';
 import HospitalDetails from './src/screen/Hospital/HospitalDetails';
 import { createStackNavigator } from '@react-navigation/stack';
+import Notification from './src/screen/Notifications/Notification';
 
 const Tab = createBottomTabNavigator();
 
@@ -129,6 +130,7 @@ export default function App() {
       return (
         <Stack.Navigator initialRoutName="Home">
           <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+          <Stack.Screen name="Thông báo" component={Notification} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
           //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
