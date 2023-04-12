@@ -59,9 +59,11 @@ export default function DoctorDetails({navigation}) {
                             Chức danh: {props.title}                 
                         </Text>
                         <View className="h-px mb-2 bg-gray-300 block" />
-                        <Text className="text-slate-900 text-base font-normal text-justify">
-                            Nơi làm việc: {props.hospital}                 
-                        </Text>
+                        <TouchableOpacity className="w-fit" onPress={() => navigation.navigate("Thông tin bệnh viện")}>
+                            <Text className="text-slate-900 text-base font-normal text-justify">
+                                Nơi làm việc: {props.hospital}                 
+                            </Text>
+                        </TouchableOpacity>
                         <View className="h-px mb-2 bg-gray-300" />
                         <Text className="text-slate-900 text-base font-normal text-justify">
                             Chuyên môn: {props.department}                 

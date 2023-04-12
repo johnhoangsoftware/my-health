@@ -52,6 +52,41 @@ export default function DoctorList({navigation}) {
             name: "Khoa thẩm mỹ",
             tittle: "beauty",
             image: require("./../../assets/department-icon/beauty.png")
+        },
+        {
+            name: "Khoa nội tim mạch",
+            tittle: "heart",
+            image: require("./../../assets/department-icon/heart.png")
+        },
+        {
+            name: "Khoa sản",
+            tittle: "obstetrics",
+            image: require("./../../assets/department-icon/obstetrics.png")
+        },
+        {
+            name: "Khoa răng hàm mặt",
+            tittle: "tooth",
+            image: require("./../../assets/department-icon/tooth.png")
+        },
+        {
+            name: "Khoa cấp cứu",
+            tittle: "emergency",
+            image: require("./../../assets/department-icon/emergency.png")
+        },
+        {
+            name: "Khoa xét nghiệm",
+            tittle: "blood",
+            image: require("./../../assets/department-icon/blood.png")
+        },
+        {
+            name: "Khoa da liễu",
+            tittle: "skin",
+            image: require("./../../assets/department-icon/skin.png")
+        },
+        {
+            name: "Khoa tâm lý",
+            tittle: "mental",
+            image: require("./../../assets/department-icon/mental.png")
         }
     ];
     const departments2 = [
@@ -84,6 +119,41 @@ export default function DoctorList({navigation}) {
             name: "Khoa vật lý trị liệu",
             tittle: "physical",
             image: require("./../../assets/department-icon/physical.png")
+        },
+        {
+            name: "Khoa phẫu thuật gây mê",
+            tittle: "anesthesia",
+            image: require("./../../assets/department-icon/anesthesia.png")
+        },
+        {
+            name: "Khoa tai - mũi họng",
+            tittle: "ear",
+            image: require("./../../assets/department-icon/ear.png")
+        },
+        {
+            name: "Khoa dược",
+            tittle: "medicine",
+            image: require("./../../assets/department-icon/medicine.png")
+        },
+        {
+            name: "Khoa ung bướu",
+            tittle: "cancer",
+            image: require("./../../assets/department-icon/cancer.png")
+        },
+        {
+            name: "Khoa thận",
+            tittle: "kidney",
+            image: require("./../../assets/department-icon/kidney.png")
+        },
+        {
+            name: "Khoa phòng bệnh",
+            tittle: "prevent",
+            image: require("./../../assets/department-icon/prevent.png")
+        },
+        {
+            name: "Bác sĩ gia đình",
+            tittle: "home",
+            image: require("./../../assets/department-icon/home.png")
         }
     ];
     const doctors = [
@@ -129,12 +199,12 @@ export default function DoctorList({navigation}) {
         return (
             <>
             <TouchableOpacity onPress={() => choose(props.tittle)} style={department==props.tittle ? styles.focus : styles.none} className="mt-2 p-2 h-20 w-40 flex-row items-center text-center rounded-lg border float-left">
-                <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
+                <View className="ml-2 bg-gray-50 h-16 w-16 rounded-full items-center justify-center">
                     <Image source={props.image} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
                 <Text style={department==props.tittle ? styles.textColor : styles.none} className="left-3 w-14 text-left break-normal font-medium justify-center">{props.name}</Text>
             </TouchableOpacity>
-            <View style={{width: '1.25%'}}></View>
+            <View className="w-3.5"></View>
             </>
         )
     }
@@ -162,7 +232,7 @@ export default function DoctorList({navigation}) {
                     </View>
                 </View>
             </TouchableOpacity>
-            <View style={{width: '1.25%'}}></View>
+            <View style={{width: '1.2%'}}></View>
             </>
         )
     }
@@ -197,10 +267,10 @@ export default function DoctorList({navigation}) {
                     showsHorizontalScrollIndicator={false}
                     >
                         <View className="grid-rows-2 grid-flow-col">
-                            <View className="flex-row mb-2 pr-20">
+                            <View className="flex-row mb-2">
                                     {departmentOptions}               
                             </View>
-                            <View className="flex-row pr-14">
+                            <View className="flex-row">
                                     {departmentOptions2}               
                             </View>
                         </View>

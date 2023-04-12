@@ -16,6 +16,7 @@ import Packages from './src/screen/Test/Packages';
 import PackageDetails from './src/screen/Test/PackageDetails';
 import DoctorList from './src/screen/Doctors/DoctorList';
 import DoctorDetails from './src/screen/Doctors/DoctorDetails';
+import HospitalDetails from './src/screen/Hospital/HospitalDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -154,6 +155,7 @@ export default function App() {
               <Tab.Screen name="Chi tiết gói khám" component={PackageDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
               <Tab.Screen name="Danh sách bác sĩ" component={DoctorList} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
               <Tab.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}} />
+              <Tab.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
           </Tab.Navigator> 
         )
         : <RootStackScreen /> }
