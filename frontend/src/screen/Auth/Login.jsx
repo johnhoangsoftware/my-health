@@ -67,8 +67,8 @@ export default function Login({navigation}) {
         <View style={styles.container} className="relative flex-2 items-center justify-center h-screen">
           <Text className="font-bold text-2xl text-center mb-10">Chào mừng bạn{"\n"} đến với MyHealth</Text>
           {/* <Image source={require('./../../assets/img-login.jpg')} className='object-cover h-48 w-screen' /> */}
-          <View className="space-y-2 m-5">
-            <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+          <View className="space-y-3 m-5 items-center">
+            <View className='bg-gray-200 rounded-full mx-5 px-3 py-2 w-80 flex-row items-center'>
                 {data.check_userChange ?
                   <FontAwesome name='user-o' size={20} color="black" />
                   : <FontAwesome name='user-o' size={20} color="gray" />
@@ -79,14 +79,14 @@ export default function Login({navigation}) {
                   onChangeText={(val) => userChange(val)}
                   />
             </View>     
-            <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+            <View className='bg-gray-200 rounded-full mx-5 px-3 py-2 w-80 flex-row items-center'>
                 {data.check_pwChange ? 
                   <Feather name='lock' size={20} color="black" />
                   : <Feather name='lock' size={20} color="gray" />
                 } 
                 <TextInput
                   secureTextEntry={true}
-                  className="pl-2" placeholder='Mật khẩu'
+                  className="pl-2 w-72" placeholder='Mật khẩu'
                   onChangeText={(val) => pwChange(val)}
                   />
             </View> 
@@ -96,8 +96,11 @@ export default function Login({navigation}) {
             <TouchableOpacity>
               <Text style={styles.textColor} className="font-bold text-center mt-5">Quên mật khẩu</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {loginHandle(data.username, data.password)}}>
-              <Text style={styles.bgColor} className="font-bold text-center mx-5 mt-2 w-80 py-3 rounded-md text-white">Đăng nhập</Text>
+            <TouchableOpacity 
+              onPress={() => {loginHandle(data.username, data.password)}}
+              className="rounded-md items-center my-2 w-72" style={styles.bgColor}
+            >
+              <Text className="font-bold text-center mx-5 w-80 py-3 text-white">Đăng nhập</Text>
             </TouchableOpacity>
             <View className="flex-row justify-center mb-10">
               <Text>Chưa có tài khoản? </Text>

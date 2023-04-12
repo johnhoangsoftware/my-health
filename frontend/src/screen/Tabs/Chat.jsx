@@ -1,5 +1,5 @@
 import React from "react"
-import { View, TextInput, Text, Image, TouchableOpacity } from "react-native"
+import { View, TextInput, Text, Image, TouchableOpacity, StatusBar } from "react-native"
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons"
 
 export default function Chat() {
@@ -22,12 +22,12 @@ export default function Chat() {
             last_message: "Bạn nên thường xuyên tập thể dục hơn"
         },
         {
-            post_id: 1,
+            chat_id: 1,
             user_id: "Nguyễn Thị Lan",
             avatar: "https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_person_people_avatar_icon_159366.png",
             last_message: "Đó là biểu hiện bình thường ở trẻ nhỏ, bạn không cần quá lo lắng"
         },
-        
+
     ];
     const chatList = [];
     chats.forEach((item) => {
@@ -44,8 +44,8 @@ export default function Chat() {
     const searchChange = (val) => {
         if (val.length != 0) {
             setSearch({
-              inputSearch: val,
-              isSearch: true
+                inputSearch: val,
+                isSearch: true
             });
         } else {
             setSearch({
@@ -56,24 +56,30 @@ export default function Chat() {
     }
 
     const searchInfo = () => {
-        
+
     }
 
     return (
-        <View className="flex-1 items-center">
-            <View className='bg-gray-200 rounded-full m-3 px-3 py-1 w-11/12 flex-row items-center'>
-                {search.isSearch ?
-                <Ionicons name='search' size={20} color="black" />
-                : <Ionicons name='search' size={20} color="gray" />
-                }                    
-                <TextInput 
-                    className="pl-2" placeholder='Nhập tên bác sĩ'
-                    onChangeText={(val) => searchChange(val)}
-                    onEndEditing={() => searchInfo()}
-                />
-            </View>  
-            <View>
-                {chatList}
+        <View className="bg-white flex-1">
+            <StatusBar />
+            <View className="flex-row items-center pt-10 pb-2 px-5 bg-white border border-gray-300 justify-center">
+                <Text className="font-bold text-xl text-center">Đoạn chat</Text>
+            </View>
+            <View className="flex-1 items-center">
+                <View className='bg-gray-200 rounded-full m-3 px-3 py-2 w-11/12 flex-row items-center'>
+                    {search.isSearch ?
+                        <Ionicons name='search' size={20} color="black" />
+                        : <Ionicons name='search' size={20} color="gray" />
+                    }
+                    <TextInput
+                        className="pl-2" placeholder='Nhập tên bác sĩ'
+                        onChangeText={(val) => searchChange(val)}
+                        onEndEditing={() => searchInfo()}
+                    />
+                </View>
+                <View>
+                    {chatList}
+                </View>
             </View>
         </View>
     )
@@ -81,17 +87,17 @@ export default function Chat() {
 
 const ChatItem = (props) => {
     return (
-        <TouchableOpacity className="mx-4 my-2 flex-col">
+        <TouchableOpacity className="mx-4 my-2 flex-col ">
             <View className="flex-row items-center w-screen px-3">
-                <Image 
+                <Image
                     src={props.avatar}
                     className="w-16 h-16 rounded-full"
-                    />
+                />
                 <View className="w-72">
-                    <Text className="font-semibold text-base ml-3">{props.user_id}</Text> 
+                    <Text className="font-semibold text-base ml-3">{props.user_id}</Text>
                     <Text className="text-gray-400 ml-3 text-sm" numberOfLines={1}>{props.last_message}</Text>
                 </View>
             </View>
-        </TouchableOpacity> 
+        </TouchableOpacity>
     )
 }

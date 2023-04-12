@@ -2,9 +2,10 @@ import { View, Text, TouchableOpacity, ScrollView, TextInput, StyleSheet, Image 
 import React from "react";
 import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
     const [search, setSearch] = React.useState({
         inputSearch: null,
         isSearch: false
@@ -57,17 +58,17 @@ export default function Home({navigation}) {
             image: require("./../../assets/home-icon/shortlist.png")
         },
     ];
-    const itemList=[];
+    const itemList = [];
 
     items.forEach((item) => {
         itemList.push(<Item key={item.title} title={item.title} image={item.image} />)
     })
-    
+
     const searchChange = (val) => {
         if (val.length != 0) {
             setSearch({
-              inputSearch: val,
-              isSearch: true
+                inputSearch: val,
+                isSearch: true
             });
         } else {
             setSearch({
@@ -85,64 +86,67 @@ export default function Home({navigation}) {
         // todo: notification screen
     }
 
-    return ( 
+    return (<>
+        <StatusBar />
+        <View className="flex-row items-center pt-10 pb-2 px-5 space-x-2 bg-white">
+            <View className='bg-gray-200 rounded-full px-3 py-2 w-80 flex-row items-center'>
+                {search.isSearch ?
+                    <Ionicons name='search' size={20} color="black" />
+                    : <Ionicons name='search' size={20} color="gray" />
+                }
+
+                <TextInput
+                    className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
+                    onChangeText={(val) => searchChange(val)}
+                    onEndEditing={() => searchInfo()}
+                />
+            </View>
+            <TouchableOpacity onPress={() => notification()}>
+                <Ionicons name="notifications-outline" size={28} />
+            </TouchableOpacity>
+        </View>
         <ScrollView
-                horizontal={false}
-                showsVerticalScrollIndicator={true}
-            >
-            <LinearGradient 
+            horizontal={false}
+            showsVerticalScrollIndicator={true}
+        >
+            <LinearGradient
                 colors={['#ffffff', 'rgba(36, 220, 226, 0.5)']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 1 }}
                 className="w-100"
             >
-                <View className="flex-row items-center mt-10 mx-5 space-x-2">
-                    <View className='bg-gray-200 rounded-full px-3 py-1 w-80 flex-row items-center'>
-                        {search.isSearch ?
-                        <Ionicons name='search' size={20} color="black" />
-                        : <Ionicons name='search' size={20} color="gray" />
-                        }
-                    
-                        <TextInput 
-                        className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
-                        onChangeText={(val) => searchChange(val)}
-                        onEndEditing={() => searchInfo()}
-                        />
-                    </View>  
-                    <TouchableOpacity onPress={() => notification()}>
-                        <Ionicons name="notifications-outline" size={28} />
-                    </TouchableOpacity>
-                </View>
-                
+
+
                 <Text className="font-bold mx-5 mt-5 text-xl" >Đặt khám</Text>
-                <ScrollView 
-                    className="flex-1 m-5 mt-3" 
+                <ScrollView
+                    className="flex-1 m-5 mt-3"
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    >
+                >
                     {hospitalList}
                 </ScrollView>
                 <View>
                     {itemList}
                 </View>
-            
+
             </LinearGradient>
         </ScrollView>
+    </>
     );
 }
 
 const InfoHospital = (props) => {
     return (
         <View className="bg-white rounded-xl w-40 h-64 mr-4">
-            <Image 
+            <Image
                 src={props.imageURL}
-                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"                
-                />
+                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
+            />
             <View className="px-2 py-1 space-y-1">
                 <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
                 <Text className="text-gray-500 text-xs h-12" numberOfLines={3}>{props.address}</Text>
-                <TouchableOpacity >
-                    <Text className="font-semibold text-base bg-cyan-400 rounded-full text-center text-white m-1 p-1">Đặt khám</Text>
+                <TouchableOpacity className="rounded-full bg-cyan-400">
+                    <Text className="font-semibold text-base text-center text-white m-1 p-1">Đặt khám</Text>
                 </TouchableOpacity>
             </View>
         </View>

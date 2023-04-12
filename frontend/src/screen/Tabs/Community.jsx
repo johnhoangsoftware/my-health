@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import Post from "../../component/Post/Post"
+import { StatusBar } from "expo-status-bar";
 
 export default function Community() {
     const posts = [
@@ -25,12 +26,12 @@ export default function Community() {
             avatar: "https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_person_people_avatar_icon_159366.png",
             content: "Mọi người cho em hỏi, bố em hay đau thắt ở ngực, cảm giác lồng ngực cứ như có ai đó bóp chặt, đè nén với một áp lực rất lớn. Các bác sĩ cho em hỏi, triệu chứng như vậy có phải bố em bị bệnh mạch vành không? Bố em nên đi kiểm tra những gì?"
         },
-        
+
     ];
     const postList = [];
     posts.forEach((post) => {
         postList.push(
-            <Post 
+            <Post
                 key={post.post_id}
                 user_id={post.user_id}
                 createdAt={post.createdAt}
@@ -41,21 +42,38 @@ export default function Community() {
     })
 
     return (
-        <ScrollView className="flex-1">
-            <TouchableOpacity className="flex-row items-center bg-white py-5 w-screen"> 
-                <Image 
-                    src="https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg"
-                    className="w-10 h-10 rounded-full ml-3"
-                    />
-                <Text className="text-base ml-3 text-gray-500">Chia sẻ thông tin của bạn</Text>
-                <View className="right-3 absolute">
-                    <Ionicons name="images" size={28} color={"green"} />
+        <>
+            <StatusBar />
+            <View className="flex-row items-center pt-10 pb-2 px-5 bg-white border border-gray-300">
+                <View>
+                    <Text className="font-bold text-2xl">Cộng đồng</Text>
                 </View>
-            </TouchableOpacity>
-
-            <View>
-                {postList}
+                <View className="space-x-2 flex-row mx-3 right-3 bottom-2 absolute">
+                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                        <Ionicons name="search" size={24} />
+                    </TouchableOpacity>
+                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                        <Ionicons name="notifications" size={24} />
+                    </TouchableOpacity>
+                </View>
             </View>
-        </ScrollView>
+            <ScrollView className="flex-1">
+                <TouchableOpacity className="flex-row items-center bg-white py-5 w-screen">
+                    <Image
+                        src="https://i.etsystatic.com/isla/28f779/58119197/isla_fullxfull.58119197_gwg8k1wg.jpg?version=0"
+                        className="w-10 h-10 rounded-full ml-3"
+                    />
+                    <Text className="text-base ml-3 text-gray-500">Chia sẻ thông tin của bạn</Text>
+                    <View className="right-3 absolute">
+                        <Ionicons name="images" size={28} color={"green"} />
+                    </View>
+                </TouchableOpacity>
+
+                <View>
+                    {postList}
+                </View>
+            </ScrollView>
+        </>
+
     )
 }

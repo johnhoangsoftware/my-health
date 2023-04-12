@@ -30,27 +30,27 @@ export default function App() {
     switch (action.type) {
       case 'RETRIEVE_TOKEN':
         return {
-          ... prevState,
+          ...prevState,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGIN':
         return {
-          ... prevState,
+          ...prevState,
           username: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'SIGNUP':
         return {
-          ... prevState,
+          ...prevState,
           username: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
-          ... prevState,
+          ...prevState,
           username: null,
           userToken: null,
           isLoading: false,
@@ -69,14 +69,15 @@ export default function App() {
 
       let userToken;
       // if (username == "user" && password == "pass") {
-        try {
-          userToken = "ok";
-          await AsyncStorage.setItem('userToken', userToken)
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        userToken = "ok";
+        await AsyncStorage.setItem('userToken', userToken)
+        await AsyncStorage.setItem('username', username)
+      } catch (e) {
+        console.log(e);
+      }
       // }
-      dispatch({ type: 'LOGIN', id: username, token: userToken})
+      dispatch({ type: 'LOGIN', id: username, token: userToken })
     },
     signup: async () => {
       let userToken
@@ -86,7 +87,7 @@ export default function App() {
       } catch (e) {
         console.log(e)
       }
-      dispatch({ type: 'SIGNUP', id: username, token: userToken})
+      dispatch({ type: 'SIGNUP', id: username, token: userToken })
     },
     logout: async () => {
       try {
@@ -94,20 +95,20 @@ export default function App() {
       } catch (e) {
         console.log(e);
       }
-      dispatch({type: 'LOGOUT'})
+      dispatch({ type: 'LOGOUT' })
     }
   }), []);
-  
+
   useEffect(() => {
     setTimeout(async () => {
-      let userToken 
+      let userToken
       try {
         userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
-       console.log(e); 
+        console.log(e);
       }
-      dispatch({type: 'RETRIEVE_TOKEN', token: userToken})
-    }, 1000);  
+      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken })
+    }, 1000);
   }, []);
 
   if (loginState.isLoading) {
@@ -122,7 +123,7 @@ export default function App() {
       <NavigationContainer>
         {loginState.userToken != null ? (
           <Tab.Navigator
-            screenOptions={({route}) => {
+            screenOptions={({ route }) => {
               return ({
                 tabBarIcon: ({ focused, color, size }) => {
                   let iconName;
@@ -139,40 +140,21 @@ export default function App() {
                 },
                 tabBarActiveTintColor: '#24dce2',
                 tabBarInactiveTintColor: 'gray',
+                headerShown: false,
               });
             }}
           >
-              <Tab.Screen name="Trang chủ" component={Home} options={{headerShown: false}} />
-              <Tab.Screen name="Cộng đồng" component={Community} 
-                options={{
-                  headerRight: () => (
-                    <View className="space-x-2 flex-row mx-3">
-                      <TouchableOpacity> 
-                        <Ionicons name="search" size={24}/>
-                      </TouchableOpacity>
-                      <TouchableOpacity> 
-                        <Ionicons name="notifications" size={24}/>
-                      </TouchableOpacity>
-                    </View>
-                  ),
-                  headerStyle: {borderBottomWidth: 1, borderColor: "gray"}
-                }}
-                
-              />
-              <Tab.Screen name="Chat" component={Chat} 
-                options={{
-                  headerTitle:"Đoạn chat",
-                  headerStyle: {borderBottomWidth: 1, borderColor: "gray"}
-                  }}
-              />
-              <Tab.Screen name="Tài khoản" component={Account} options={{headerShown: false}} />
-          </Tab.Navigator> 
+            <Tab.Screen name="Trang chủ" component={Home} />
+            <Tab.Screen name="Cộng đồng" component={Community} />
+            <Tab.Screen name="Chat" component={Chat} />
+            <Tab.Screen name="Tài khoản" component={Account} />
+          </Tab.Navigator>
         )
-        : <RootStackScreen /> }
+          : <RootStackScreen />}
       </NavigationContainer>
-    
+
     </AuthContext.Provider>
-    
+
   );
 }
 
