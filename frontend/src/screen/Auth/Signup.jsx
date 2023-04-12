@@ -95,8 +95,8 @@ export default function Signup({navigation}) {
         
             <View style={styles.container} className="relative flex-2 items-center justify-center h-screen">
             <Text className="font-bold text-2xl text-center">Tạo tài khoản</Text>
-            <View className="space-y-2 m-5">
-                <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+            <View className="items-center">
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
                     {data.check_userChange ? 
                     <FontAwesome name='user-o' size={20} color="black" />
                     : <FontAwesome name='user-o' size={20} color="gray" />
@@ -107,7 +107,7 @@ export default function Signup({navigation}) {
                         onChangeText={(val) => userChange(val)}
                         />
                 </View>  
-                <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
                     {data.check_emailChange ? 
                     <Feather name='mail' size={20} color="black" />
                     :<Feather name='mail' size={20} color="gray" />  
@@ -118,7 +118,7 @@ export default function Signup({navigation}) {
                         onChangeText={(val) => emailChange(val)}
                         />
                 </View>   
-                <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
                     {data.check_pwChange ?
                     <Feather name='lock' size={20} color="black" />
                     : <Feather name='lock' size={20} color="gray" />
@@ -130,7 +130,7 @@ export default function Signup({navigation}) {
                         onChangeText={(val) => pwChange(val)}
                         />
                 </View> 
-                <View className='bg-gray-200 rounded-full mx-5 px-3 py-1 w-80 flex-row items-center'>
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
                     {data.check_rePwChange ?
                     <Feather name='check-square' size={20} color="black" />
                     : <Feather name='check-square' size={20} color="gray" />
@@ -141,8 +141,11 @@ export default function Signup({navigation}) {
                         onChangeText={(val) => rePwChange(val)}
                         />
                 </View>
-                <TouchableOpacity onPress={() => {handleSignup()}}>
-                    <Text style={styles.bgColor} className="font-bold text-center mx-5 mt-10 w-80 py-3 rounded-md text-white">Đăng ký</Text>
+                <TouchableOpacity 
+                  onPress={() => {handleSignup()}}
+                  className="rounded-md items-center w-80 mt-10" style={styles.bgColor}
+                >
+                    <Text className="font-bold text-center mx-5 w-80 py-3 text-white">Đăng ký</Text>
                 </TouchableOpacity>
                 <View className="flex-row justify-center my-10">
                 <Text>Đã có tài khoản? </Text>

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStackScreen from './src/screen/RootStackScreen'
@@ -37,27 +37,27 @@ export default function App() {
     switch (action.type) {
       case 'RETRIEVE_TOKEN':
         return {
-          ... prevState,
+          ...prevState,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGIN':
         return {
-          ... prevState,
+          ...prevState,
           username: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'SIGNUP':
         return {
-          ... prevState,
+          ...prevState,
           username: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
-          ... prevState,
+          ...prevState,
           username: null,
           userToken: null,
           isLoading: false,
@@ -76,14 +76,15 @@ export default function App() {
 
       let userToken;
       // if (username == "user" && password == "pass") {
-        try {
-          userToken = "ok";
-          await AsyncStorage.setItem('userToken', userToken)
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        userToken = "ok";
+        await AsyncStorage.setItem('userToken', userToken)
+        await AsyncStorage.setItem('username', username)
+      } catch (e) {
+        console.log(e);
+      }
       // }
-      dispatch({ type: 'LOGIN', id: username, token: userToken})
+      dispatch({ type: 'LOGIN', id: username, token: userToken })
     },
     signup: async () => {
       let userToken
@@ -93,7 +94,7 @@ export default function App() {
       } catch (e) {
         console.log(e)
       }
-      dispatch({ type: 'SIGNUP', id: username, token: userToken})
+      dispatch({ type: 'SIGNUP', id: username, token: userToken })
     },
     logout: async () => {
       try {
@@ -101,20 +102,20 @@ export default function App() {
       } catch (e) {
         console.log(e);
       }
-      dispatch({type: 'LOGOUT'})
+      dispatch({ type: 'LOGOUT' })
     }
   }), []);
-  
+
   useEffect(() => {
     setTimeout(async () => {
-      let userToken 
+      let userToken
       try {
         userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
-       console.log(e); 
+        console.log(e);
       }
-      dispatch({type: 'RETRIEVE_TOKEN', token: userToken})
-    }, 1000);  
+      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken })
+    }, 1000);
   }, []);
 
   if (loginState.isLoading) {
@@ -152,7 +153,7 @@ export default function App() {
       <NavigationContainer>
         {loginState.userToken != null ? (
           <Tab.Navigator
-            screenOptions={({route}) => {
+            screenOptions={({ route }) => {
               return ({
                 tabBarIcon: ({ focused, color, size }) => {
                   let iconName;
@@ -169,20 +170,21 @@ export default function App() {
                 },
                 tabBarActiveTintColor: '#24dce2',
                 tabBarInactiveTintColor: 'gray',
+                headerShown: false,
               });
             }}
           >
-              <Tab.Screen name="Trang chủ" component={HomeStack} options={{headerShown: false}} />
+              <Tab.Screen name="Trang chủ" component={HomeStack} />
               <Tab.Screen name="Cộng đồng" component={Community} />
-              <Tab.Screen name="Chat" component={Chat} options={{title: 'Đoạn chat'}} />
-              <Tab.Screen name="Tài khoản" component={Account} options={{headerShown: false}} />
-            </Tab.Navigator> 
+              <Tab.Screen name="Chat" component={Chat} />
+              <Tab.Screen name="Tài khoản" component={Account} />
+          </Tab.Navigator> 
         )
-        : <RootStackScreen /> }
+          : <RootStackScreen />}
       </NavigationContainer>
-    
+
     </AuthContext.Provider>
-    
+
   );
 }
 
