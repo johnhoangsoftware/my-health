@@ -82,7 +82,7 @@ export default function Home({ navigation }) {
     }
 
     const searchInfo = () => {
-        // todo: search screen
+        navigation.navigate("Tìm kiếm");
     }
 
     const notification = () => {

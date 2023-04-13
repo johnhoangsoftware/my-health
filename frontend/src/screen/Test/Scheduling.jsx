@@ -111,7 +111,7 @@ export default function Scheduling({navigation}) {
                         Giờ khám
                     </Text>
 
-                    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }} className="mx-2.5 my-1.5">
+                    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }} className="mx-2.5 mt-2.5 mb-0.5">
                         {timeOptions}                    
                     </View>
                 </View>

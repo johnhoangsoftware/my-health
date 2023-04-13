@@ -213,21 +213,21 @@ export default function DoctorList({navigation}) {
         return (
             <>
             <View className="h-0.5 w-full bg-gray-200" />
-            <TouchableOpacity onPress={() => navigation.navigate("Thông tin bác sĩ")} style={department==props.tittle ? styles.focus : styles.none} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
+            <TouchableOpacity onPress={() => navigation.navigate("Thông tin bác sĩ")} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
                     <Image src={props.image} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
                 <View className="left-3 w-full">
-                    <Text className="w-fit text-left break-normal font-semibold justify-center">{props.name}</Text>
-                    <View className="flex-row">
+                    <Text className="w-2/3 text-left break-normal font-semibold justify-center">{props.name}</Text>
+                    <View className="w-2/3 flex-row">
                         <MaterialIcons name={props.stars >= 1 ? "star" : "star-border"} size={25} style={props.stars >= 1 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 2 ? "star" : "star-border"} size={25} style={props.stars >= 2 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 3 ? "star" : "star-border"} size={25} style={props.stars >= 3 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 4 ? "star" : "star-border"} size={25} style={props.stars >= 4 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars == 5 ? "star" : "star-border"} size={25} style={props.stars == 5 ? styles.starSelected : styles.starUnselected} />
                     </View>
-                    <Text className="w-fit text-left break-normal font-normal justify-center">{props.department}</Text>
-                    <View className="w-fit absolute ml-60 mt-4">
+                    <Text className="w-2/3 text-left break-normal font-normal justify-center">{props.department}</Text>
+                    <View className="w-1/5 absolute ml-60 mt-4">
                         <Ionicons name="caret-forward" size={24} color="#24DCE2" />
                     </View>
                 </View>
