@@ -8,7 +8,7 @@ export default function Packages({navigation}) {
     };
 
     const goToSchedulings = () => {
-        navigation.navigate("Đặt lịch hẹn");
+        navigation.navigate("Đặt lịch xét nghiệm");
     };
 
     const packages = [

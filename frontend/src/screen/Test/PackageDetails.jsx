@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default function PackageDetails({navigation}) {
 
     const goToSchedulings = () => {
-        navigation.navigate("Đặt lịch hẹn");
+        navigation.navigate("Đặt lịch xét nghiệm");
     };
 
     const pack = {

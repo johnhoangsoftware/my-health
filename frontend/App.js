@@ -19,6 +19,9 @@ import DoctorDetails from './src/screen/Doctors/DoctorDetails';
 import HospitalDetails from './src/screen/Hospital/HospitalDetails';
 import { createStackNavigator } from '@react-navigation/stack';
 import Notification from './src/screen/Notifications/Notification';
+import Scheduling from './src/screen/Test/Scheduling';
+import Search from './src/screen/Search/Search';
+import ViewSchedules from './src/screen/Schedule/ViewSchedules';
 
 const Tab = createBottomTabNavigator();
 
@@ -131,8 +134,10 @@ export default function App() {
       return (
         <Stack.Navigator initialRoutName="Home">
           <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+          <Stack.Screen name="Tìm kiếm" component={Search} options={{headerShown: false, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           <Stack.Screen name="Thông báo" component={Notification} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+          <Stack.Screen name="Xem lịch khám" component={ViewSchedules} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
           //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
           //     onPress={() => {
@@ -141,6 +146,7 @@ export default function App() {
           //   />)
           // })} /> */}
           <Stack.Screen name="Chi tiết gói khám" component={PackageDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+          <Stack.Screen name="Đặt lịch xét nghiệm" component={Scheduling}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
           <Stack.Screen name="Danh sách bác sĩ" component={DoctorList} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
           <Stack.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}}/>
           <Stack.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />

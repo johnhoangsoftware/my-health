@@ -53,7 +53,7 @@ export default function Home({ navigation }) {
         {
             title: "Xem lịch khám",
             image: require("./../../assets/home-icon/calendar.png"),
-            onPress: () => {navigation.navigate("")}
+            onPress: () => {navigation.navigate("Xem lịch khám")}
         },
         {
             title: "Danh sách bác sĩ",
