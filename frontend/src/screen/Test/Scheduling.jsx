@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -15,6 +15,17 @@ export default function Scheduling({navigation}) {
         chooseDay(time);
     }
 
+    const goToSchedulings = () => {
+        if (chosenDay == null) {
+            Alert.alert("Vui lòng chọn ngày khám.", "");
+        }
+        else if (chosenTime == null) {
+            Alert.alert("Vui lòng chọn giờ khám.","");
+        } else {
+            navigation.navigate("Đặt lịch xét nghiệm");
+        }
+    };
+
     const daysInWeek = {
         0 : "Chủ nhật",
         1 : "Thứ 2",
@@ -25,8 +36,7 @@ export default function Scheduling({navigation}) {
         6 : "Thứ 7"
     };
     
-    const days = [
-    ];
+    const days = [];
 
     const getDate = () => {
         let separator = "/";
@@ -114,6 +124,9 @@ export default function Scheduling({navigation}) {
                     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }} className="mx-2.5 mt-2.5 mb-0.5">
                         {timeOptions}                    
                     </View>
+                    <TouchableOpacity style={styles.bgColor} className="mx-3.5 mt-2.5 mb-2 w-fit p-2 text-center rounded-lg border" onPress={goToSchedulings}>
+                            <Text className="text-white text-base text-center font-bold">Tiếp tục</Text>
+                    </TouchableOpacity>
                 </View>
                 
 
