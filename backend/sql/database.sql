@@ -8,8 +8,8 @@ drop table if exists hospital;
 create table hospital (
 	hospital_id varchar(36) primary key not null,
     name varchar(100),
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     address varchar(255)
 );
 
@@ -27,8 +27,8 @@ drop table if exists department_detail;
 create table department_detail (
 	department_detail_id varchar(36) primary key not null,
     name varchar(30),
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp
 );
 
 insert into department_detail(department_detail_id, name)
@@ -98,8 +98,8 @@ create table user (
     avatar varchar(100),
     phone varchar(11),
     `role` enum("PATIENT", "DOCTOR"),
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     department_id varchar(36),
     address varchar(255),
     constraint user_department_key foreign key (department_id) references department(department_id)
@@ -111,8 +111,8 @@ create table notification(
     content varchar(100),
     link varchar(100),
     isRead bit,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     user_id varchar(36),
     constraint user_noti_key foreign key(user_id) references user(user_id)  on update cascade on delete cascade
 );
@@ -120,8 +120,8 @@ create table notification(
 drop table if exists chat;
 create table chat(
 	chat_id varchar(36) primary key not null,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     member_one varchar(36),
     member_two varchar(36),
     constraint member1_chat_key foreign key(member_one) references user(user_id)  on update cascade on delete cascade,
@@ -132,7 +132,7 @@ drop table if exists message;
 create table message (
 	message_id varchar(36) primary key not null,
     type varchar(10) default "none",
-    createdAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
     deletedAt datetime default NULL,
     chat_id varchar(36),
     sender_id varchar(36),
@@ -146,8 +146,8 @@ create table service(
 	price DOUBLE unsigned not null,
     name varchar(100) not null,
     description TEXT,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     hospital_id varchar(36),
 	foreign key (hospital_id) references hospital(hospital_id) on update cascade on delete cascade
 );
@@ -157,8 +157,8 @@ create table appointment(
 	appointment_id varchar(36) primary key not null,
     status varchar(10),
     time DATETIME,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     patient_id varchar(36),
     doctor_id varchar(36),
     service_id varchar(36),
@@ -173,8 +173,8 @@ create table post(
 	post_id varchar(36) primary key not null,
     topic varchar(30),
     content TEXT,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     auth_id varchar(36),
     constraint post_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade
 );
@@ -183,8 +183,8 @@ drop table if exists comment;
 create table comment(
 	comment_id varchar(36) primary key not null,
     content TEXT,
-    createdAt datetime default current_timestamp,
-    updatedAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp,
     auth_id varchar(36),
     post_id varchar(36),
     constraint cmt_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade,
@@ -194,7 +194,7 @@ create table comment(
 drop table if exists reaction;
 create table reaction(
 	reaction_id varchar(36) primary key not null,
-    createdAt datetime default current_timestamp,
+    created_at datetime default current_timestamp,
     auth_id varchar(36),
 	comment_id varchar(36),
     constraint reaction_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade,

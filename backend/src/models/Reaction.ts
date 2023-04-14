@@ -9,7 +9,7 @@ export class Reaction extends Model{
   public reaction_id!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

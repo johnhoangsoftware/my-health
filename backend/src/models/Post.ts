@@ -14,11 +14,14 @@ export class Post extends Model {
   @Column({ type: DataType.TEXT })
   public content!: string;
 
+  @Column({ type: DataType.STRING })
+  public media!: string;
+
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

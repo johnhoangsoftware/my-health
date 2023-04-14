@@ -22,10 +22,10 @@ export class Department  extends Model{
   public department_detail_id!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   // association
 

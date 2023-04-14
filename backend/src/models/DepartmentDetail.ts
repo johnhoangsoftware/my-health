@@ -11,10 +11,10 @@ export class DepartmentDetail extends Model{
   public name!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @BeforeCreate
   static generateID(instance: DepartmentDetail) {

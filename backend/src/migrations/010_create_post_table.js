@@ -1,4 +1,4 @@
-const {DataTypes } = require('sequelize')
+const {DataTypes,Sequelize } = require('sequelize')
 
 const {POST, USER} = require("./table_name")
 
