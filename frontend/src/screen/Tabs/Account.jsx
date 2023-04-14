@@ -54,16 +54,16 @@ export default function Account() {
             </View>
 
             <View className="border-t border-slate-300 w-screen items-center">
-                <TouchableOpacity className="w-screen">
+                <TouchableOpacity className="w-screen items-center">
                     <Item title="Hồ sơ khám bệnh" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen">
+                <TouchableOpacity className="w-screen items-center">
                     <Item title="Tạo lịch nhắc" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen">
+                <TouchableOpacity className="w-screen items-center">
                     <Item title="Đổi mật khẩu" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen" onPress={() => { logout() }}>
+                <TouchableOpacity className="w-screen items-center" onPress={() => { logout() }}>
                     <Item title="Đăng xuất" />
                 </TouchableOpacity>
             </View>
