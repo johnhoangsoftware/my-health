@@ -5,7 +5,7 @@ const {USER, DEPARTMENT} = require("./table_name")
 module.exports =  {
     up: async (queryInterface) => {
         await queryInterface.createTable(USER, {
-            user_id: {
+            userId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
@@ -68,12 +68,12 @@ module.exports =  {
                 defaultValue: Sequelize.fn('now'),
             },
 
-            department_id: {
+            departmentId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: DEPARTMENT,
-                    key: "department_id"
+                    key: "departmentId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",

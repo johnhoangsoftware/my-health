@@ -19,7 +19,7 @@ export const createUser = ErrorWrapperHandler(async (req: Request, res: Response
     const user = await userService.createUser(userDTO)
     return res.status(StatusCodes.OK).json({
         message: `Create user successfully.`,
-        data: user.user_id
+        data: user.userId
     })
 })
 
@@ -40,7 +40,7 @@ export const createHospital = ErrorWrapperHandler(async (req: Request, res: Resp
     const hospital = await hospitalService.create(hospitalDTO)
     return res.status(StatusCodes.OK).json({
         message: `Create hospital successfully`,
-        data: hospital.hospital_id
+        data: hospital.hospitalId
     })
 })
 
@@ -73,7 +73,7 @@ export const createService = ErrorWrapperHandler(async (req: Request, res: Respo
     const service = await serviceService.create(serviceDTO)
     return res.status(StatusCodes.OK).json({
         message: `Create service successfully.`,
-        data: service.service_id
+        data: service.serviceId
     })
 })
 

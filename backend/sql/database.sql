@@ -6,14 +6,14 @@ use my_health;
 
 drop table if exists hospital;
 create table hospital (
-	hospital_id varchar(36) primary key not null,
+	hospitalId varchar(36) primary key not null,
     name varchar(100),
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
     address varchar(255)
 );
 
-insert into hospital(hospital_id, name, address) 
+insert into hospital(hospitalId, name, address) 
 values
 ("f7fdfaf0-7f60-44b6-8d37-69c47c2c21cd", "Bệnh viện Hồng Đức 2", "Thành phố Hồ Chí Minh"),
 ("8e8e67e0-b971-4efc-b563-587d6e5675d3", "Bệnh viện Hồng Đức 3", "Thành phố Hồ Chí Minh"),
@@ -25,13 +25,13 @@ values
 
 drop table if exists department_detail;
 create table department_detail (
-	department_detail_id varchar(36) primary key not null,
+	department_detailId varchar(36) primary key not null,
     name varchar(30),
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp
 );
 
-insert into department_detail(department_detail_id, name)
+insert into department_detail(department_detailId, name)
 values
 ("6c6e0cf7-084a-497e-9f47-30ac5ed93401","Khoa Nhi"),
 ("0fa142b3-d580-475f-95b4-9375fddb4a8b","Khoa ngoại tổng quát"),
@@ -51,14 +51,14 @@ values
 
 drop table if exists department;
 create table department(
-	department_id varchar(36) primary key not null,
-    hospital_id varchar(36),
-    department_detail_id varchar(36),
-	foreign key (hospital_id) references hospital(hospital_id) on update cascade on delete cascade,
-    foreign key (department_detail_id) references department_detail(department_detail_id) on update cascade on delete cascade
+	departmentId varchar(36) primary key not null,
+    hospitalId varchar(36),
+    department_detailId varchar(36),
+	foreign key (hospitalId) references hospital(hospitalId) on update cascade on delete cascade,
+    foreign key (department_detailId) references department_detail(department_detailId) on update cascade on delete cascade
 );
 
-insert into department(department_id,  department_detail_id, hospital_id)
+insert into department(departmentId,  department_detailId, hospitalId)
 values
 ("d31be3b7-c6b1-464e-9c6f-849e9c769e9b","6c6e0cf7-084a-497e-9f47-30ac5ed93401","f7fdfaf0-7f60-44b6-8d37-69c47c2c21cd"),
 ("72080ecb-3f58-4f0f-a3c2-43d9d4a1e3e6","0fa142b3-d580-475f-95b4-9375fddb4a8b","f7fdfaf0-7f60-44b6-8d37-69c47c2c21cd"),
@@ -89,7 +89,7 @@ values
 
 drop table if exists user;
 create table user (
-	user_id varchar(36) primary key not null,
+	userId varchar(36) primary key not null,
     email varchar(100) unique not null,
     password varchar(100) not null,
     firstName varchar(30),
@@ -100,104 +100,104 @@ create table user (
     `role` enum("PATIENT", "DOCTOR"),
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    department_id varchar(36),
+    departmentId varchar(36),
     address varchar(255),
-    constraint user_department_key foreign key (department_id) references department(department_id)
+    constraint user_department_key foreign key (departmentId) references department(departmentId)
 );
 
 drop table if exists notification;
 create table notification(
-	notification_id varchar(36) primary key not null,
+	notificationId varchar(36) primary key not null,
     content varchar(100),
     link varchar(100),
     isRead bit,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    user_id varchar(36),
-    constraint user_noti_key foreign key(user_id) references user(user_id)  on update cascade on delete cascade
+    userId varchar(36),
+    constraint user_noti_key foreign key(userId) references user(userId)  on update cascade on delete cascade
 );
 
 drop table if exists chat;
 create table chat(
-	chat_id varchar(36) primary key not null,
+	chatId varchar(36) primary key not null,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
     member_one varchar(36),
     member_two varchar(36),
-    constraint member1_chat_key foreign key(member_one) references user(user_id)  on update cascade on delete cascade,
-    constraint member2_chat_key foreign key(member_two) references user(user_id)  on update cascade on delete cascade
+    constraint member1_chat_key foreign key(member_one) references user(userId)  on update cascade on delete cascade,
+    constraint member2_chat_key foreign key(member_two) references user(userId)  on update cascade on delete cascade
 );
 
 drop table if exists message;
 create table message (
-	message_id varchar(36) primary key not null,
+	messageId varchar(36) primary key not null,
     type varchar(10) default "none",
     created_at datetime default current_timestamp,
     deletedAt datetime default NULL,
-    chat_id varchar(36),
-    sender_id varchar(36),
-    constraint msg_chat_key foreign key(chat_id) references chat(chat_id)  on update cascade on delete cascade, 
-    constraint msg_user_key foreign key(sender_id) references user(user_id)  on update cascade on delete cascade
+    chatId varchar(36),
+    senderId varchar(36),
+    constraint msg_chat_key foreign key(chatId) references chat(chatId)  on update cascade on delete cascade, 
+    constraint msg_user_key foreign key(senderId) references user(userId)  on update cascade on delete cascade
 );
 
 drop table if exists service;
 create table service(
-	service_id varchar(36) primary key not null,
+	serviceId varchar(36) primary key not null,
 	price DOUBLE unsigned not null,
     name varchar(100) not null,
     description TEXT,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    hospital_id varchar(36),
-	foreign key (hospital_id) references hospital(hospital_id) on update cascade on delete cascade
+    hospitalId varchar(36),
+	foreign key (hospitalId) references hospital(hospitalId) on update cascade on delete cascade
 );
 
 drop table if exists appointment;
 create table appointment(
-	appointment_id varchar(36) primary key not null,
+	appointmentId varchar(36) primary key not null,
     status varchar(10),
     time DATETIME,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    patient_id varchar(36),
-    doctor_id varchar(36),
-    service_id varchar(36),
+    patientId varchar(36),
+    doctorId varchar(36),
+    serviceId varchar(36),
     address varchar(255),
-    foreign key(patient_id) references user(user_id)  on update cascade on delete cascade,
-    foreign key(doctor_id) references user(user_id)  on update cascade on delete cascade,
-    foreign key(service_id) references service(service_id)  on update cascade on delete cascade
+    foreign key(patientId) references user(userId)  on update cascade on delete cascade,
+    foreign key(doctorId) references user(userId)  on update cascade on delete cascade,
+    foreign key(serviceId) references service(serviceId)  on update cascade on delete cascade
 );
 
 drop table if exists post;
 create table post(
-	post_id varchar(36) primary key not null,
+	postId varchar(36) primary key not null,
     topic varchar(30),
     content TEXT,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    auth_id varchar(36),
-    constraint post_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade
+    authId varchar(36),
+    constraint post_auth_key foreign key(authId) references user(userId)  on update cascade on delete cascade
 );
 
 drop table if exists comment;
 create table comment(
-	comment_id varchar(36) primary key not null,
+	commentId varchar(36) primary key not null,
     content TEXT,
     created_at datetime default current_timestamp,
     updated_at datetime default current_timestamp,
-    auth_id varchar(36),
-    post_id varchar(36),
-    constraint cmt_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade,
-    constraint cmt_post_key foreign key(post_id) references post(post_id)  on update cascade on delete cascade
+    authId varchar(36),
+    postId varchar(36),
+    constraint cmt_auth_key foreign key(authId) references user(userId)  on update cascade on delete cascade,
+    constraint cmt_post_key foreign key(postId) references post(postId)  on update cascade on delete cascade
 );
 
 drop table if exists reaction;
 create table reaction(
-	reaction_id varchar(36) primary key not null,
+	reactionId varchar(36) primary key not null,
     created_at datetime default current_timestamp,
-    auth_id varchar(36),
-	comment_id varchar(36),
-    constraint reaction_auth_key foreign key(auth_id) references user(user_id)  on update cascade on delete cascade,
-	constraint reaction_cmt_key foreign key(comment_id) references comment(comment_id)  on update cascade on delete cascade
+    authId varchar(36),
+	commentId varchar(36),
+    constraint reaction_auth_key foreign key(authId) references user(userId)  on update cascade on delete cascade,
+	constraint reaction_cmt_key foreign key(commentId) references comment(commentId)  on update cascade on delete cascade
 );
 

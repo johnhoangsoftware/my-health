@@ -19,7 +19,7 @@ export const create = async (createHospitalDTO: CreateHospitalDTO): Promise<Hosp
 export const updateByID = async (id: string, updateHospitalDTO: UpdateHospitalDTO): Promise<string> => {
     await findByID(id)   
     await Hospital.update(updateHospitalDTO, {
-        where: {hospital_id: id}
+        where: {hospitalId: id}
     })
     return Promise.resolve(id)
 }
@@ -27,7 +27,7 @@ export const updateByID = async (id: string, updateHospitalDTO: UpdateHospitalDT
 export const deleteByID = async (id: string): Promise<string> => {
     await findByID(id)
     await Hospital.destroy({
-        where: {hospital_id: id}
+        where: {hospitalId: id}
     })
     return Promise.resolve(id)
 }

@@ -2,22 +2,22 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import {User, Comment} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'reaction' })
+@Table({ tableName: 'Reactions' })
 export class Reaction extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public reaction_id!: string;
+  public reactionId!: string;
 
   @CreatedAt
   public readonly created_at!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
-  public auth_id!: string;
+  public authId!: string;
 
   @ForeignKey(() => Comment)
   @Column({ type: DataType.STRING })
-  public comment_id!: string;
+  public commentId!: string;
 
   // associate
 
@@ -37,6 +37,6 @@ export class Reaction extends Model{
 
   @BeforeCreate
   static generateID(instance: Reaction) {
-    instance.reaction_id = generateUUID()
+    instance.reactionId = generateUUID()
   }
 }

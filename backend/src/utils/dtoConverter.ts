@@ -6,7 +6,7 @@ export const toPost = (postDTO : CreatePostDTO|UpdatePostDTO) => {
         topic: postDTO.topic,
         content: postDTO.content,
         media: postDTO.media,
-        auth_id: postDTO.auth_id,
+        authId: postDTO.authId,
     })
 }
 

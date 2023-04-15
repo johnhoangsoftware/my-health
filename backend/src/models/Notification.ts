@@ -2,11 +2,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import {User} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'notification' })
+@Table({ tableName: 'Notifications' })
 export class Notification extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public notification_id!: string;
+  public notificationId!: string;
 
   @Column({ type: DataType.STRING })
   public content!: string;
@@ -25,10 +25,10 @@ export class Notification extends Model{
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
-  public user_id!: string;
+  public userId!: string;
 
   @BeforeCreate
   static generateID(instance: Notification) {
-    instance.notification_id = generateUUID()
+    instance.notificationId = generateUUID()
   }
 }

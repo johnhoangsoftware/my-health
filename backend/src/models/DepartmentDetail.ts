@@ -1,11 +1,11 @@
 import { Model,  PrimaryKey, Column, Table, CreatedAt, UpdatedAt, DataType, BeforeCreate } from 'sequelize-typescript';
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'department_detail' })
+@Table({ tableName: 'DepartmentDetails' })
 export class DepartmentDetail extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public department_detail_id!: string;
+  public department_detailId!: string;
 
   @Column({ type: DataType.STRING })
   public name!: string;
@@ -18,6 +18,6 @@ export class DepartmentDetail extends Model{
 
   @BeforeCreate
   static generateID(instance: DepartmentDetail) {
-    instance.department_detail_id = generateUUID()
+    instance.department_detailId = generateUUID()
   }
 }

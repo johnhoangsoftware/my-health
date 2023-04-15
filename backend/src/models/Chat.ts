@@ -2,11 +2,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import { generateUUID } from '../utils/uuid';
 import { User } from './User';
 
-@Table({ tableName: 'chat' })
+@Table({ tableName: 'Chats' })
 export class Chat extends Model {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public chat_id!: string;
+  public chatId!: string;
 
   @CreatedAt
   public readonly created_at!: Date;
@@ -35,6 +35,6 @@ export class Chat extends Model {
 
   @BeforeCreate
   static generateID(instance: Chat) {
-    instance.chat_id = generateUUID()
+    instance.chatId = generateUUID()
   }
 }

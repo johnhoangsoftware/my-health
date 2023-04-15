@@ -16,7 +16,7 @@ export const deleteByID = async (id: string): Promise<User> => {
         throw new CustomError(StatusCodes.NOT_FOUND, `User not found`)
     }
     await User.destroy({
-        where: { user_id: id },
+        where: { userId: id },
     })
     return Promise.resolve(user)
 }

@@ -2,11 +2,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import { Chat, User} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'message' })
+@Table({ tableName: 'Messages' })
 export class Message extends Model {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public message_id!: string;
+  public messageId!: string;
 
   @Column({ type: DataType.STRING })
   public type?: string;
@@ -19,11 +19,11 @@ export class Message extends Model {
 
   @ForeignKey(() => Chat)
   @Column({ type: DataType.STRING })
-  public chat_id!: string;
+  public chatId!: string;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
-  public sender_id!: string;
+  public senderId!: string;
 
   // associate
   @BelongsTo(() => Chat)
@@ -42,6 +42,6 @@ export class Message extends Model {
 
   @BeforeCreate
   static generateID(instance: Message) {
-    instance.message_id = generateUUID()
+    instance.messageId = generateUUID()
   }
 }

@@ -4,7 +4,7 @@ export interface CreatePostDTO {
     media: string
     created_at: Date,
     updated_at: Date,
-    auth_id: string
+    authId: string
 }
 
 export interface UpdatePostDTO extends Partial<CreatePostDTO> { }

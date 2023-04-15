@@ -21,7 +21,7 @@ export const create = async (post: Post): Promise<Post> => {
 export const update = async (id: string, post: UpdatePostDTO): Promise<Post> => {
   await Post.update({ ...post}, {
     where: {
-      post_id : id
+      postId : id
     }
   })
   const updatedPost = await findByID(id)

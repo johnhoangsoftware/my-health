@@ -17,7 +17,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         attributes: {
             include: [
                 [Sequelize.literal(`
-                    (SELECT count(*) FROM comment WHERE comment.post_id = Post.post_id)`
+                    (SELECT count(*) FROM comment WHERE comment.postId = Posts.postId)`
                 )
                     , "numberOfComments"]
             ]
@@ -25,7 +25,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         include: [
             {
                 model: User,
-                attributes: ["user_id", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "firstName", "lastName", "avatar"]
             },
         ],
         ...condition
@@ -37,17 +37,17 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
     }
 }
 
-export const createPost = async (authID: string, post: CreatePostDTO): Promise<string> => {
+export const createPost = async (authID: string, post: CreatePostDTO): Promise<Post> => {
     const user = await User.findByPk(authID, {
-        attributes: ["user_id"]
+        attributes: ["userId"]
     })
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find user: ${authID}`)
     }
     post = validateCreatePost(post)
-    post.auth_id = authID
+    post.authId = authID
     const newPost = await post_db.create(dtoConverter.toPost(post).dataValues)
-    return newPost.post_id
+    return newPost
 }
 
 export const updatePost = async (id: string, post: UpdatePostDTO): Promise<Post> => {
@@ -77,12 +77,12 @@ export const list = async (q: { [key: string]: any }): Promise<{totalPages: numb
 export const getComments = async(postId: string):Promise<Comment[]> => {
     return await Comment.findAll({
         where: {
-            post_id: postId
+            postId: postId
         },
         include: [
             {
                 model: User,
-                attributes: ["user_id", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "firstName", "lastName", "avatar"]
             }
         ]
     })
@@ -90,7 +90,7 @@ export const getComments = async(postId: string):Promise<Comment[]> => {
 
 export const comment = async (authId: string, postId: string, cmt: CreateCommentDTO): Promise<Comment> => {
     const user = await User.findByPk(authId, {
-        attributes: ["user_id"]
+        attributes: ["userId"]
     })
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find user: ${authId}`)
@@ -100,8 +100,8 @@ export const comment = async (authId: string, postId: string, cmt: CreateComment
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find post: ${postId}`)
     }
     cmt = validateCreateComment(cmt)
-    cmt.auth_id = authId
-    cmt.post_id = postId
+    cmt.authId = authId
+    cmt.postId = postId
     const newCmt = await Comment.create({ ...cmt })
     return newCmt
 }
@@ -112,7 +112,7 @@ export const deleteComment = async (id: string): Promise<Comment> => {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find comment: ${id}`)
     }
 
-    await Comment.destroy({ where: { comment_id: id } })
+    await Comment.destroy({ where: { commentId: id } })
     return cmt
 }
 
@@ -129,7 +129,7 @@ export const updateComment = async (id: string, updateComment: UpdateCommentDTO)
 
 export const getPostsByUser = async (userId: string, q: { [key: string]: any }) :Promise<{totalPages: number, page: number,posts: Post[]} >=> {
     const user = await User.findByPk(userId, {
-        attributes: ["user_id"]
+        attributes: ["userId"]
     })
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find user: ${userId}`)
@@ -141,7 +141,7 @@ export const getPostsByUser = async (userId: string, q: { [key: string]: any }) 
     const pagination = new Pagination(totalRows, perPage, page, sort)
     return findPostWithPagination(pagination, {
         where: {
-            auth_id: userId
+            authId: userId
         }
     })
 }

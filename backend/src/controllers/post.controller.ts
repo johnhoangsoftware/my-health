@@ -9,10 +9,10 @@ import { CreateCommentDTO, UpdateCommentDTO } from "../dtos/comment.dto";
 export const newPost = ErrorWrapperHandler(async (req: Request, res: Response, next:NextFunction) => {
     const data = req.body
     const authID = req.auth?.id
-    const postId = await postService.createPost(authID, data as CreatePostDTO)
+    const post = await postService.createPost(authID, data as CreatePostDTO)
     return res.status(StatusCodes.OK).json({
         message: `Create user successfully.`,
-        data: postId
+        data: post
     })
 })
 

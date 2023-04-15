@@ -32,7 +32,7 @@ export const createUser = async (createUserDTO: CreateUserDTO): Promise<User> =>
 export const updateByID = async (id: string, updateUser: UpdateUserDTO): Promise<string> => {
     await user_db.findByID(id)
     await User.update(updateUser, {
-        where: {user_id: id}
+        where: {userId: id}
     })
     return Promise.resolve(id)
 }

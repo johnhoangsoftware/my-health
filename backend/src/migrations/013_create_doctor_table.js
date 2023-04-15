@@ -1,32 +1,51 @@
 const { DataTypes, Sequelize } = require('sequelize')
 
-const {COMMENT, POST, USER} = require("./table_name")
+const {USER, DEPARTMENT, HOSPITAL, DOCTOR} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
-        await queryInterface.createTable(COMMENT, {
-            commentId: {
+        await queryInterface.createTable(DOCTOR, {
+            doctorId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
 
-            content: {
-                type: DataTypes.TEXT,
+            rank: {
+                type: DataTypes.STRING(100),
                 allowNull: false,
             },
+
+            
 
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),
             },
-            updated_at: {
-                type: DataTypes.DATE,
+
+            departmentId: {
+                type: DataTypes.UUID,
                 allowNull: false,
-                defaultValue: Sequelize.fn('now'),
+                references: {
+                    model: DEPARTMENT,
+                    key: "departmentId"
+                },
+                onUpdate: "CASCADE",
+                onDelete: "CASCADE",
             },
 
-            authId: {
+            hospitalId: {
+                type: DataTypes.UUID,
+                allowNull: false,
+                references: {
+                    model: HOSPITAL,
+                    key: "hospitalId"
+                },
+                onUpdate: "CASCADE",
+                onDelete: "CASCADE",
+            },
+
+            userId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
@@ -36,21 +55,10 @@ module.exports =  {
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
-
-            postId: {
-                type: DataTypes.UUID,
-                allowNull: false,
-                references: {
-                    model: POST,
-                    key: "postId"
-                },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
-            },
         })
     },
 
     down: async (queryInterface) => {
-        await queryInterface.dropTable(COMMENT);
+        await queryInterface.dropTable(DOCTOR);
     },
 }

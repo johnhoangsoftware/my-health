@@ -3,11 +3,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import {Department, Chat, Post, Appointment} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'user' })
+@Table({ tableName: 'Users' })
 export class User extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public user_id!: string;
+  public userId!: string;
 
   @Column({ type: DataType.STRING })
   public email!: string;
@@ -41,7 +41,7 @@ export class User extends Model{
 
   @ForeignKey(() => Department)
   @Column({ type: DataType.STRING })
-  public department_id?: string;
+  public departmentId?: string;
 
   @Column({ type: DataType.STRING })
   public address?: string;
@@ -78,6 +78,6 @@ export class User extends Model{
 
   @BeforeCreate
   static generateID(instance: User) {
-    instance.user_id = generateUUID()
+    instance.userId = generateUUID()
   }
 }

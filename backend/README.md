@@ -19,10 +19,10 @@ How to run?
 
     # More:
     # Undo migrate
-    npx sequelize-cli db:migrate:undo:all
+    npx sequelize-cli db:migrate:undo:all --config ./src/configs/db.json --migrations-path ./src/migrations
 
     # Undo seed
-    npx sequelize-cli db:seed:undo:all
+    npx sequelize-cli db:seed:undo:all --config ./src/configs/db.json --seeders-path ./src/seeder
     
 ```
 

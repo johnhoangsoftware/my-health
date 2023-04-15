@@ -1,31 +1,32 @@
 const { DataTypes, Sequelize } = require('sequelize')
 
-const {DEPARTMENT, DEPARTMENT_DETAIL, HOSPITAL} = require("./table_name")
+const {DEPARTMENT, HOSPITAL} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
         await queryInterface.createTable(DEPARTMENT, {
-            department_id: {
+            departmentId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
-            department_detail_id: {
-                type: DataTypes.UUID,
+
+            name: {
+                type: DataTypes.STRING(255),
                 allowNull: false,
-                references: {
-                    model: DEPARTMENT_DETAIL,
-                    key: "department_detail_id"
-                },
-                onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
             },
 
-            hospital_id: {
+            created_at: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.fn('now'),
+            },
+
+            hospitalId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: HOSPITAL,
-                    key: "hospital_id"
+                    key: "hospitalId"
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',

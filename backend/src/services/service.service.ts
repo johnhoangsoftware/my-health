@@ -19,7 +19,7 @@ export const create = async(createServiceDTO: CreateServiceDTO): Promise<Service
 export const updateByID = async (id: string, updateServiceDTO: UpdateServiceDTO): Promise<string> => {
     await findByID(id)
     await Service.update(updateServiceDTO, {
-        where: { service_id: id }
+        where: { serviceId: id }
     })
     return Promise.resolve(id)
 }
@@ -27,7 +27,7 @@ export const updateByID = async (id: string, updateServiceDTO: UpdateServiceDTO)
 export const deleteByID = async (id: string): Promise<string> => {
     await findByID(id)
     await Service.destroy({
-        where: {service_id: id}
+        where: {serviceId: id}
     })
     return Promise.resolve(id)
 }
