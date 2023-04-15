@@ -12,7 +12,7 @@ export class Message extends Model {
   public type?: string;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @DeletedAt
   public deletedAt?: Date | null;

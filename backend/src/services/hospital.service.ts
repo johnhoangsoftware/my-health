@@ -31,3 +31,12 @@ export const deleteByID = async (id: string): Promise<string> => {
     })
     return Promise.resolve(id)
 }
+
+export const info = async(id: string) => {
+    const h = await Hospital.findByPk(id, {
+        attributes: {
+            exclude: ["createdAt", 'updatedAt']
+        }
+    })
+    return h
+}

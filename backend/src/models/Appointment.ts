@@ -15,10 +15,10 @@ export class Appointment extends Model{
   public time!: Date;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
+  public readonly updatedAt!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

@@ -17,7 +17,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         attributes: {
             include: [
                 [Sequelize.literal(`
-                    (SELECT count(*) FROM comment WHERE comment.postId = Posts.postId)`
+                    (SELECT count(*) FROM Comments WHERE Comments.postId = Post.postId)`
                 )
                     , "numberOfComments"]
             ]

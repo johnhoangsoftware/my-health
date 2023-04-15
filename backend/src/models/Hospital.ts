@@ -1,5 +1,5 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, HasMany, BeforeCreate } from 'sequelize-typescript';
-import { Department, Service } from '.';
+import { Model, PrimaryKey, Column, Table, CreatedAt, DataType, HasMany, BeforeCreate } from 'sequelize-typescript';
+import { Department } from '.';
 import { generateUUID } from '../utils/uuid';
 
 @Table({ tableName: 'Hospitals' })

@@ -16,16 +16,9 @@ export class Patient extends Model {
     
     @BelongsTo(() => User)
     private user!: User
-        
-    @HasMany(() => Department)
-    private department!: Department
-
+    
     public GetUser() {
         return this.user
-    }
-
-    public GetDepartment() {
-        return this.department
     }
 
     @BeforeCreate

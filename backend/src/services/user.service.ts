@@ -2,10 +2,9 @@ import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes';
 import {CreateUserDTO, UpdateUserDTO}  from "../dtos/user.dto";
 import CustomError from "../error/CustomError";
-import { User } from "../models";
+import { User, Doctor, Department, Hospital, Patient } from "../models";
 import { encodedPassword } from '../utils/bcrypt'
 import { user_db } from '../persistence';
-import { CreatePostDTO } from '../dtos/post.dto';
 
 export const createUser = async (createUserDTO: CreateUserDTO): Promise<User> => {
     const existingUser = await User.findOne({
@@ -35,4 +34,35 @@ export const updateByID = async (id: string, updateUser: UpdateUserDTO): Promise
         where: {userId: id}
     })
     return Promise.resolve(id)
+}
+
+export const profile = async (id: string) => {
+    const user = await User.findByPk(id, {
+        include: [
+            {
+                model: Doctor,
+                attributes: ["doctorId", "rank"],
+                include: [
+                    {
+                        model: Department,
+                        attributes: ["departmentId","name"],
+                        include: [
+                            {
+                                model: Hospital,
+                                attributes: ["hospitalId", "name"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                model: Patient,
+                attributes: ["patientId"]
+            }
+        ]
+    })
+    if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${id} not found.`)
+    }
+    return user
 }

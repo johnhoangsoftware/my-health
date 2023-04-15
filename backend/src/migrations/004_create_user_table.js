@@ -38,7 +38,7 @@ module.exports =  {
 
             avatar: {
                 type: DataTypes.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
 
             phone: {
@@ -57,26 +57,15 @@ module.exports =  {
                 allowNull: false,
             },
 
-            created_at: {
+            createdAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),
             },
-            updated_at: {
+            updatedAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),
-            },
-
-            departmentId: {
-                type: DataTypes.UUID,
-                allowNull: false,
-                references: {
-                    model: DEPARTMENT,
-                    key: "departmentId"
-                },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
             },
         })
     },

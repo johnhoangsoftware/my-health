@@ -1,6 +1,6 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, HasMany, BeforeCreate } from 'sequelize-typescript';
+import { Model,  PrimaryKey, Column, Table, CreatedAt, UpdatedAt, DataType, BelongsTo, HasMany, BeforeCreate, HasOne } from 'sequelize-typescript';
 
-import {Department, Chat, Post, Appointment} from '.'
+import { Chat, Post, Appointment, Doctor, Patient} from '.'
 import { generateUUID } from '../utils/uuid';
 
 @Table({ tableName: 'Users' })
@@ -34,22 +34,15 @@ export class User extends Model{
   public role!: "PATIENT" | "DOCTOR";
   
   @CreatedAt
-  public created_at?: Date;
+  public createdAt?: Date;
 
   @UpdatedAt
-  public updated_at?: Date;
-
-  @ForeignKey(() => Department)
-  @Column({ type: DataType.STRING })
-  public departmentId?: string;
+  public updatedAt?: Date;
 
   @Column({ type: DataType.STRING })
   public address?: string;
 
   // associate
-
-  @BelongsTo(() => Department)
-  private department!: Department
   
   @HasMany(() => Chat)
   private chats!: Chat[]
@@ -57,12 +50,14 @@ export class User extends Model{
   @HasMany(() => Post)
   private posts!: Post[]
 
+  @HasOne(() => Doctor)
+  private doctor!: Doctor
+  
+  @HasOne(() => Patient)
+    private patient!: Patient
+
   @HasMany(() => Appointment)
   private appointments!: Appointment[]
-
-  public getDepartment(): Department {
-    return this.department
-  }
 
   public getAllChats(): Chat[] {
     return this.chats
@@ -74,6 +69,14 @@ export class User extends Model{
 
   public getAllAppointments(): Appointment[] {
     return this.appointments
+  }
+
+  public getDoctor() {
+    return this.doctor
+  }
+
+  public getPatient() {
+    return this.patient
   }
 
   @BeforeCreate

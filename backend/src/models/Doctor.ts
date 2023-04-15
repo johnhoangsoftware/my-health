@@ -18,6 +18,10 @@ export class Doctor extends Model {
     @ForeignKey(() => User)
     public userId!: string
 
+    @Column({ type: DataType.STRING })
+    @ForeignKey(() => Department)
+    public departmentId!: string
+
     // associate
     
     @BelongsTo(() => User)
