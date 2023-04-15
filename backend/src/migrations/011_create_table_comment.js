@@ -1,11 +1,11 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, Sequelize } = require('sequelize')
 
 const {COMMENT, POST, USER} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
         await queryInterface.createTable(COMMENT, {
-            comment_id: {
+            commentId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
@@ -18,31 +18,31 @@ module.exports =  {
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
             updated_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
 
-            auth_id: {
+            authId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: USER,
-                    key: "user_id"
+                    key: "userId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
 
-            post_id: {
+            postId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: POST,
-                    key: "post_id"
+                    key: "postId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",

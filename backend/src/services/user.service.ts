@@ -4,16 +4,10 @@ import {CreateUserDTO, UpdateUserDTO}  from "../dtos/user.dto";
 import CustomError from "../error/CustomError";
 import { User } from "../models";
 import { encodedPassword } from '../utils/bcrypt'
+import { user_db } from '../persistence';
+import { CreatePostDTO } from '../dtos/post.dto';
 
-export const findByID = async (id: string): Promise<User> => {
-    const user = await User.findByPk(id)
-    if (!user) {
-        throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${id} does not exist`)
-    }
-    return Promise.resolve(user)
-}
-
-export const create = async (createUserDTO: CreateUserDTO): Promise<User> => {
+export const createUser = async (createUserDTO: CreateUserDTO): Promise<User> => {
     const existingUser = await User.findOne({
         where: {
             [Op.or]: [
@@ -36,17 +30,30 @@ export const create = async (createUserDTO: CreateUserDTO): Promise<User> => {
 }
 
 export const updateByID = async (id: string, updateUser: UpdateUserDTO): Promise<string> => {
-    await findByID(id)
+    await user_db.findByID(id)
     await User.update(updateUser, {
-        where: {user_id: id}
+        where: {userId: id}
     })
     return Promise.resolve(id)
 }
 
-export const deleteByID = async (id: string): Promise<string> => {
-    await findByID(id)
-    await User.destroy({
-        where: { user_id: id },
+export const login = async (username: string, password: string): Promise<User> => {
+    const user = await User.findOne({
+        where: {
+            [Op.or]: [
+                { email: username },
+            ]
+        }
     })
-    return Promise.resolve(id)
+
+    if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "User not found")
+    }
+
+    const hashedPassword    = await encodedPassword(password);
+    if (hashedPassword !==   user.password) {
+        throw new CustomError(StatusCodes.UNAUTHORIZED, "Wrong password")
+    }
+
+    return Promise.resolve(user)
 }

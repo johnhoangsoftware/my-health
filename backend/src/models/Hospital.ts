@@ -2,42 +2,38 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import { Department, Service } from '.';
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'hospital' })
+@Table({ tableName: 'Hospitals' })
 export class Hospital extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public hospital_id!: string;
+  public hospitalId!: string;
 
   @Column({ type: DataType.STRING })
   public name!: string;
 
-  @CreatedAt
-  public readonly createdAt!: Date;
-
-  @UpdatedAt
-  public readonly updatedAt!: Date;
-
   @Column({ type: DataType.STRING })
   public address!: string;
+
+  @Column({ type: DataType.STRING })
+  public description!: string;
+
+  @Column({ type: DataType.STRING })
+  public avatar!: string;
+
+  @CreatedAt
+  public readonly createdAt!: Date;
 
   // associate
 
   @HasMany(() => Department)
   private departments!: Department[]
 
-  @HasMany(() => Service)
-  private services!: Service[]
-
   public getDepartments(): Department[] {
     return this.departments
   }
 
-  public getServices(): Service[] {
-    return this.services
-  }
-
   @BeforeCreate
   static generateID(instance: Hospital) {
-    instance.hospital_id = generateUUID()
+    instance.hospitalId = generateUUID()
   }
 }

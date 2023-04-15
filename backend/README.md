@@ -4,7 +4,7 @@
 
 How to run?
 
-- Config your database in src/configs/db.json
+- Config your database in `src/configs/db.json` and `.env`
 - Run this commandline at the root of project:
 
 ```bash
@@ -23,6 +23,16 @@ How to run?
 
     # Undo seed
     npx sequelize-cli db:seed:undo:all
+    #Run
+    npm run dev
+
+    ---------------
+    # More:
+    # Undo migrate
+    npx sequelize-cli db:migrate:undo:all --config ./src/configs/db.json --migrations-path ./src/migrations
+
+    # Undo seed
+    npx sequelize-cli db:seed:undo:all --config ./src/configs/db.json --seeders-path ./src/seeder
     
 ```
 

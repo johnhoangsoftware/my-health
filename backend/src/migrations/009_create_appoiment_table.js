@@ -1,11 +1,11 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, Sequelize } = require('sequelize')
 
 const {APPOINTMENT, USER, SERVICE} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
         await queryInterface.createTable(APPOINTMENT, {
-            appointment_id: {
+            appointmentId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
@@ -17,7 +17,7 @@ module.exports =  {
 
             time: {
                 type: DataTypes.DATE,
-                defaultValue: DataTypes.NOW
+                defaultValue: Sequelize.fn('now')
             },
 
             description: {
@@ -33,42 +33,42 @@ module.exports =  {
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
             updated_at: {
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.fn('now'),
             },
 
-            patient_id: {
+            patientId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: USER,
-                    key: "user_id"
+                    key: "userId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
 
-            doctor_id: {
+            doctorId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: USER,
-                    key: "user_id"
+                    key: "userId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
 
-            service_id: {
+            serviceId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: SERVICE,
-                    key: "service_id"
+                    key: "serviceId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",

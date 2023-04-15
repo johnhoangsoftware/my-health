@@ -12,73 +12,88 @@ import { CreateUserDTO } from '../dtos/user.dto';
 import { validateCreateService, validateUpdateService } from '../validator/service';
 import { CreateServiceDTO, UpdateServiceDTO } from '../dtos/service.dto';
 
+// [POST] /admin/user
 export const createUser = ErrorWrapperHandler(async (req: Request, res: Response) => {
     let data = req.body
     const userDTO = validateCreateUser(data as CreateUserDTO)
-    const user = await userService.create(userDTO)
+    const user = await userService.createUser(userDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create user successfully. ID: ${user.user_id}`
+        message: `Create user successfully.`,
+        data: user.userId
     })
 })
 
+// [DELETE] /admin/user/:id
 export const deleteUserByID = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const userId = req.params.id
-    await userService.deleteByID(userId)
+    // await userService.deleteByID(userId)
     return res.status(StatusCodes.OK).json({
-        message: `Delete user successfully. ID: ${userId}`
+        message: `Delete user successfully.`,
+        data: userId
     })
 })
 
+// [POST] /admin/hospital
 export const createHospital = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
     const hospitalDTO = validateCreateHospital(data as CreateHospitalDTO)
     const hospital = await hospitalService.create(hospitalDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create hospital successfully. ID: ${hospital.hospital_id}`
+        message: `Create hospital successfully`,
+        data: hospital.hospitalId
     })
 })
 
+// [PATCH] /admin/hospital/:id
 export const updateHospital = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
     const {id} = req.params
     const hospitalDTO = validateUpdateHospital(data as UpdateHospitalDTO)
     await hospitalService.updateByID(id, hospitalDTO);
     return res.status(StatusCodes.OK).json({
-        message: `Update hospital successfully. ID: ${id}`
+        message: `Update hospital successfully.`,
+        data: id
     })
 })
 
+// [DELETE] /admin/hospital/:id
 export const deleteHospitalByID = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const {id} = req.params
     await hospitalService.deleteByID(id)
     return res.status(StatusCodes.OK).json({
-        message: `Delete hospital successfully. ID: ${id}`
+        message: `Delete hospital successfully.`,
+        data: id
     })
 })
 
+// [POST] /admin/service
 export const createService = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
     const serviceDTO = validateCreateService(data as CreateServiceDTO)
     const service = await serviceService.create(serviceDTO)
     return res.status(StatusCodes.OK).json({
-        message: `Create service successfully. ID: ${service.service_id}`
+        message: `Create service successfully.`,
+        data: service.serviceId
     })
 })
 
+// [PATCH] /admin/service/:id
 export const updateService = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
     const {id} = req.params
     const serviceDTO = validateUpdateService(data as UpdateServiceDTO)
     await serviceService.updateByID(id, serviceDTO);
     return res.status(StatusCodes.OK).json({
-        message: `Update service successfully. ID: ${id}`
+        message: `Update service successfully.`,
+        data: id,
     })
 })
 
+// [DELETE] /admin/service/:id
 export const deleteServiceByID = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const {id} = req.params
     await serviceService.deleteByID(id)
     return res.status(StatusCodes.OK).json({
-        message: `Delete service successfully. ID: ${id}`
+        message: `Delete service successfully.`
     })
 })

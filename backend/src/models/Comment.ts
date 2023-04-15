@@ -2,28 +2,28 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import {User, Post, Reaction} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'comment' })
+@Table({ tableName: 'Comments' })
 export class Comment extends Model{
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public comment_id!: string;
+  public commentId!: string;
 
   @Column({ type: DataType.TEXT })
   public content!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
-  public auth_id!: string;
+  public authId!: string;
 
   @ForeignKey(() => Post)
   @Column({ type: DataType.STRING })
-  public post_id!: string;
+  public postId!: string;
 
   // association
   @BelongsTo(() => User)
@@ -49,6 +49,6 @@ export class Comment extends Model{
 
   @BeforeCreate
   static generateID(instance: Comment) {
-    instance.comment_id = generateUUID()
+    instance.commentId = generateUUID()
   }
 }

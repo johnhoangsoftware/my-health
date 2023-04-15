@@ -2,11 +2,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import { Hospital } from '.';
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'service' })
+@Table({ tableName: 'Services' })
 export class Service extends Model {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public service_id!: string;
+  public serviceId!: string;
 
   @Column({ type: DataType.STRING })
   public name!: string;
@@ -18,14 +18,14 @@ export class Service extends Model {
   public description!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @ForeignKey(() => Hospital)
   @Column({ type: DataType.STRING })
-  public hospital_id!: string;
+  public hospitalId!: string;
 
   // associate
 
@@ -38,6 +38,6 @@ export class Service extends Model {
 
   @BeforeCreate
   static generateID(instance: Service) {
-    instance.service_id = generateUUID()
+    instance.serviceId = generateUUID()
   }
 }

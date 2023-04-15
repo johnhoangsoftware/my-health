@@ -1,24 +1,23 @@
 import express from "express";
 
-import api from '../configs/api.config';
 import * as adminController from '../controllers/admin.controller';
 
 const router = express.Router();
 
-router.route(api.admin.user.create)
+router.route("/user")
     .post(adminController.createUser)
-router.route(api.admin.user.manipulate)
+router.route("/user/:id")
     .delete(adminController.deleteUserByID)
 
-router.route(api.admin.hospital.create)
+router.route("/hospital")
     .post(adminController.createHospital)
-router.route(api.admin.hospital.manipulate)
+router.route("/hospital/:id")
     .patch(adminController.updateHospital)
     .delete(adminController.deleteHospitalByID)
 
-router.route(api.admin.service.create)
+router.route("/service")
     .post(adminController.createService)
-router.route(api.admin.service.manipulate)
+router.route("/service/:id")
     .patch(adminController.updateService)
     .delete(adminController.deleteServiceByID)
 

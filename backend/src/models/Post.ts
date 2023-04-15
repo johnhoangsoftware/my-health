@@ -2,11 +2,11 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import {User, Comment} from '.'
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'post' })
+@Table({ tableName: 'Posts' })
 export class Post extends Model {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public post_id!: string;
+  public postId!: string;
 
   @Column({ type: DataType.STRING })
   public topic!: string;
@@ -14,15 +14,18 @@ export class Post extends Model {
   @Column({ type: DataType.TEXT })
   public content!: string;
 
+  @Column({ type: DataType.STRING })
+  public media!: string;
+
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
-  public auth_id!: string;
+  public authId!: string;
 
   // associate 
   
@@ -42,6 +45,6 @@ export class Post extends Model {
 
   @BeforeCreate
   static generateID(instance: Post) {
-    instance.post_id = generateUUID()
+    instance.postId = generateUUID()
   }
 }

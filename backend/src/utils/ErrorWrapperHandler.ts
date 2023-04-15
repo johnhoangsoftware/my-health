@@ -7,6 +7,7 @@ export default function ErrorWrapperHandler(controller : Function) {
         try {
             await controller(req, res, next)
         } catch (error) {
+            console.error(error)
             if (error instanceof CustomError) {
                 return res.status(error.statusCode).json({
                     message: error.message
@@ -14,7 +15,7 @@ export default function ErrorWrapperHandler(controller : Function) {
             }
 
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                message: StatusCodes.INTERNAL_SERVER_ERROR.toString()
+                message: 'Something went wrong'
             })
         }
     }
