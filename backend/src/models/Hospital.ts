@@ -1,4 +1,4 @@
-import { Model, PrimaryKey, Column, Table, CreatedAt, DataType, HasMany, BeforeCreate } from 'sequelize-typescript';
+import { Model, PrimaryKey, Column, Table, CreatedAt, DataType, HasMany, BeforeCreate, UpdatedAt } from 'sequelize-typescript';
 import { Department } from '.';
 import { generateUUID } from '../utils/uuid';
 
@@ -22,6 +22,9 @@ export class Hospital extends Model{
 
   @CreatedAt
   public readonly createdAt!: Date;
+
+  @UpdatedAt
+  public readonly updatedAt!: Date;
 
   // associate
 

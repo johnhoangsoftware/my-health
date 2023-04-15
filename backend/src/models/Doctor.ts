@@ -12,15 +12,18 @@ export class Doctor extends Model {
     public rank!: string;
 
     @Column({ type: DataType.STRING })
-    public address!: string;
-
-    @Column({ type: DataType.STRING })
     @ForeignKey(() => User)
     public userId!: string
 
     @Column({ type: DataType.STRING })
     @ForeignKey(() => Department)
     public departmentId!: string
+
+    @CreatedAt
+    public readonly createdAt!: Date;
+  
+    @UpdatedAt
+    public readonly updatedAt!: Date;
 
     // associate
     

@@ -46,6 +46,12 @@ module.exports =  {
                 defaultValue: Sequelize.fn('now'),
             },
 
+            updatedAt: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.fn('now'),
+            },
+
             patientId: {
                 type: DataTypes.UUID,
                 allowNull: false,
