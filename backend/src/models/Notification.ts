@@ -18,10 +18,10 @@ export class Notification extends Model{
   public isRead!: boolean;
 
   @CreatedAt
-  public createdAt?: Date;
+  public created_at?: Date;
 
   @UpdatedAt
-  public updatedAt?: Date;
+  public updated_at?: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

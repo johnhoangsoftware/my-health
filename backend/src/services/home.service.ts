@@ -14,13 +14,15 @@ export const searchPreview = async(keyword :string) => {
         where: {
             [Op.and]: [
                 {
-                    role: 'DOCTOR'
-                },
-                Sequelize.literal(`CONCAT(firstName, " ", lastName) LIKE "%${keyword}%"`)
+                    role: 'DOCTOR',
+                    name: {
+                        [Op.like]: `%${keyword}%`
+                    }
+                }
             ]
             
         },
-        attributes: ["userId", "firstName", "lastName", "avatar"],
+        attributes: ["userId", "name", "avatar"],
         include: {
             model: Doctor,
             attributes: ["doctorId"],
@@ -48,13 +50,15 @@ export const searchDoctors = async(keyword: string, d: string) => {
         where: {
             [Op.and]: [
                 {
-                    role: 'DOCTOR'
-                },
-                Sequelize.literal(`CONCAT(firstName, " ", lastName) LIKE "%${keyword}%"`)
+                    role: 'DOCTOR',
+                    name: {
+                        [Op.like]: `%${keyword}%`
+                    }
+                }
             ]
             
         },
-        attributes: ["userId", "firstName", "lastName", "avatar"],
+        attributes: ["userId", "name", "avatar"],
         include: [{
             model: Doctor,
             attributes: ["doctorId"],

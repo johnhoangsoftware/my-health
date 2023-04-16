@@ -18,10 +18,10 @@ export class Service extends Model {
   public description!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
-  public readonly updatedAt!: Date;
+  public readonly updated_at!: Date;
 
   @ForeignKey(() => Hospital)
   @Column({ type: DataType.STRING })

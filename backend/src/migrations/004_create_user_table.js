@@ -21,13 +21,8 @@ module.exports =  {
                 allowNull: false,
             },
 
-            firstName: {
-                type: DataTypes.STRING(30),
-                allowNull: false,
-            },
-
-            lastName: {
-                type: DataTypes.STRING(30),
+            name: {
+                type: DataTypes.STRING(50),
                 allowNull: false,
             },
 

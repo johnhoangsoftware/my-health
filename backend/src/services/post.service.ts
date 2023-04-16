@@ -25,7 +25,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         include: [
             {
                 model: User,
-                attributes: ["userId", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "name", "avatar"]
             },
         ],
         ...condition
@@ -82,7 +82,7 @@ export const getComments = async(postId: string):Promise<Comment[]> => {
         include: [
             {
                 model: User,
-                attributes: ["userId", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "name", "avatar"]
             }
         ]
     })

@@ -23,9 +23,6 @@ export class Department  extends Model{
   @CreatedAt
   public readonly createdAt!: Date;
 
-  @UpdatedAt
-  public readonly updatedAt!: Date;
-
   // association
 
   @BelongsTo(() => Hospital)

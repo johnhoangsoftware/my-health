@@ -4,13 +4,16 @@ import postRouter from './post.route'
 import userRouter from './user.route'
 import hospitalRouter from './hospital.route'
 import homeRouter from './home.route'
+import authRouter from './auth.route'
 
-import { authMiddleware  } from '../middleware/auth';
+import { authMiddleware } from '../middleware/auth';
+import {roleCheck} from '../middleware/role'
 
 export default function initRoutes(app: Application) {
-    app.use("/api/admin", adminRouter)
-    app.use("/api/post", authMiddleware, postRouter)
-    app.use("/api/user", authMiddleware, userRouter)
-    app.use("/api/hospital", authMiddleware, hospitalRouter)
-    app.use("/api", authMiddleware, homeRouter)
+    app.use("/api/auth", authRouter)
+    app.use("/api/admin", authMiddleware, roleCheck("ADMIN"), adminRouter)
+    app.use("/api/post", authMiddleware, roleCheck("DOCTOR", "PATIENT"), postRouter)
+    app.use("/api/user", authMiddleware, roleCheck("DOCTOR", "PATIENT"), userRouter)
+    app.use("/api/hospital", authMiddleware, roleCheck("DOCTOR", "PATIENT"), hospitalRouter)
+    app.use("/api", authMiddleware, roleCheck("DOCTOR", "PATIENT"), homeRouter)
 };

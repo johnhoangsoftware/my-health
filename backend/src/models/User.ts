@@ -2,6 +2,7 @@ import { Model,  PrimaryKey, Column, Table, CreatedAt, UpdatedAt, DataType, Belo
 
 import { Chat, Post, Appointment, Doctor, Patient} from '.'
 import { generateUUID } from '../utils/uuid';
+import {encodedPassword} from '../utils/bcrypt'
 
 @Table({ tableName: 'Users' })
 export class User extends Model{
@@ -16,10 +17,7 @@ export class User extends Model{
   public password!: string;
 
   @Column({ type: DataType.STRING })
-  public firstName?: string;
-
-  @Column({ type: DataType.STRING })
-  public lastName?: string;
+  public name?: string;
 
   @Column({ type: DataType.INTEGER })
   public birthDay?: Date;
@@ -30,8 +28,8 @@ export class User extends Model{
   @Column({ type: DataType.STRING })
   public phone?: string;
 
-  @Column({ type: DataType.ENUM("PATIENT", "DOCTOR") })
-  public role!: "PATIENT" | "DOCTOR";
+  @Column({ type: DataType.ENUM("PATIENT", "DOCTOR", "ADMIN") })
+  public role!: string;
   
   @CreatedAt
   public createdAt?: Date;
@@ -82,5 +80,6 @@ export class User extends Model{
   @BeforeCreate
   static generateID(instance: User) {
     instance.userId = generateUUID()
+    instance.password = encodedPassword(instance.password)
   }
 }

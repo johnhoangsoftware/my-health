@@ -9,7 +9,7 @@ export class Reaction extends Model{
   public reactionId!: string;
 
   @CreatedAt
-  public readonly createdAt!: Date;
+  public readonly created_at!: Date;
 
   @UpdatedAt
   public readonly updatedAt!: Date;
