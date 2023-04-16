@@ -1,0 +1,16 @@
+module.exports = {
+    HOSPITAL : "Hospitals",
+    DEPARTMENT : "Departments",
+    USER: "Users",
+    DOCTOR: "Doctors",
+    PATIENT: "Patients",
+    MEDICAL_RECORD: "MedicalRecords",
+    NOTIFICATION : "Notifications",
+    CHAT : "Chats",
+    MESSAGE : "Messages",
+    APPOINTMENT : "Appointments",
+    SERVICE : "Services",
+    POST : "Posts",
+    COMMENT : "Comments",
+    REACTION : "Reactions",
+}
