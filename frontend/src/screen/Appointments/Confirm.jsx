@@ -2,8 +2,8 @@ import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
 import Profile from "../../component/Utils/Profile";
 import React from "react";
 
-export default function ViewSchedules({ navigation, route }) {
-    // const { profile, hospital, department, date, hour } = route.params;
+export default function Confirm({ navigation, route }) {
+    const { profile, hospital, department, date, hour } = route.params;
 
     const Info = (props) => {
         return (

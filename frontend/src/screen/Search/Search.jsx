@@ -9,6 +9,24 @@ export default function Search({navigation}) {
         isSearch: false
     })
 
+    const searchChange = (val) => {
+        if (val.length != 0) {
+            setSearch({
+                inputSearch: val,
+                isSearch: true
+            });
+        } else {
+            setSearch({
+                inputSearch: val,
+                isSearch: false
+            });
+        }
+    }
+    
+    const searchInfo = () => {
+        navigation.navigate("Tìm kiếm");
+    }
+
     const goToDoctorDetails = () => {
         navigation.navigate("Thông tin bác sĩ");
     };
