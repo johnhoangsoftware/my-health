@@ -17,6 +17,8 @@ import Notification from './Notifications/Notification';
 import Scheduling from './Test/Scheduling';
 import Search from './Search/Search';
 import ViewSchedules from './Schedule/ViewSchedules';
+import ConfirmTest from './Test/Confirm';
+import ListProfileTest from './Test/ListProfile';
 
 const Stack = createStackNavigator();
 export default function HomeStack() {
@@ -49,7 +51,17 @@ export default function HomeStack() {
                 headerLeft:
                     (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} />)
             })} />
-            <Stack.Screen name="Đặt lịch xét nghiệm" component={Scheduling} 
+            <Stack.Screen name="Chọn hồ sơ xét nghiệm" component={ListProfileTest}
+                navigationOptions={({ navigation, route }) => ({
+                    headerLeft:
+                        (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} />)
+                })} />
+            <Stack.Screen name="Chọn lịch xét nghiệm" component={Scheduling} 
+            navigationOptions={({ navigation, route }) => ({
+                headerLeft:
+                    (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} />)
+            })} />
+            <Stack.Screen name="Xác nhận gói khám" component={ConfirmTest}
             navigationOptions={({ navigation, route }) => ({
                 headerLeft:
                     (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} />)

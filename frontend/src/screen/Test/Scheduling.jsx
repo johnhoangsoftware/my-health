@@ -1,30 +1,12 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
-import React, { useState } from "react";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import React from "react";
 
-export default function Scheduling({navigation}) {
+export default function Scheduling({ navigation, route }) {
+    const { profile, testPackage} = route.params;
 
-    const [chosenTime, chooseTime] = useState(null);
-    const [chosenDay, chooseDay] = useState(null);
-
-    const choose = (time) => {
-        chooseTime(time);
-    }
-
-    const chooseThisDay = (time) => {
-        chooseDay(time);
-    }
-
-    const goToSchedulings = () => {
-        if (chosenDay == null) {
-            Alert.alert("Vui lòng chọn ngày khám.", "");
-        }
-        else if (chosenTime == null) {
-            Alert.alert("Vui lòng chọn giờ khám.","");
-        } else {
-            navigation.navigate("Đặt lịch xét nghiệm");
-        }
-    };
+    const [selectedDate, setSelectedDate] = React.useState(null);
+    const [selectedHour, setSelectedHour] = React.useState(null);
+    const dates = [];
 
     const daysInWeek = {
         0 : "Chủ nhật",
@@ -35,124 +17,124 @@ export default function Scheduling({navigation}) {
         5 : "Thứ 6",
         6 : "Thứ 7"
     };
-    
-    const days = [];
 
-    const getDate = () => {
-        let separator = "/";
-        let date = new Date();
-        let num = 7;
+    let date = new Date();
+    for (let i = 0; i < 7; i++) {
+        dates.push({
+            date: date.toDateString(),
+            day: daysInWeek[date.getDay()],
+            shortDate: date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(),
+        })
+        date.setDate(date.getDate() + 1);
+    }
+    dates[0].day = "Hôm nay";
 
-        while(num--) {     
-            let dayInWeek = date.getDay();      
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
-            days.push({day: `${daysInWeek[dayInWeek]}`, date: `${day}${separator}${month<10?`0${month}`:`${month}`}`});
-            date.setDate(date.getDate()+1);
+    const DateBox = (props) => {
+        return (
+            <TouchableOpacity
+                className="items-center bg-slate-100 w-1/4 rounded-md p-2 m-2 border border-gray-200"
+                onPress={() => { setSelectedDate(props) }}
+                style={(selectedDate != null && selectedDate.date == props.date) ? styles.focus : null}
+            >
+                <Text className="font-bold" style={(selectedDate != null && selectedDate.date == props.date) ? styles.textColor : null}>{props.day}</Text>
+                <Text style={(selectedDate != null && selectedDate.date == props.date) ? styles.textColor : null}>{props.shortDate}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    const listDate = [];
+    dates.forEach((d) => {
+        listDate.push(
+            <DateBox key={d.date} date={d.date} day={d.day} shortDate={d.shortDate} />
+        )
+    })
+
+    const hours = [
+        { hour: "7:00", available: true },
+        { hour: "7:30", available: true },
+        { hour: "8:00", available: false },
+        { hour: "8:30", available: true },
+        { hour: "9:00", available: false },
+        { hour: "9:30", available: true },
+        { hour: "10:00", available: true },
+        { hour: "11:30", available: true },
+        { hour: "14:00", available: false },
+        { hour: "14:30", available: true },
+        { hour: "15:00", available: false },
+        { hour: "15:30", available: false },
+        { hour: "16:00", available: false },
+        { hour: "16:30", available: true },
+    ]
+    const HourBox = (props) => {
+        if (props.available) {
+            return (
+                <TouchableOpacity
+                    className="items-center bg-slate-100 w-1/5 rounded-md p-2 m-2 border border-gray-200"
+                    onPress={() => { setSelectedHour(props.hour) }}
+                    style={(selectedHour != null && selectedHour == props.hour) ? styles.focus : null}
+                >
+                    <Text style={(selectedHour != null && selectedHour == props.hour) ? styles.textColor : null}>{props.hour}</Text>
+                </TouchableOpacity>
+            )
         }
-
-        days[0].day = "Hôm nay";
-    }
-
-    getDate();
-
-    const times = ["05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-    "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", ];
-
-    TimeOption = (props) => {
         return (
-            <>
-            <TouchableOpacity onPress={() => choose(props.time)} style={chosenTime==props.time ? styles.focus : styles.none} className="m-auto mb-2 p-2 w-20 items-center text-center rounded-lg border">
-                <Text style={chosenTime==props.time ? styles.textColor : styles.none} className="w-fit text-center font-medium justify-center">{props.name}</Text>
-            </TouchableOpacity>
-            </>
+            <View
+                className="items-center bg-gray-300 w-1/5 rounded-md p-2 m-2 border border-gray-300"
+            >
+                <Text>{props.hour}</Text>
+            </View>
         )
-    
     }
 
-    const timeOptions=[];
-    times.forEach((item) => {
-        timeOptions.push(<TimeOption key={item} time={item} name={item} />)
+    const listHour = [];
+    hours.forEach((h) => {
+        listHour.push(
+            <HourBox key={h.hour} hour={h.hour} available={h.available} />
+        )
     })
 
-
-    DayOption = (props) => {
-        return (
-            <>
-            <TouchableOpacity onPress={() => chooseThisDay(props.date)} style={chosenDay==props.date ? styles.focus : styles.none} className="mx-1 mt-2 px-2 py-4 w-20 items-center text-center rounded-lg border">
-                <Text style={chosenDay==props.date ? styles.textColor : styles.none} className="w-fit m-auto text-center font-medium justify-center">{props.day}</Text>
-                <Text style={chosenDay==props.date ? styles.textColor : styles.none} className="w-fit m-auto text-center font-medium justify-center">{props.date}</Text>
-            </TouchableOpacity>
-            </>
-        )
-    
+    const chooseNext = () => {
+        navigation.navigate("Xác nhận gói khám", { profile: profile, testPackage: testPackage, date: selectedDate, hour: selectedHour })
     }
-
-    const dayOptions=[];
-    days.forEach((item) => {
-        dayOptions.push(<DayOption key={item.date} day={item.day} date={item.date} />)
-    })
 
     return (
-        <KeyboardAwareScrollView>
-            <ScrollView pagingEnabled={true}>
-
-                <View className="my-2 mx-1 py-2 bg-white rounded-xl w-fit max-w-s shadow-sm">
-                    <Text className="ml-2.5 text-slate-900 text-xl font-bold">
-                        Thời gian lấy mẫu
-                    </Text>
-                    <View className="h-0.5 w-fit my-1 bg-gray-200" />
-                    <Text style={styles.textColor} className="ml-2.5 mt-1 text-base font-semibold uppercase">
-                        Ngày khám
-                    </Text>
-
-                    <ScrollView 
-                    className="w-fit ml-2.5 mt-0.5" 
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    >
-                        <View className="flex-row mb-3">
-                                    {dayOptions}               
-                        </View>
-                    </ScrollView>
-                    <View className="h-0.5 w-fit my-1 bg-gray-200" />
-
-                    <Text style={styles.textColor} className="ml-2.5 mt-1 text-slate-900 text-base font-semibold uppercase">
-                        Giờ khám
-                    </Text>
-
-                    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }} className="mx-2.5 mt-2.5 mb-0.5">
-                        {timeOptions}                    
-                    </View>
-                    <TouchableOpacity style={styles.bgColor} className="mx-3.5 mt-2.5 mb-2 w-fit p-2 text-center rounded-lg border" onPress={goToSchedulings}>
-                            <Text className="text-white text-base text-center font-bold">Tiếp tục</Text>
-                    </TouchableOpacity>
+        <View className="flex-1">
+            <View className="bg-white mt-3">
+                <Text className="text-lg font-bold ml-8 mt-2">Ngày khám</Text>
+                <View className="flex flex-row flex-wrap items-center justify-center w-screen overflow-hidden my-2">
+                    {listDate}
                 </View>
-                
-
-            </ScrollView>
-        </KeyboardAwareScrollView>  
-
+            </View>
+            {selectedDate &&
+                <View className="bg-white mt-3">
+                    <Text className="text-lg font-bold ml-8 mt-2">Giờ khám</Text>
+                    <View className="flex flex-row flex-wrap items-center justify-center w-screen overflow-hidden my-2">
+                        {listHour}
+                    </View>
+                </View>
+            }
+            {
+                (selectedDate && selectedHour) &&
+                <TouchableOpacity
+                    className="m-auto w-1/3 p-2 mt-4 mb-8 rounded" style={{ backgroundColor: "#24DCE2" }}
+                    onPress={chooseNext}
+                >
+                    <Text className="text-white font-bold text-center">Tiếp theo</Text>
+                </TouchableOpacity>
+            }
+        </View>
     )
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     textColor: {
-        color: "#24DCE2",
-        fontWeight: "bold"
-    },
-    bgColor: {
-        backgroundColor: "#24DCE2",
-        borderColor: "#24DCE2"
+        color: "white",
     },
     focus: {
+        backgroundColor: "#24DCE2",
         borderColor: "#24DCE2",
-        color: "#24DCE2",
+        borderTopColor: "#24DCE2",
+        borderBottomColor: "#24DCE2"
     },
-    none: {
-        fontWeight: "normal",
-        backgroundColor: "#FFFFFF",
-        borderColor: "#526060",
-        color: "#526060",
-    },
-  });
+
+});

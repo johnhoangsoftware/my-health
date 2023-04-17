@@ -8,52 +8,26 @@ export default function Book({ navigation, route }) {
     const [selectedHour, setSelectedHour] = React.useState(null);
     const dates = [];
 
-    const getNextDay = (date) => {
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        if (day == 31 && month == 12) {
-            return new Date(year + 1, 0, 1);
-        }
-        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-            if (day == 29 && month == 2) {
-                return new Date(year, 2, 1);
-            }
-        }
-        if ((month == 1 || month == 3 || month == 5 || month == 7
-            || month == 8 || month == 10 || month == 12) && day == 31) {
-            return new Date(year, month, 1);
-        }
-        if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 30) {
-            return new Date(year, month, 1)
-        }
-        if (month == 2 && day == 28) {
-            return new Date(year, 2, 1);
-        }
-        return new Date(year, month - 1, day + 1);
-    }
-
-    const convertNumbertoDay = (val) => {
-        switch (val) {
-            case 0: return "Chủ nhật";
-            case 1: return "Thứ hai";
-            case 2: return "Thứ ba";
-            case 3: return "Thứ tư";
-            case 4: return "Thứ năm";
-            case 5: return "Thứ sáu";
-            case 6: return "Thứ bảy";
-        }
-    }
+    const daysInWeek = {
+        0 : "Chủ nhật",
+        1 : "Thứ 2",
+        2 : "Thứ 3",
+        3 : "Thứ 4",
+        4 : "Thứ 5",
+        5 : "Thứ 6",
+        6 : "Thứ 7"
+    };
 
     let date = new Date();
     for (let i = 0; i < 7; i++) {
         dates.push({
             date: date.toDateString(),
-            day: convertNumbertoDay(date.getDay()),
+            day: daysInWeek[date.getDay()],
             shortDate: date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(),
         })
-        date = getNextDay(date);
+        date.setDate(date.getDate() + 1);
     }
+    dates[0].day = "Hôm nay";
 
     const DateBox = (props) => {
         return (
