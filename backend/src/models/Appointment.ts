@@ -1,5 +1,5 @@
 import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, BeforeCreate } from 'sequelize-typescript';
-import {User, Service} from '.'
+import {User, TestPackage} from '.'
 import { generateUUID } from '../utils/uuid';
 
 @Table({ tableName: 'Appointments' })
@@ -28,7 +28,7 @@ export class Appointment extends Model{
   @Column({ type: DataType.STRING })
   public doctorId!: string;
 
-  @ForeignKey(() => Service)
+  @ForeignKey(() => TestPackage)
   @Column({ type: DataType.STRING })
   public serviceId!: string;
 
@@ -37,8 +37,8 @@ export class Appointment extends Model{
 
   // association
 
-  @BelongsTo(() => Service)
-  private service!: Service
+  @BelongsTo(() => TestPackage)
+  private service!: TestPackage
   
   @BelongsTo(() => User)
   private patient!: User
@@ -46,7 +46,7 @@ export class Appointment extends Model{
   @BelongsTo(() => User)
   private doctor!: User
 
-  public getService(): Service {
+  public getService(): TestPackage {
     return this.service
   }
 
