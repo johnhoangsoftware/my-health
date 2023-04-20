@@ -1,9 +1,11 @@
 
 import { StatusCodes } from 'http-status-codes';
 import CustomError from "../error/CustomError";
-import { User, Patient, MedicalRecord } from "../models";
+import { User, Patient, MedicalRecord, Appointment } from "../models";
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
+import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { convertDateTime } from '../utils/converter';
 
 export const allMedicalRecords = async (userId: string) => {
     const user = await User.findByPk(userId, {
@@ -68,4 +70,16 @@ export const deleteMedicalRecord = async (id: string) =>{
         }
     })
     return medicalRecord
+}
+
+export const makeAnAppointment = async (userId: string, apm: CreateAppointmentDTO) => {
+    const user = await User.findByPk(userId)
+    if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
+    }
+    const dateApm = convertDateTime(apm.date, apm.time)
+    return await Appointment.create({
+        status: 'PENDING',
+        dateTime: dateApm
+    })
 }

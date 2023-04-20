@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import CustomError from "../error/CustomError";
-import { Hospital } from "../models";
+import { Department, Hospital } from "../models";
 import { CreateHospitalDTO, UpdateHospitalDTO } from '../dtos/hospital.dto';
 
 export const findByID = async (id: string): Promise<Hospital> => {
@@ -39,4 +39,15 @@ export const info = async(id: string) => {
         }
     })
     return h
+}
+
+export const getDepartment = async (hospitalId: string) => {
+    return await Department.findAll({
+        where: {
+            hospitalId: hospitalId
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
 }

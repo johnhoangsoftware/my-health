@@ -11,3 +11,11 @@ export const all = ErrorWrapperHandler(async (req: Request, res: Response, next:
         data: testPackages
     })
 })
+
+// [GET] /test_package/:id
+export const detail = ErrorWrapperHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const testPackages = await testPackage.detail(req.params.id)
+    return res.status(StatusCodes.OK).json({
+        data: testPackages
+    })
+})

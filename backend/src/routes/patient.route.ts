@@ -10,4 +10,6 @@ router.route("/medical_record/:id")
     .patch(patientController.updateMedicalRecord)
     .delete(patientController.deleteMedicalRecord)
 
+router.route("/appointment")
+    .post(patientController.makeAnAppointment)
 export default router;

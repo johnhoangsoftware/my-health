@@ -1,7 +1,7 @@
 import { CreatePostDTO, UpdatePostDTO } from "../dtos/post.dto"
 import { validateCreateComment, validateCreatePost, validateUpdateComment, validateUpdatePost } from "../validator/post"
 import { post_db } from '../persistence'
-import * as dtoConverter from '../utils/dtoConverter'
+import * as dtoConverter from '../utils/converter'
 import { Post, User, Comment } from "../models"
 import CustomError from "../error/CustomError"
 import { StatusCodes } from "http-status-codes"

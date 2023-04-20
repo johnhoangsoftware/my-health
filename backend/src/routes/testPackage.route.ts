@@ -5,5 +5,6 @@ const router = express.Router()
 router.route("/")
     .get(testPackageController.all)
     
-
+router.route("/:id")
+    .get(testPackageController.detail)
 export default router;

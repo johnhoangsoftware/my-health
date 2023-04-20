@@ -1,4 +1,4 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, BeforeCreate } from 'sequelize-typescript';
+import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, BeforeCreate, Default } from 'sequelize-typescript';
 import {User, TestPackage} from '.'
 import { generateUUID } from '../utils/uuid';
 
@@ -8,17 +8,17 @@ export class Appointment extends Model{
   @Column({ type: DataType.STRING })
   public appointmentId!: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({type: DataType.ENUM("PENDING", "DONE")})
   public status!: string;
 
   @Column({ type: DataType.DATE })
-  public time!: Date;
+  public dateTime!: Date;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
+  public readonly updatedAt!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

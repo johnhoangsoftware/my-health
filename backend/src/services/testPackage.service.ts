@@ -45,3 +45,17 @@ export const all = async() => {
         }
     })
 }
+
+export const detail = async(id: string) => {
+    return await TestPackage.findByPk(id, {
+        attributes: {
+            exclude: ["createdAt", "updatedAt"]
+        },
+        include: {
+            model: Hospital,
+            attributes: {
+                exclude: ["createdAt", "updatedAt"]
+            }, 
+        }
+    })
+}
