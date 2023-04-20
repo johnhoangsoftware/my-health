@@ -1,11 +1,11 @@
 const {DataTypes,Sequelize } = require('sequelize')
 
-const {SERVICE, HOSPITAL} = require("./table_name")
+const {TEST_PACKAGE, HOSPITAL} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
-        await queryInterface.createTable(SERVICE, {
-            serviceId: {
+        await queryInterface.createTable(TEST_PACKAGE, {
+            testPackageId: {
                 type: DataTypes.UUID,
                 primaryKey: true,
             },
@@ -16,8 +16,8 @@ module.exports =  {
             },
 
             price: {
-                type: DataTypes.DOUBLE,
-                defaultValue: 0
+                type: DataTypes.STRING,
+                defaultValue: "0đ"
             },
 
             description: {
@@ -50,6 +50,6 @@ module.exports =  {
     },
 
     down: async (queryInterface) => {
-        await queryInterface.dropTable(SERVICE);
+        await queryInterface.dropTable(TEST_PACKAGE);
     },
 }

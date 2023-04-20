@@ -62,17 +62,6 @@ module.exports =  {
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
-
-            serviceId: {
-                type: DataTypes.UUID,
-                allowNull: false,
-                references: {
-                    model: SERVICE,
-                    key: "serviceId"
-                },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
-            },
         })
     },
 
