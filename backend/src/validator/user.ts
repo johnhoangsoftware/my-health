@@ -20,7 +20,7 @@ export const validateCreateUser = (user: CreateUserDTO): CreateUserDTO => {
     }
 
     if (!isValidDate(results.birthDay)) {
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday")
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday.Must be YYYY-MM-DD")
     }
     
     if (!isValidPhoneNumber(results.phone)) {
@@ -44,7 +44,7 @@ export const validateUpdateUser = (user: UpdateUserDTO): UpdateUserDTO => {
     }
 
     if ('birthDay' in updateUser && !isValidDate(updateUser.birthDay)) {
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday")
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday.Must be YYYY-MM-DD")
     }
     
     if ('phone' in updateUser && !isValidPhoneNumber(updateUser.phone)) {

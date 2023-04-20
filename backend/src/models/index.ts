@@ -11,4 +11,5 @@ export { Doctor } from './Doctor'
 export { Patient } from './Patient'
 export { Post } from './Post'
 export { Service } from './Service'
+export {MedicalRecord} from './MedicalRecord'
 
