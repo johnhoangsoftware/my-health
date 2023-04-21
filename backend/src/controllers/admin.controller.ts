@@ -5,12 +5,12 @@ import ErrorWrapperHandler from '../utils/ErrorWrapperHandler'
 
 import * as userService from '../services/user.service'
 import * as hospitalService from '../services/hospital.service'
-import * as serviceService from '../services/service.service'
+import * as serviceService from '../services/testPackage.service'
 import { validateCreateUser } from '../validator/user'
 import { CreateHospitalDTO, UpdateHospitalDTO } from '../dtos/hospital.dto';
 import { CreateUserDTO } from '../dtos/user.dto';
 import { validateCreateService, validateUpdateService } from '../validator/service';
-import { CreateServiceDTO, UpdateServiceDTO } from '../dtos/service.dto';
+import { CreateTestPackageDTO, UpdateTestPackageDTO } from '../dtos/testPackage.dto';
 
 // [POST] /admin/user
 export const createUser = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -69,11 +69,11 @@ export const deleteHospitalByID = ErrorWrapperHandler(async (req: Request, res: 
 // [POST] /admin/service
 export const createService = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
-    const serviceDTO = validateCreateService(data as CreateServiceDTO)
+    const serviceDTO = validateCreateService(data as CreateTestPackageDTO)
     const service = await serviceService.create(serviceDTO)
     return res.status(StatusCodes.OK).json({
         message: `Create service successfully.`,
-        data: service.serviceId
+        data: service
     })
 })
 
@@ -81,7 +81,7 @@ export const createService = ErrorWrapperHandler(async (req: Request, res: Respo
 export const updateService = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const data = req.body
     const {id} = req.params
-    const serviceDTO = validateUpdateService(data as UpdateServiceDTO)
+    const serviceDTO = validateUpdateService(data as UpdateTestPackageDTO)
     await serviceService.updateByID(id, serviceDTO);
     return res.status(StatusCodes.OK).json({
         message: `Update service successfully.`,

@@ -29,4 +29,3 @@ How to run?
     npx sequelize-cli db:seed:undo:all --config ./src/configs/db.json --seeders-path ./src/seeder
     
 ```
-

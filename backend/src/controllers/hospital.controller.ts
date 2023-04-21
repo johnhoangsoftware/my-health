@@ -8,7 +8,14 @@ import * as hospitalService from '../services/hospital.service'
 export const hospitalInfo = ErrorWrapperHandler(async (req: Request, res: Response, next: NextFunction) => {
     const h = await hospitalService.info(req.params.id)
     return res.status(StatusCodes.OK).json({
-        message: `Create user successfully.`,
         data: h
+    })
+})
+
+// [GET] /hospital/:id/department
+export const getDepartments = ErrorWrapperHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const d = await hospitalService.getDepartment(req.params.id)
+    return res.status(StatusCodes.OK).json({
+        data: d
     })
 })

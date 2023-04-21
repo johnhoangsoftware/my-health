@@ -10,5 +10,6 @@ export { User } from './User'
 export { Doctor } from './Doctor'
 export { Patient } from './Patient'
 export { Post } from './Post'
-export { Service } from './Service'
+export { TestPackage } from './TestPackage'
+export {MedicalRecord} from './MedicalRecord'
 

@@ -7,4 +7,7 @@ const router = express.Router();
 router.route("/:id")
     .get(hospitalController.hospitalInfo)
 
+router.route("/:id/department")
+    .get(hospitalController.getDepartments)
+
 export default router

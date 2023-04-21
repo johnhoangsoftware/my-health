@@ -1,5 +1,5 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, BeforeCreate } from 'sequelize-typescript';
-import {User, Service} from '.'
+import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, BeforeCreate } from 'sequelize-typescript';
+import {User, TestPackage, MedicalRecord, Department} from '.'
 import { generateUUID } from '../utils/uuid';
 
 @Table({ tableName: 'Appointments' })
@@ -8,54 +8,51 @@ export class Appointment extends Model{
   @Column({ type: DataType.STRING })
   public appointmentId!: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({type: DataType.ENUM("PENDING", "DONE")})
   public status!: string;
 
   @Column({ type: DataType.DATE })
-  public time!: Date;
+  public dateTime!: Date;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
+  public readonly updatedAt!: Date;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => MedicalRecord)
   @Column({ type: DataType.STRING })
-  public patientId!: string;
+  public medicalRecordId!: string
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => TestPackage)
   @Column({ type: DataType.STRING })
-  public doctorId!: string;
+  public testPackageId!: string;
 
-  @ForeignKey(() => Service)
+  @ForeignKey(() => Department)
   @Column({ type: DataType.STRING })
-  public serviceId!: string;
-
-  @Column({ type: DataType.STRING })
-  public address!: string;
+  public departmentId!: string
 
   // association
 
-  @BelongsTo(() => Service)
-  private service!: Service
+  @BelongsTo(() => TestPackage)
+  private testPackage!: TestPackage
   
-  @BelongsTo(() => User)
-  private patient!: User
+  @BelongsTo(() => Department)
+  private department!: Department
   
-  @BelongsTo(() => User)
-  private doctor!: User
+  @BelongsTo(() => MedicalRecord)
+  private medicalRecord!: MedicalRecord
 
-  public getService(): Service {
-    return this.service
+  public getTestPackage(): TestPackage {
+    return this.testPackage
   }
 
-  public getPatient(): User {
-    return this.patient
+  public getDepartment() {
+    return this.department
   }
 
-  public getDoctor(): User{
-    return this.doctor
+  public getMedicalRecord() {
+    return this.medicalRecord
   }
 
   @BeforeCreate

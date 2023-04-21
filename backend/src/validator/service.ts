@@ -1,42 +1,42 @@
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../error/CustomError';
 import { trimObject } from '../utils/object';
-import { CreateServiceDTO, UpdateServiceDTO } from './../dtos/service.dto';
+import { CreateTestPackageDTO, UpdateTestPackageDTO } from '../dtos/testPackage.dto';
 
-export const validateCreateService = (service: CreateServiceDTO): CreateServiceDTO => {
-    const createServiceDTO = trimObject(service) as CreateServiceDTO
+export const validateCreateService = (service: CreateTestPackageDTO): CreateTestPackageDTO => {
+    const CreateTestPackageDTO = trimObject(service) as CreateTestPackageDTO
 
-    if (!('name' in createServiceDTO) || !('price' in createServiceDTO) || !('description' in createServiceDTO)) {
+    if (!('name' in CreateTestPackageDTO) || !('price' in CreateTestPackageDTO) || !('description' in CreateTestPackageDTO)) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Missing value. Must fill out all information")
     }
 
-    if (!createServiceDTO.name.trim() || !createServiceDTO.description?.trim()) {
+    if (!CreateTestPackageDTO.name.trim() || !CreateTestPackageDTO.description?.trim()) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid value. Value must not be empty")
     }
 
-    if (createServiceDTO.price < 0) {
+    if (CreateTestPackageDTO.price < 0) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid value. Price muse be positive")
     }
 
-    return createServiceDTO
+    return CreateTestPackageDTO
 }
 
-export const validateUpdateService = (service: UpdateServiceDTO): UpdateServiceDTO => {
-    const updateServiceDTO = trimObject(service) as UpdateServiceDTO
+export const validateUpdateService = (service: UpdateTestPackageDTO): UpdateTestPackageDTO => {
+    const UpdateTestPackageDTO = trimObject(service) as UpdateTestPackageDTO
 
-    if ('name' in updateServiceDTO && !updateServiceDTO.name) {
+    if ('name' in UpdateTestPackageDTO && !UpdateTestPackageDTO.name) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid name")
     }
 
-    if ('price' in updateServiceDTO &&
-        ((typeof (updateServiceDTO.price) != 'string' && typeof(updateServiceDTO.price) != 'number') || Number(updateServiceDTO.price) < 0)
+    if ('price' in UpdateTestPackageDTO &&
+        ((typeof (UpdateTestPackageDTO.price) != 'string' && typeof(UpdateTestPackageDTO.price) != 'number') || Number(UpdateTestPackageDTO.price) < 0)
     ) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid price")
     }
 
-    if ('description' in updateServiceDTO && !updateServiceDTO.description) {
+    if ('description' in UpdateTestPackageDTO && !UpdateTestPackageDTO.description) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid description")
     }
 
-    return updateServiceDTO
+    return UpdateTestPackageDTO
 }
