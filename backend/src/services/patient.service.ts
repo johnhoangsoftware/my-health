@@ -6,6 +6,7 @@ import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalR
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
 import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
 import { convertDateTime } from '../utils/converter';
+import { validateCreateAppointment } from '../validator/appointment';
 
 export const allMedicalRecords = async (userId: string) => {
     const user = await User.findByPk(userId, {
@@ -77,9 +78,18 @@ export const makeAnAppointment = async (userId: string, apm: CreateAppointmentDT
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
     }
+    apm = validateCreateAppointment(apm)
+    const existingMedicalRecord = await MedicalRecord.findByPk(apm.medicalRecordId)
+    if (!existingMedicalRecord) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `Medical Record with ID: ${apm.medicalRecordId} not found.`)
+    }
     const dateApm = convertDateTime(apm.date, apm.time)
-    return await Appointment.create({
+    const appointment = {
         status: 'PENDING',
-        dateTime: dateApm
-    })
+        dateTime: dateApm,
+        medicalRecordId: apm.medicalRecordId,
+        testPackageId: apm.testPackageId,
+        departmentId: apm.departmentId
+    }
+    return await Appointment.create({ ...appointment })
 }

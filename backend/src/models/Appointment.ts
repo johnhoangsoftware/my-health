@@ -1,5 +1,5 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, DeletedAt, BelongsTo, BeforeCreate, Default } from 'sequelize-typescript';
-import {User, TestPackage} from '.'
+import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, BeforeCreate } from 'sequelize-typescript';
+import {User, TestPackage, MedicalRecord, Department} from '.'
 import { generateUUID } from '../utils/uuid';
 
 @Table({ tableName: 'Appointments' })
@@ -20,42 +20,39 @@ export class Appointment extends Model{
   @UpdatedAt
   public readonly updatedAt!: Date;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => MedicalRecord)
   @Column({ type: DataType.STRING })
-  public patientId!: string;
-
-  @ForeignKey(() => User)
-  @Column({ type: DataType.STRING })
-  public doctorId!: string;
+  public medicalRecordId!: string
 
   @ForeignKey(() => TestPackage)
   @Column({ type: DataType.STRING })
-  public serviceId!: string;
+  public testPackageId!: string;
 
+  @ForeignKey(() => Department)
   @Column({ type: DataType.STRING })
-  public address!: string;
+  public departmentId!: string
 
   // association
 
   @BelongsTo(() => TestPackage)
-  private service!: TestPackage
+  private testPackage!: TestPackage
   
-  @BelongsTo(() => User)
-  private patient!: User
+  @BelongsTo(() => Department)
+  private department!: Department
   
-  @BelongsTo(() => User)
-  private doctor!: User
+  @BelongsTo(() => MedicalRecord)
+  private medicalRecord!: MedicalRecord
 
-  public getService(): TestPackage {
-    return this.service
+  public getTestPackage(): TestPackage {
+    return this.testPackage
   }
 
-  public getPatient(): User {
-    return this.patient
+  public getDepartment() {
+    return this.department
   }
 
-  public getDoctor(): User{
-    return this.doctor
+  public getMedicalRecord() {
+    return this.medicalRecord
   }
 
   @BeforeCreate

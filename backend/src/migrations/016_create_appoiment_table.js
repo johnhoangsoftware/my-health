@@ -1,6 +1,6 @@
 const { DataTypes, Sequelize } = require('sequelize')
 
-const {APPOINTMENT, USER, SERVICE} = require("./table_name")
+const {APPOINTMENT, USER, MEDICAL_RECORD, DEPARTMENT, TEST_PACKAGE} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
@@ -15,19 +15,9 @@ module.exports =  {
                 allowNull: false,
             },
 
-            time: {
+            dateTime: {
                 type: DataTypes.DATE,
-                defaultValue: Sequelize.fn('now')
-            },
-
-            description: {
-                type: DataTypes.TEXT,
-                allowNull: false,
-            },
-
-            address: {
-                type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: false
             },
 
             createdAt: {
@@ -41,27 +31,42 @@ module.exports =  {
                 defaultValue: Sequelize.fn('now'),
             },
 
-            patientId: {
+            medicalRecordId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
-                    model: USER,
-                    key: "userId"
+                    model: MEDICAL_RECORD,
+                    key: "medicalRecordId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
 
-            doctorId: {
+            departmentId: {
                 type: DataTypes.UUID,
-                allowNull: false,
+                allowNull: true,
+                defaultValue: null,
                 references: {
-                    model: USER,
-                    key: "userId"
+                    model: DEPARTMENT,
+                    key: "departmentId",
+                    
                 },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
+                onUpdate: "SET NULL",
+                onDelete: "SET NULL",
             },
+
+            testPackageId: {
+                type: DataTypes.UUID,
+                allowNull: true,
+                defaultValue: null,
+                references: {
+                    model: TEST_PACKAGE,
+                    key: "testPackageId"
+                },
+                onUpdate: "SET NULL",
+                onDelete: "SET NULL",
+            },
+
         })
     },
 

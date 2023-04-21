@@ -12,4 +12,5 @@ router.route("/medical_record/:id")
 
 router.route("/appointment")
     .post(patientController.makeAnAppointment)
+
 export default router;

@@ -54,19 +54,12 @@ export class User extends Model{
   @HasOne(() => Patient)
     private patient!: Patient
 
-  @HasMany(() => Appointment)
-  private appointments!: Appointment[]
-
   public GetAllChats(): Chat[] {
     return this.chats
   }
 
   public GetAllPosts(): Post[] {
     return this.posts
-  }
-
-  public GetAllAppointments(): Appointment[] {
-    return this.appointments
   }
 
   public GetDoctor() {
