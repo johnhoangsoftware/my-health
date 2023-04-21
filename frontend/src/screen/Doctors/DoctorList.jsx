@@ -15,9 +15,9 @@ export default function DoctorList({navigation}) {
 
     const getDName = (title) => {
         let name = "";
-        departments.forEach((item) => {if (item.tittle === title) name = item.name}); 
+        departments.forEach((item) => {if (item.title === title) name = item.name}); 
         if (name === "") {
-            departments2.forEach((item) => {if (item.tittle === title) name = item.name;}); 
+            departments2.forEach((item) => {if (item.title === title) name = item.name;}); 
         }
         return name;
     } 
@@ -25,134 +25,134 @@ export default function DoctorList({navigation}) {
     const departments = [
         {
             name: "Tất cả",
-            tittle: "all",
+            title: "all",
             image: require("./../../assets/department-icon/all.png")
         },
         {
             name: "Khoa chấn thương chỉnh hình",
-            tittle: "bone",
+            title: "bone",
             image: require("./../../assets/department-icon/bone.png")
         },
         {
             name: "Khoa khám bệnh",
-            tittle: "check",
+            title: "check",
             image: require("./../../assets/department-icon/check.png")
         },
         {
             name: "Khoa đông y",
-            tittle: "oriental",
+            title: "oriental",
             image: require("./../../assets/department-icon/oriental.png")
         },
         {
             name: "Khoa nội tổng quát",
-            tittle: "internal",
+            title: "internal",
             image: require("./../../assets/department-icon/internal.png")
         },
         {
             name: "Khoa thẩm mỹ",
-            tittle: "beauty",
+            title: "beauty",
             image: require("./../../assets/department-icon/beauty.png")
         },
         {
             name: "Khoa nội tim mạch",
-            tittle: "heart",
+            title: "heart",
             image: require("./../../assets/department-icon/heart.png")
         },
         {
             name: "Khoa sản",
-            tittle: "obstetrics",
+            title: "obstetrics",
             image: require("./../../assets/department-icon/obstetrics.png")
         },
         {
             name: "Khoa răng hàm mặt",
-            tittle: "tooth",
+            title: "tooth",
             image: require("./../../assets/department-icon/tooth.png")
         },
         {
             name: "Khoa cấp cứu",
-            tittle: "emergency",
+            title: "emergency",
             image: require("./../../assets/department-icon/emergency.png")
         },
         {
             name: "Khoa xét nghiệm",
-            tittle: "blood",
+            title: "blood",
             image: require("./../../assets/department-icon/blood.png")
         },
         {
             name: "Khoa da liễu",
-            tittle: "skin",
+            title: "skin",
             image: require("./../../assets/department-icon/skin.png")
         },
         {
             name: "Khoa tâm lý",
-            tittle: "mental",
+            title: "mental",
             image: require("./../../assets/department-icon/mental.png")
         }
     ];
     const departments2 = [
         {
             name: "Khoa nhi",
-            tittle: "kid",
+            title: "kid",
             image: require("./../../assets/department-icon/kid.png")
         },
         {
             name: "Khoa ngoại tổng quát",
-            tittle: "external",
+            title: "external",
             image: require("./../../assets/department-icon/external.png")
         },
         {
             name: "Khoa thần kinh",
-            tittle: "brain",
+            title: "brain",
             image: require("./../../assets/department-icon/brain.png")
         },
         {
             name: "Khoa mắt",
-            tittle: "eyes",
+            title: "eyes",
             image: require("./../../assets/department-icon/eye.png")
         },
         {
             name: "Khoa chẩn đoán ảnh - chức năng",
-            tittle: "photo",
+            title: "photo",
             image: require("./../../assets/department-icon/photo.png")
         },
         {
             name: "Khoa vật lý trị liệu",
-            tittle: "physical",
+            title: "physical",
             image: require("./../../assets/department-icon/physical.png")
         },
         {
             name: "Khoa phẫu thuật gây mê",
-            tittle: "anesthesia",
+            title: "anesthesia",
             image: require("./../../assets/department-icon/anesthesia.png")
         },
         {
             name: "Khoa tai - mũi họng",
-            tittle: "ear",
+            title: "ear",
             image: require("./../../assets/department-icon/ear.png")
         },
         {
             name: "Khoa dược",
-            tittle: "medicine",
+            title: "medicine",
             image: require("./../../assets/department-icon/medicine.png")
         },
         {
             name: "Khoa ung bướu",
-            tittle: "cancer",
+            title: "cancer",
             image: require("./../../assets/department-icon/cancer.png")
         },
         {
             name: "Khoa thận",
-            tittle: "kidney",
+            title: "kidney",
             image: require("./../../assets/department-icon/kidney.png")
         },
         {
             name: "Khoa phòng bệnh",
-            tittle: "prevent",
+            title: "prevent",
             image: require("./../../assets/department-icon/prevent.png")
         },
         {
             name: "Bác sĩ gia đình",
-            tittle: "home",
+            title: "home",
             image: require("./../../assets/department-icon/home.png")
         }
     ];
@@ -198,11 +198,11 @@ export default function DoctorList({navigation}) {
     const DepartmentOption = (props) => {
         return (
             <>
-            <TouchableOpacity onPress={() => choose(props.tittle)} style={department==props.tittle ? styles.focus : styles.none} className="mt-2 p-2 h-20 w-40 flex-row items-center text-center rounded-lg border float-left">
+            <TouchableOpacity onPress={() => choose(props.title)} style={department==props.title ? styles.focus : styles.none} className="mt-2 p-2 h-20 w-40 flex-row items-center text-center rounded-lg border float-left">
                 <View className="ml-2 bg-gray-50 h-16 w-16 rounded-full items-center justify-center">
                     <Image source={props.image} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
-                <Text style={department==props.tittle ? styles.textColor : styles.none} className="left-3 w-14 text-left break-normal font-medium justify-center">{props.name}</Text>
+                <Text style={department==props.title ? styles.textColor : styles.none} className="left-3 w-14 text-left break-normal font-medium justify-center">{props.name}</Text>
             </TouchableOpacity>
             <View className="w-3.5"></View>
             </>
@@ -213,21 +213,21 @@ export default function DoctorList({navigation}) {
         return (
             <>
             <View className="h-0.5 w-full bg-gray-200" />
-            <TouchableOpacity onPress={() => navigation.navigate("Thông tin bác sĩ")} style={department==props.tittle ? styles.focus : styles.none} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
+            <TouchableOpacity onPress={() => navigation.navigate("Thông tin bác sĩ")} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
                     <Image src={props.image} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
                 <View className="left-3 w-full">
-                    <Text className="w-fit text-left break-normal font-semibold justify-center">{props.name}</Text>
-                    <View className="flex-row">
+                    <Text className="w-2/3 text-left break-normal font-semibold justify-center">{props.name}</Text>
+                    <View className="w-2/3 flex-row">
                         <MaterialIcons name={props.stars >= 1 ? "star" : "star-border"} size={25} style={props.stars >= 1 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 2 ? "star" : "star-border"} size={25} style={props.stars >= 2 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 3 ? "star" : "star-border"} size={25} style={props.stars >= 3 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars >= 4 ? "star" : "star-border"} size={25} style={props.stars >= 4 ? styles.starSelected : styles.starUnselected} />
                         <MaterialIcons name={props.stars == 5 ? "star" : "star-border"} size={25} style={props.stars == 5 ? styles.starSelected : styles.starUnselected} />
                     </View>
-                    <Text className="w-fit text-left break-normal font-normal justify-center">{props.department}</Text>
-                    <View className="w-fit absolute ml-60 mt-4">
+                    <Text className="w-2/3 text-left break-normal font-normal justify-center">{props.department}</Text>
+                    <View className="w-1/5 absolute ml-60 mt-4">
                         <Ionicons name="caret-forward" size={24} color="#24DCE2" />
                     </View>
                 </View>
@@ -239,11 +239,11 @@ export default function DoctorList({navigation}) {
 
     const departmentOptions=[];
     departments.forEach((item) => {
-        departmentOptions.push(<DepartmentOption key={item.tittle} tittle={item.tittle} name={item.name} image={item.image}/>)
+        departmentOptions.push(<DepartmentOption key={item.title} title={item.title} name={item.name} image={item.image}/>)
     })
     const departmentOptions2=[];
     departments2.forEach((item) => {
-        departmentOptions2.push(<DepartmentOption key={item.tittle} tittle={item.tittle} name={item.name} image={item.image}/>)
+        departmentOptions2.push(<DepartmentOption key={item.title} title={item.title} name={item.name} image={item.image}/>)
     })
     
     const doctorList=[];

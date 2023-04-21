@@ -7,23 +7,26 @@ export default function Packages({navigation}) {
         navigation.navigate("Chi tiết gói khám");
     };
 
-    const goToSchedulings = () => {
-        navigation.navigate("Đặt lịch hẹn");
+    const goToSchedulings = (pack) => {
+        navigation.navigate("Chọn hồ sơ xét nghiệm", {testPackage: pack});
     };
 
     const packages = [
         {
             title: "Gói xét nghiệm tại nhà",
+            hospital: "Bệnh viện Trung ương Quân đội 108",
             image: require("./../../assets/demo-img/hospital.jpg"),
             price: "500.000"
         },
         {
             title: "Gói thăm khám tổng quát tại nhà",
+            hospital: "Bệnh viện Trung ương Quân đội 108",
             image: require("./../../assets/demo-img/hospital.jpg"),
             price: "500.000"
         },
         {
             title: "Gói thăm khám và xét nghiệm tại nhà",
+            hospital: "Bệnh viện Trung ương Quân đội 108",
             image: require("./../../assets/demo-img/hospital.jpg"),
             price: "700.000"
         },
@@ -54,7 +57,7 @@ export default function Packages({navigation}) {
                     </TouchableOpacity>
                     <View style={{width: '4%'}}></View>
                     <TouchableOpacity style={styles.bgColor} className="mt-2 p-2 text-center rounded-lg border float-right"
-                        onPress={goToSchedulings}
+                        onPress={() => goToSchedulings(props)}
                         >
                         <Text className="text-white text-base text-center font-bold">Đặt lịch hẹn</Text>
                     </TouchableOpacity>

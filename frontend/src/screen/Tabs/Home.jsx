@@ -3,9 +3,46 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
+// import { AppointmentContext } from "../../component/context";
 
 
 export default function Home({ navigation }) {
+    // const { setHospital } = React.useContext(AppointmentContext)
+
+    const InfoHospital = (props) => {
+        return (
+            <View className="bg-white rounded-xl w-40 h-full mr-4 mb-3">
+                <Image
+                    src={props.imageURL}
+                    className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
+                />
+                <View className="px-2 py-1 space-y-1 mb-3">
+                    <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
+                    <Text className="text-gray-500 text-xs h-14" numberOfLines={3}>{props.address}</Text>
+                    <TouchableOpacity className="rounded-full mb-3" style={{ backgroundColor: "#24DCE2" }}
+                        onPress={() => { navigation.navigate("Chọn hồ sơ", { hospital: props }) }}
+                    >
+                        <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+
+    const Item = (props) => {
+        return (
+            <TouchableOpacity className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item} onPress={props.onPress}>
+                <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
+                    <Image source={props.image} className='object-scale-down h-10 w-10' />
+                </View>
+                <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
+                <View className="right-3 absolute">
+                    <Ionicons name="caret-forward" size={24} color="#24DCE2" />
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     const [search, setSearch] = React.useState({
         inputSearch: null,
         isSearch: false
@@ -19,7 +56,7 @@ export default function Home({ navigation }) {
         },
         {
             name: "Bệnh viện Bạch Mai",
-            address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội, ",
+            address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội",
             imageURL: "https://bcp.cdnchinhphu.vn/Uploaded/hoangtrongdien/2020_02_18/kh%C3%A1m-b%E1%BB%87nh-%E1%BB%9F-b%E1%BB%87nh-vi%E1%BB%87n-B%E1%BA%A1ch-Mai-1-1024x449.jpg"
         },
         {
@@ -48,23 +85,23 @@ export default function Home({ navigation }) {
         {
             title: "Xét nghiệm tại nhà",
             image: require("./../../assets/home-icon/blood-test.png"),
-            onPress: () => {navigation.navigate("Xét nghiệm tại nhà")}
+            onPress: () => { navigation.navigate("Xét nghiệm tại nhà") }
         },
         {
             title: "Xem lịch khám",
             image: require("./../../assets/home-icon/calendar.png"),
-            onPress: () => {navigation.navigate("")}
+            onPress: () => {navigation.navigate("Xem lịch khám")}
         },
         {
             title: "Danh sách bác sĩ",
             image: require("./../../assets/home-icon/shortlist.png"),
-            onPress: () => {navigation.navigate("Danh sách bác sĩ")}
+            onPress: () => { navigation.navigate("Danh sách bác sĩ") }
         },
     ];
     const itemList = [];
 
     items.forEach((item) => {
-        itemList.push(<Item key={item.title} title={item.title} image={item.image} onPress={item.onPress}/>)
+        itemList.push(<Item key={item.title} title={item.title} image={item.image} onPress={item.onPress} />)
     })
 
     const searchChange = (val) => {
@@ -82,11 +119,11 @@ export default function Home({ navigation }) {
     }
 
     const searchInfo = () => {
-        // todo: search screen
+        navigation.navigate("Tìm kiếm");
     }
 
     const notification = () => {
-        // todo: notification screen
+        navigation.navigate("Thông báo");
     }
 
     return (<>
@@ -104,7 +141,7 @@ export default function Home({ navigation }) {
                     onEndEditing={() => searchInfo()}
                 />
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity
                 className="w-1/12 justify-center items-center"
                 onPress={() => notification()}>
                 <Ionicons name="notifications-outline" size={28} />
@@ -122,7 +159,7 @@ export default function Home({ navigation }) {
             >
                 <Text className="font-bold mx-5 mt-5 text-xl" >Đặt khám</Text>
                 <ScrollView
-                    className="flex-1 m-5 mt-3 h-2/5 min-h-fit"
+                    className="flex-1 m-5 mt-3 h-fit"
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
@@ -136,38 +173,6 @@ export default function Home({ navigation }) {
         </ScrollView>
     </>
     );
-}
-
-const InfoHospital = (props) => {
-    return (
-        <View className="bg-white rounded-xl w-40 h-full mr-4 pb-3">
-            <Image
-                src={props.imageURL}
-                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
-            />  
-            <View className="px-2 py-1 space-y-1">
-                <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
-                <Text className="text-gray-500 text-xs h-12" numberOfLines={3}>{props.address}</Text>
-                <TouchableOpacity className="rounded-full bg-cyan-400 mb-5">
-                    <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    )
-}
-
-const Item = (props) => {
-    return (
-        <TouchableOpacity className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item} onPress={props.onPress}>
-            <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
-                <Image source={props.image} className='object-scale-down h-10 w-10' />
-            </View>
-            <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
-            <View className="right-3 absolute">
-                <Ionicons name="caret-forward" size={24} color="#24DCE2" />
-            </View>
-        </TouchableOpacity>
-    )
 }
 
 const styles = StyleSheet.create({

@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStackScreen from './src/screen/RootStackScreen'
 import { AuthContext } from './src/component/context';
-import Home from './src/screen/Tabs/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons'
 
@@ -12,12 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Community from './src/screen/Tabs/Community';
 import Chat from './src/screen/Tabs/Chat';
 import Account from './src/screen/Tabs/Account';
-import Packages from './src/screen/Test/Packages';
-import PackageDetails from './src/screen/Test/PackageDetails';
-import DoctorList from './src/screen/Doctors/DoctorList';
-import DoctorDetails from './src/screen/Doctors/DoctorDetails';
-import HospitalDetails from './src/screen/Hospital/HospitalDetails';
-import { createStackNavigator } from '@react-navigation/stack';
+import HomeStack from './src/screen/HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -74,7 +68,7 @@ export default function App() {
       setIsLogin(false);
 
       let userToken;
-      // if (username == "user" && password == "pass") {
+      if (username == "user" && password == "pass") {
       try {
         userToken = "ok";
         await AsyncStorage.setItem('userToken', userToken)
@@ -82,7 +76,7 @@ export default function App() {
       } catch (e) {
         console.log(e);
       }
-      // }
+      }
       dispatch({ type: 'LOGIN', id: username, token: userToken })
     },
     signup: async () => {
@@ -125,26 +119,30 @@ export default function App() {
     );
   }
 
-  const Stack = createStackNavigator();
-  const HomeStack = () => {    
-      return (
-        <Stack.Navigator initialRoutName="Home">
-          <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
-          <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-          {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
-          //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
-          //     onPress={() => {
-          //       navigation.goBack();
-          //     }}
-          //   />)
-          // })} /> */}
-          <Stack.Screen name="Chi tiết gói khám" component={PackageDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-          <Stack.Screen name="Danh sách bác sĩ" component={DoctorList} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-          <Stack.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}}/>
-          <Stack.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-        </Stack.Navigator>
-      )
-  }
+  // const Stack = createStackNavigator();
+  // const HomeStack = () => {    
+  //     return (
+  //       <Stack.Navigator initialRoutName="Home">
+  //         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+  //         <Stack.Screen name="Tìm kiếm" component={Search} options={{headerShown: false, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         <Stack.Screen name="Thông báo" component={Notification} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         <Stack.Screen name="Xem lịch khám" component={ViewSchedules} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
+  //         //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
+  //         //     onPress={() => {
+  //         //       navigation.goBack();
+  //         //     }}
+  //         //   />)
+  //         // })} /> */}
+  //         <Stack.Screen name="Chi tiết gói khám" component={PackageDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         <Stack.Screen name="Đặt lịch xét nghiệm" component={Scheduling}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
+  //         <Stack.Screen name="Danh sách bác sĩ" component={DoctorList} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+  //         <Stack.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}}/>
+  //         <Stack.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
+  //       </Stack.Navigator>
+  //     )
+  // }
 
   return (
     <AuthContext.Provider value={authContext}>
