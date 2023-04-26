@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { postService, userService } from '../services';
+import * as notifyService from '../services/notify.service';
 
 // [GET] /user/:id/profile
 export const profile = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -21,4 +22,13 @@ export const allPosts = ErrorWrapperHandler(async (req: Request, res: Response) 
         data: posts
     });
 })
+
+// [GET] /user/:id/notify
+export const allNotify = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id
+    const notifications = await notifyService.getNotify(userId)
+    return res.status(StatusCodes.OK).json({
+        data: notifications
+    });
+}
 

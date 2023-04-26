@@ -7,4 +7,7 @@ router.route("/:id/posts")
 
 router.route("/:id/profile")
     .get(userController.profile)
+
+router.route("/:id/notify")
+    .get(userController.allNotify)
 export default router;

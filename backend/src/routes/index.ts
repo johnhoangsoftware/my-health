@@ -16,7 +16,7 @@ export default function initRoutes(app: Application) {
     app.use("/api/auth", authRouter)
     app.use("/api/admin", authMiddleware, roleCheck("ADMIN"), adminRouter)
     app.use("/api/post", authMiddleware, roleCheck("DOCTOR", "PATIENT"), postRouter)
-    app.use("/api/user", authMiddleware, roleCheck("DOCTOR", "PATIENT"), userRouter)
+    app.use("/api/user", authMiddleware, roleCheck("DOCTOR", "PATIENT", "ADMIN"), userRouter)
     app.use("/api/hospital", authMiddleware, roleCheck("DOCTOR", "PATIENT"), hospitalRouter)
     app.use("/api/patient", authMiddleware, roleCheck("PATIENT"), patientRouter)
     app.use("/api/test_package", authMiddleware, roleCheck("PATIENT", "DOCTOR"), testPackageRouter)
