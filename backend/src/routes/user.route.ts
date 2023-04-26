@@ -2,9 +2,9 @@ import express from 'express'
 import * as  userController  from '../controllers/user.controller'
 const router = express.Router()
 
-router.route("/:id/posts")
+router.route("/posts")
     .get(userController.allPosts)
 
-router.route("/:id/profile")
+router.route("/profile")
     .get(userController.profile)
 export default router;
