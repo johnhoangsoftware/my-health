@@ -52,3 +52,12 @@ export const makeAnAppointment = ErrorWrapperHandler(async (req: Request, res: R
         data: appointment
     });
 })
+
+// [GET] /patient/appointment
+export const getAllAppointments = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const userId = req.auth?.id
+    const appointment = await patientService.getAllAppointments(userId)
+    return res.status(StatusCodes.OK).json({
+        data: appointment
+    });
+})
