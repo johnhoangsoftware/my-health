@@ -4,6 +4,7 @@ import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { patientService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import * as notifyService from '../services/notify.service';
 
 // [GET] /patient/medical_record
 export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -52,3 +53,12 @@ export const makeAnAppointment = ErrorWrapperHandler(async (req: Request, res: R
         data: appointment
     });
 })
+
+// [GET] /patient/notify/:id
+export const listNotifications = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id
+    const notifications = await notifyService.getNotify(userId)
+    return res.status(StatusCodes.OK).json({
+        data: notifications
+    });
+}
