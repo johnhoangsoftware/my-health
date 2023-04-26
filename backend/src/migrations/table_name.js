@@ -9,7 +9,7 @@ module.exports = {
     CHAT : "Chats",
     MESSAGE : "Messages",
     APPOINTMENT : "Appointments",
-    SERVICE : "Services",
+    TEST_PACKAGE : "TestPackages",
     POST : "Posts",
     COMMENT : "Comments",
     REACTION : "Reactions",

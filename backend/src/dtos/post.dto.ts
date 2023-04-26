@@ -2,8 +2,8 @@ export interface CreatePostDTO {
     topic: string
     content: string;
     media: string
-    created_at: Date,
-    updated_at: Date,
+    createdAt: Date,
+    updatedAt: Date,
     authId: string
 }
 

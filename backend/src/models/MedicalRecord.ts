@@ -28,6 +28,9 @@ export class MedicalRecord extends Model {
 
     @CreatedAt
     public readonly createdAt!: Date;
+  
+    @UpdatedAt
+    public readonly updatedAt!: Date;
 
     @ForeignKey(() => Patient)
     public patientId!: string;

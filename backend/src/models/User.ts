@@ -1,7 +1,8 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, HasMany, BeforeCreate } from 'sequelize-typescript';
+import { Model,  PrimaryKey, Column, Table, CreatedAt, UpdatedAt, DataType, BelongsTo, HasMany, BeforeCreate, HasOne } from 'sequelize-typescript';
 
-import {Department, Chat, Post, Appointment} from '.'
+import { Chat, Post, Appointment, Doctor, Patient} from '.'
 import { generateUUID } from '../utils/uuid';
+import {encodedPassword} from '../utils/bcrypt'
 
 @Table({ tableName: 'Users' })
 export class User extends Model{
@@ -16,10 +17,7 @@ export class User extends Model{
   public password!: string;
 
   @Column({ type: DataType.STRING })
-  public firstName?: string;
-
-  @Column({ type: DataType.STRING })
-  public lastName?: string;
+  public name?: string;
 
   @Column({ type: DataType.INTEGER })
   public birthDay?: Date;
@@ -30,26 +28,19 @@ export class User extends Model{
   @Column({ type: DataType.STRING })
   public phone?: string;
 
-  @Column({ type: DataType.ENUM("PATIENT", "DOCTOR") })
-  public role!: "PATIENT" | "DOCTOR";
+  @Column({ type: DataType.ENUM("PATIENT", "DOCTOR", "ADMIN") })
+  public role!: string;
   
   @CreatedAt
-  public created_at?: Date;
+  public createdAt?: Date;
 
   @UpdatedAt
-  public updated_at?: Date;
-
-  @ForeignKey(() => Department)
-  @Column({ type: DataType.STRING })
-  public departmentId?: string;
+  public updatedAt?: Date;
 
   @Column({ type: DataType.STRING })
   public address?: string;
 
   // associate
-
-  @BelongsTo(() => Department)
-  private department!: Department
   
   @HasMany(() => Chat)
   private chats!: Chat[]
@@ -57,27 +48,31 @@ export class User extends Model{
   @HasMany(() => Post)
   private posts!: Post[]
 
-  @HasMany(() => Appointment)
-  private appointments!: Appointment[]
+  @HasOne(() => Doctor)
+  private doctor!: Doctor
+  
+  @HasOne(() => Patient)
+    private patient!: Patient
 
-  public getDepartment(): Department {
-    return this.department
-  }
-
-  public getAllChats(): Chat[] {
+  public GetAllChats(): Chat[] {
     return this.chats
   }
 
-  public getAllPosts(): Post[] {
+  public GetAllPosts(): Post[] {
     return this.posts
   }
 
-  public getAllAppointments(): Appointment[] {
-    return this.appointments
+  public GetDoctor() {
+    return this.doctor
+  }
+
+  public GetPatient() {
+    return this.patient
   }
 
   @BeforeCreate
   static generateID(instance: User) {
     instance.userId = generateUUID()
+    instance.password = encodedPassword(instance.password)
   }
 }

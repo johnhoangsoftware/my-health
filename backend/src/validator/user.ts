@@ -8,7 +8,7 @@ export const validateCreateUser = (user: CreateUserDTO): CreateUserDTO => {
     const results = trimObject(user) as CreateUserDTO
     console.log(results)
 
-    if (!results.email || !results.password || !results.firstName || !results.lastName || !results.birthDay || !results.phone || !results.address) {
+    if (!results.email || !results.password || !results.name || !results.birthDay || !results.phone || !results.address) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Missing value. Must fill out all information")
     }
 
@@ -21,7 +21,7 @@ export const validateCreateUser = (user: CreateUserDTO): CreateUserDTO => {
     }
 
     if (!isValidDate(results.birthDay)) {
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday")
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday.Must be YYYY-MM-DD")
     }
     
     if (!isValidPhoneNumber(results.phone)) {
@@ -36,12 +36,8 @@ export const validateCreateUser = (user: CreateUserDTO): CreateUserDTO => {
 export const validateUpdateUser = (user: UpdateUserDTO): UpdateUserDTO => {
     const updateUser = trimObject(user)
     
-    if ('firstName' in updateUser && !updateUser.firstName) {
+    if ('name' in updateUser && !updateUser.name) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid first name")
-    }
-
-    if ('lastName' in updateUser && !updateUser.lastName) {
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid last name")
     }
 
     if ('email' in updateUser && !isValidEmail(updateUser.email)) {
@@ -49,7 +45,7 @@ export const validateUpdateUser = (user: UpdateUserDTO): UpdateUserDTO => {
     }
 
     if ('birthDay' in updateUser && !isValidDate(updateUser.birthDay)) {
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday")
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid birthday.Must be YYYY-MM-DD")
     }
     
     if ('phone' in updateUser && !isValidPhoneNumber(updateUser.phone)) {

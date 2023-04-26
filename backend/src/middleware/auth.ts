@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import {verifyToken} from '../utils/jwt'
+import { JwtPayload } from "jsonwebtoken";
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    // Fix logic jwt 
-    req.auth = {
-        id: 'cf6a7cac-5c4c-45fa-bb4a-b79dfbfadb22'
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    if (!token) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            message: 'You are not allowed'
+        })
     }
-
-
+    req.auth = verifyToken(token) as JwtPayload
     next()
 }

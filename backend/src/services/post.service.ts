@@ -1,7 +1,7 @@
 import { CreatePostDTO, UpdatePostDTO } from "../dtos/post.dto"
 import { validateCreateComment, validateCreatePost, validateUpdateComment, validateUpdatePost } from "../validator/post"
 import { post_db } from '../persistence'
-import * as dtoConverter from '../utils/dtoConverter'
+import * as dtoConverter from '../utils/converter'
 import { Post, User, Comment } from "../models"
 import CustomError from "../error/CustomError"
 import { StatusCodes } from "http-status-codes"
@@ -17,7 +17,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         attributes: {
             include: [
                 [Sequelize.literal(`
-                    (SELECT count(*) FROM comment WHERE comment.postId = Posts.postId)`
+                    (SELECT count(*) FROM Comments WHERE Comments.postId = Post.postId)`
                 )
                     , "numberOfComments"]
             ]
@@ -25,7 +25,7 @@ const findPostWithPagination = async (pagination: Pagination, condition: {[key:s
         include: [
             {
                 model: User,
-                attributes: ["userId", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "name", "avatar"]
             },
         ],
         ...condition
@@ -82,7 +82,7 @@ export const getComments = async(postId: string):Promise<Comment[]> => {
         include: [
             {
                 model: User,
-                attributes: ["userId", "firstName", "lastName", "avatar"]
+                attributes: ["userId", "name", "avatar"]
             }
         ]
     })

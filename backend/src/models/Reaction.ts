@@ -11,6 +11,9 @@ export class Reaction extends Model{
   @CreatedAt
   public readonly created_at!: Date;
 
+  @UpdatedAt
+  public readonly updatedAt!: Date;
+
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })
   public authId!: string;

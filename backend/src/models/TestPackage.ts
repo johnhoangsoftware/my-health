@@ -2,26 +2,26 @@ import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, Da
 import { Hospital } from '.';
 import { generateUUID } from '../utils/uuid';
 
-@Table({ tableName: 'Services' })
-export class Service extends Model {
+@Table({ tableName: 'TestPackages' })
+export class TestPackage extends Model {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  public serviceId!: string;
+  public testPackageId!: string;
 
   @Column({ type: DataType.STRING })
   public name!: string;
 
   @Column({ type: DataType.FLOAT })
-  public price!: number;
+  public price!: string;
 
   @Column({ type: DataType.TEXT })
   public description!: string;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
+  public readonly updatedAt!: Date;
 
   @ForeignKey(() => Hospital)
   @Column({ type: DataType.STRING })
@@ -37,7 +37,7 @@ export class Service extends Model {
   }
 
   @BeforeCreate
-  static generateID(instance: Service) {
-    instance.serviceId = generateUUID()
+  static generateID(instance: TestPackage) {
+    instance.testPackageId = generateUUID()
   }
 }

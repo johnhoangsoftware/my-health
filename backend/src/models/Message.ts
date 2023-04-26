@@ -14,8 +14,8 @@ export class Message extends Model {
   @CreatedAt
   public readonly created_at!: Date;
 
-  @DeletedAt
-  public deletedAt?: Date | null;
+  @UpdatedAt
+  public readonly updatedAt!: Date;
 
   @ForeignKey(() => Chat)
   @Column({ type: DataType.STRING })

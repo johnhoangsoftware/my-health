@@ -1,6 +1,6 @@
 const { DataTypes, Sequelize } = require('sequelize')
 
-const {APPOINTMENT, USER, SERVICE} = require("./table_name")
+const {APPOINTMENT, USER, MEDICAL_RECORD, DEPARTMENT, TEST_PACKAGE} = require("./table_name")
 
 module.exports =  {
     up: async (queryInterface) => {
@@ -15,64 +15,58 @@ module.exports =  {
                 allowNull: false,
             },
 
-            time: {
+            dateTime: {
                 type: DataTypes.DATE,
-                defaultValue: Sequelize.fn('now')
+                allowNull: false
             },
 
-            description: {
-                type: DataTypes.TEXT,
-                allowNull: false,
-            },
-
-            address: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-
-            created_at: {
+            createdAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),
             },
-            updated_at: {
+            updatedAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),
             },
 
-            patientId: {
+            medicalRecordId: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
-                    model: USER,
-                    key: "userId"
+                    model: MEDICAL_RECORD,
+                    key: "medicalRecordId"
                 },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
 
-            doctorId: {
+            departmentId: {
                 type: DataTypes.UUID,
-                allowNull: false,
+                allowNull: true,
+                defaultValue: null,
                 references: {
-                    model: USER,
-                    key: "userId"
+                    model: DEPARTMENT,
+                    key: "departmentId",
+                    
                 },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
+                onUpdate: "SET NULL",
+                onDelete: "SET NULL",
             },
 
-            serviceId: {
+            testPackageId: {
                 type: DataTypes.UUID,
-                allowNull: false,
+                allowNull: true,
+                defaultValue: null,
                 references: {
-                    model: SERVICE,
-                    key: "serviceId"
+                    model: TEST_PACKAGE,
+                    key: "testPackageId"
                 },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
+                onUpdate: "SET NULL",
+                onDelete: "SET NULL",
             },
+
         })
     },
 

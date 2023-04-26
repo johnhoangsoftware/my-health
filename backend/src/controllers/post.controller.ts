@@ -21,7 +21,7 @@ export const updatePost = ErrorWrapperHandler(async (req: Request, res: Response
     const id = req.params.id
     const updatedPost = await  postService.updatePost(id, req.body)
     return res.status(StatusCodes.OK).json({
-        message: `Create user successfully.`,
+        message: `Update user successfully.`,
         data: updatedPost
     });
 })
@@ -31,7 +31,7 @@ export const deletePost = ErrorWrapperHandler(async (req: Request, res: Response
     const id = req.params.id;
     const deletedPost = await postService.deletePost(id)
     return res.status(StatusCodes.OK).json({
-        message: `Create user successfully.`,
+        message: `Delete user successfully.`,
         data: deletedPost
     });
 })

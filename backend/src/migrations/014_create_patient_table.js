@@ -10,7 +10,13 @@ module.exports =  {
                 primaryKey: true,
             },
 
-            created_at: {
+            createdAt: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.fn('now'),
+            },
+
+            updatedAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.fn('now'),

@@ -1,5 +1,5 @@
 import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, BeforeCreate } from 'sequelize-typescript';
-import {Hospital, DepartmentDetail} from '.'
+import {Hospital} from '.'
 import { generateUUID } from '../utils/uuid';
 
 @Table({
@@ -27,6 +27,7 @@ export class Department  extends Model{
 
   @BelongsTo(() => Hospital)
   private hospital!: Hospital
+  
 
   public getHospital(): Hospital {
     return this.hospital

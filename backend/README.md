@@ -17,12 +17,6 @@ How to run?
     # Seed
     npx sequelize-cli db:seed:all --config ./src/configs/db.json --seeders-path ./src/seeder
 
-    # More:
-    # Undo migrate
-    npx sequelize-cli db:migrate:undo:all
-
-    # Undo seed
-    npx sequelize-cli db:seed:undo:all
     #Run
     npm run dev
 
@@ -35,4 +29,3 @@ How to run?
     npx sequelize-cli db:seed:undo:all --config ./src/configs/db.json --seeders-path ./src/seeder
     
 ```
-
