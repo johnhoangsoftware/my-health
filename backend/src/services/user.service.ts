@@ -37,11 +37,11 @@ export const updateByID = async (id: string, updateUser: UpdateUserDTO): Promise
     return Promise.resolve(id)
 }
 
-export const login = async (username: string, password: string): Promise<User> => {
+export const login = async (email: string, password: string): Promise<User> => {
     const user = await User.findOne({
         where: {
             [Op.or]: [
-                { email: username },
+                { email: email },
             ]
         }
     })
@@ -50,7 +50,7 @@ export const login = async (username: string, password: string): Promise<User> =
         throw new CustomError(StatusCodes.NOT_FOUND, "User not found")
     }
 
-    const hashedPassword    = await encodedPassword(password);
+    const hashedPassword = await encodedPassword(password);
     if (hashedPassword !==   user.password) {
         throw new CustomError(StatusCodes.UNAUTHORIZED, "Wrong password")
     }

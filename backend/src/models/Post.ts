@@ -28,6 +28,8 @@ export class Post extends Model {
   public authId!: string;
 
   // associate 
+
+  //Post.belongsTo(User, {foreignKey: "authId", as: 'user'})
   
   @BelongsTo(() => User)
   private auth!: User
