@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
-import Home from "./Tabs/Home";
 
 const RootStack = createStackNavigator();
 

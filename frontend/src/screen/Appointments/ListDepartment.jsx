@@ -15,7 +15,7 @@ export default function ListDepartment({ route, navigation }) {
             <>
                 <TouchableOpacity
                     onPress={() => choose(props)}
-                    className="m-2 p-2 h-20 w-2/5 flex-row items-center text-center rounded-lg float-left bg-white shadow-md shadow-gray-500"
+                    className="m-2 p-2 h-20 w-2/5 flex-row items-center text-center rounded-lg float-left bg-white shadow-sm"
                     style={(selected != null && selected.title == props.title) ? styles.focus : styles.none}
                 >
                     <View className="ml-2 bg-slate-100 h-16 w-16 rounded-full items-center justify-center">

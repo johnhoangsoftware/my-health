@@ -4,7 +4,7 @@ import { Feather, AntDesign } from '@expo/vector-icons';
 
 export default function Profile(props) {
     return (
-        <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-md shadow-gray-500">
+        <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-sm">
             <View className="flex-row">
                 {
                     props.selected ? <AntDesign name="checkcircle" size={20} color="green" />
