@@ -3,8 +3,8 @@ import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { patientService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
-import * as notifyService from '../services/notify.service';
+import { CreateAppointmentDTO, UpdateAppointmentDTO } from '../dtos/Appointment.dto';
+
 
 // [GET] /patient/medical_record
 export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -54,11 +54,25 @@ export const makeAnAppointment = ErrorWrapperHandler(async (req: Request, res: R
     });
 })
 
-// [GET] /patient/notify/:id
-export const listNotifications = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.params.id
-    const notifications = await notifyService.getNotify(userId)
+// [UPDATE] /patient/appointment/:id
+export const updateAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const appointmentId = req.params.id
+    const apm = req.body as UpdateAppointmentDTO
+    const appointment = await patientService.updateAppointment(appointmentId, apm)
     return res.status(StatusCodes.OK).json({
-        data: notifications
+        message: "Update appointment successfully",
+        data: appointment
     });
-}
+})
+
+// [DELETE] /patient/appointment/:id
+export const deleteAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const appointmentId = req.params.id
+    const deletedAppointment = await patientService.deleteAppointment(appointmentId)
+    return res.status(StatusCodes.OK).json({
+        message: "Delete appointment successfully",
+        data: deletedAppointment
+    });
+})
+
+

@@ -4,9 +4,9 @@ import CustomError from "../error/CustomError";
 import { User, Patient, MedicalRecord, Appointment } from "../models";
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { CreateAppointmentDTO, UpdateAppointmentDTO } from '../dtos/Appointment.dto';
 import { convertDateTime } from '../utils/converter';
-import { validateCreateAppointment } from '../validator/appointment';
+import { validateCreateAppointment, validateUpdateAppointment } from '../validator/appointment';
 
 export const allMedicalRecords = async (userId: string) => {
     const user = await User.findByPk(userId, {
@@ -92,4 +92,37 @@ export const makeAnAppointment = async (userId: string, apm: CreateAppointmentDT
         departmentId: apm.departmentId
     }
     return await Appointment.create({ ...appointment })
+}
+
+export async function updateAppointment(appointmentId: string, apmDTO: UpdateAppointmentDTO) {
+    const appointment = await Appointment.findByPk(appointmentId)
+    if(!appointment) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `Appointment with ID: ${appointmentId} not found.`)
+    }
+    apmDTO = validateUpdateAppointment(apmDTO)
+
+    const dateApm = convertDateTime(apmDTO.date as string, apmDTO.time as string) // date  as d/m/y, time as h:m
+    const appointmentUpdate = {
+        status: apmDTO.status,
+        dateTime: dateApm,
+        medicalRecordId: apmDTO.medicalRecordId,
+        testPackageId: apmDTO.testPackageId,
+        departmentId: apmDTO.departmentId
+    }
+    await Appointment.update(appointmentUpdate, {
+        where: {
+            appointmentId: appointmentId
+        }})
+}
+
+export async function deleteAppointment(appointmentId: string) {
+    const appointment = await Appointment.findByPk(appointmentId)
+    if(!appointment) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `Appointment with ID: ${appointmentId} not found.`)
+    }
+    await Appointment.destroy({
+        where: {
+            appointmentId: appointmentId
+        }
+    })
 }
