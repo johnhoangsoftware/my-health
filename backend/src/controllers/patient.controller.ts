@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { patientService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 
 // [GET] /patient/medical_record
 export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -48,6 +48,15 @@ export const makeAnAppointment = ErrorWrapperHandler(async (req: Request, res: R
     const userId = req.auth?.id
     const apm = req.body as CreateAppointmentDTO
     const appointment = await patientService.makeAnAppointment(userId, apm)
+    return res.status(StatusCodes.OK).json({
+        data: appointment
+    });
+})
+
+// [GET] /patient/appointment
+export const getAllAppointments = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const userId = req.auth?.id
+    const appointment = await patientService.getAllAppointments(userId)
     return res.status(StatusCodes.OK).json({
         data: appointment
     });

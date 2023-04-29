@@ -21,19 +21,9 @@ module.exports =  {
                 defaultValue: Sequelize.fn('now'),
             },
 
-            member_one: {
+            userId: {
                 type: DataTypes.UUID,
-                allowNull: false,
-                references: {
-                    model: USER,
-                    key: "userId"
-                },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
-            },
-
-            member_two: {
-                type: DataTypes.UUID,
+                primaryKey: true,
                 allowNull: false,
                 references: {
                     model: USER,
