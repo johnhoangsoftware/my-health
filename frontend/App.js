@@ -71,7 +71,7 @@ export default function App() {
 
       try {
         await AsyncStorage.setItem('userToken', userToken)
-        await AsyncStorage.setItem('user', {id: userId, role: userRole})
+        await AsyncStorage.setItem('user', JSON.stringify({id: userId, role: userRole}))
       } catch (e) {
         console.log(e);
       }
