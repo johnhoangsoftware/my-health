@@ -1,45 +1,17 @@
 import React from "react"
 import { View, TextInput, Text, Image, TouchableOpacity, StatusBar } from "react-native"
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons"
+import useAxios from '../../hooks/useAxios'
+import useAuth from '../../hooks/useAuth'
 
 export default function Chat() {
     const [search, setSearch] = React.useState({
         inputSearch: null,
         isSearch: false
     })
+    const [chatList, setChatList] = React.useState([])
+    const axios = useAxios()
 
-    const chats = [
-        {
-            chat_id: 3,
-            user_id: "Nguyễn Văn An",
-            avatar: "https://cdn-icons-png.flaticon.com/512/147/147133.png",
-            last_message: "Không có gì, chúc bạn mau khỏe"
-        },
-        {
-            chat_id: 2,
-            user_id: "Hoàng Thu Hương",
-            avatar: "https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png",
-            last_message: "Bạn nên thường xuyên tập thể dục hơn"
-        },
-        {
-            chat_id: 1,
-            user_id: "Nguyễn Thị Lan",
-            avatar: "https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_person_people_avatar_icon_159366.png",
-            last_message: "Đó là biểu hiện bình thường ở trẻ nhỏ, bạn không cần quá lo lắng"
-        },
-
-    ];
-    const chatList = [];
-    chats.forEach((item) => {
-        chatList.push(
-            <ChatItem
-                key={item.chat_id}
-                user_id={item.user_id}
-                avatar={item.avatar}
-                last_message={item.last_message}
-            />
-        )
-    })
 
     const searchChange = (val) => {
         if (val.length != 0) {
@@ -58,6 +30,18 @@ export default function Chat() {
     const searchInfo = () => {
 
     }
+
+    React.useEffect(() => {
+        console.log("Fetch chat")
+        axios.get("/chat")
+            .then(res => {
+                if (res.status === 200) {
+                    setChatList(res.data.data)
+                }
+            }).catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }, [])
 
     return (
         <View className="bg-white flex-1">
@@ -78,24 +62,55 @@ export default function Chat() {
                     />
                 </View>
                 <View>
-                    {chatList}
+                    {
+                        chatList.length > 0 &&
+                        chatList.map((c, index) => {
+                            return (
+                                <ChatItem
+                                    key={`chat-item-${index}-${c.chatId}`}
+                                    chatItem={{
+                                        chatId: c.chatId,
+                                        user: c.user,
+                                        lastMessage: c.messages[0]
+                                    }}
+                                />
+                            )
+                        })
+                    }
                 </View>
             </View>
         </View>
     )
 }
 
-const ChatItem = (props) => {
+const ChatItem = ({ chatItem }) => {
+    const [auth, setAuth] = React.useState({})
+
+    React.useEffect(() => {
+        (async function () {
+            const u = await useAuth()
+           setAuth(u) 
+        })()
+    }, [])
+    
     return (
         <TouchableOpacity className="mx-4 my-2 flex-col ">
             <View className="flex-row items-center w-screen px-3">
                 <Image
-                    src={props.avatar}
+                    src={chatItem.user.avatar || `https://cdn-icons-png.flaticon.com/512/147/147133.png`}
                     className="w-16 h-16 rounded-full"
                 />
                 <View className="w-72">
-                    <Text className="font-semibold text-base ml-3">{props.user_id}</Text>
-                    <Text className="text-gray-400 ml-3 text-sm" numberOfLines={1}>{props.last_message}</Text>
+                    <Text className="font-semibold text-base ml-3">{chatItem.user.name}</Text>
+                    <Text className="text-gray-400 ml-3 text-sm" numberOfLines={1}>
+                        {
+                            Object.keys(auth).length > 0 && auth.id === chatItem.lastMessage.sender.userId ?
+                                "You"
+                                :
+                                chatItem.lastMessage.sender.name
+                        }
+                        : {chatItem.lastMessage.content}
+                    </Text>
                 </View>
             </View>
         </TouchableOpacity>

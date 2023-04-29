@@ -24,6 +24,9 @@ export class Chat extends Model {
   @HasMany(() => Message)
   private messages!: Message[]
 
+  @BelongsTo(() => User)
+  private user!: User
+
   public getMessages() {
     return this.messages
   }

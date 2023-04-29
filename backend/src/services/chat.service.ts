@@ -22,28 +22,48 @@ const findChat = async(mem1: string, mem2: string) => {
     return chat?.chatId
 }
 
-export const allChatPreview = async(userId: string) => {
+export const allChatPreview = async (userId: string) => {
+    console.log(userId)
     const user = await User.findByPk(userId)
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found`)
     }
 
-    return await Chat.findAll({
+    const chatIds = await Chat.findAll({
+        attributes: ["chatId"],
         where: { userId },
+        group: "chatId"
+    })
+
+    return await Chat.findAll({
+        where: {
+            userId: {
+                [Op.not]: userId
+            },
+            chatId: {
+                [Op.in]: chatIds.map((c: { chatId: string }) => c.chatId)
+            }
+        },
         attributes: {
             exclude: ["createdAt", "deletedAT"]
         },
-        include: [{
-            model: Message,
-            limit: 1,
-            order: [
-                [Sequelize.literal('createdAt'), 'DESC']
-            ],
-            include: [{
+        include: [
+            {
+                model: Message,
+                limit: 1,
+                order: [
+                    [Sequelize.literal('createdAt'), 'DESC']
+                ],
+                include: [{
+                    model: User,
+                    attributes: ["userId", "name", "avatar"]
+                }]
+            },
+            {
                 model: User,
                 attributes: ["userId", "name", "avatar"]
-            }]
-        }]
+            }
+        ]
     })
 }
 
