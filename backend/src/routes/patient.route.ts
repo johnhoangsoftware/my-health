@@ -13,4 +13,8 @@ router.route("/medical_record/:id")
 router.route("/appointment")
     .post(patientController.makeAnAppointment)
 
+router.route("/appointment/:id")
+    .patch(patientController.updateAppointment)
+    .delete(patientController.deleteAppointment)
+
 export default router;
