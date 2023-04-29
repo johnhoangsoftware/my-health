@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { CreateAppointmentDTO } from "../dtos/Appointment.dto";
+import { CreateAppointmentDTO } from "../dtos/appointment.dto";
 import CustomError from "../error/CustomError";
 import { trimObject } from "../utils/object";
 

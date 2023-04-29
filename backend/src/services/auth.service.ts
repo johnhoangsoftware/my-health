@@ -31,7 +31,8 @@ export const login = async (username: string, password: string) => {
 
     return {
         token: accessToken,
-        role: user.role
+        role: user.role,
+        userId: user.userId
     }
 }
 

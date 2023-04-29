@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { patientService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 
 // [GET] /patient/medical_record
 export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: Response) => {

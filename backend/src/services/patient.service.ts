@@ -4,7 +4,7 @@ import CustomError from "../error/CustomError";
 import { User, Patient, MedicalRecord, Appointment } from "../models";
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 import { convertDateTime } from '../utils/converter';
 import { validateCreateAppointment } from '../validator/appointment';
 

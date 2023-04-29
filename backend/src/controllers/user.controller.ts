@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
-import { postService, userService } from '../services';
+import { chatService, postService, userService } from '../services';
+import { CreateMessageDTO } from '../dtos/message.dto';
 
 // [GET] /user/profile
 export const profile = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -21,5 +22,3 @@ export const allPosts = ErrorWrapperHandler(async (req: Request, res: Response) 
         data: posts
     });
 })
-
-// [POST] /user/
