@@ -5,5 +5,5 @@ export default function useAuth() {
     (async function() {
         user = await AsyncStorage.getItem('user')
     })()
-    return user
+    return JSON.parse(user)
 }
