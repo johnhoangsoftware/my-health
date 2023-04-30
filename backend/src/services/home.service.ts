@@ -1,6 +1,6 @@
 import { query }  from 'express'
 import { Op } from 'sequelize'
-import { Department, Doctor, Hospital, User } from "../models"
+import { Department, Doctor, Hospital, TestPackage, User } from "../models"
 import { Sequelize } from 'sequelize-typescript'
 
 
@@ -31,18 +31,30 @@ export const searchPreview = async(keyword :string) => {
                 attributes: ["name"]
             }]
         },
-        limit: LIMIT_PREVIEW_RECORDS
+        // limit: LIMIT_PREVIEW_RECORDS
     })
+
     const hospitalPromise = Hospital.findAll({
         where: {
             name: {
                 [Op.like]: `%${keyword}%`
             }
         },
-        attributes: ["hospitalId", "name", "avatar"],
-        limit: LIMIT_PREVIEW_RECORDS
+        attributes: ["hospitalId", "name", "avatar", "address"],
+        // limit: LIMIT_PREVIEW_RECORDS
     })
-    return Promise.all([doctorsPromise, hospitalPromise])
+
+    const testPackages = TestPackage.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${keyword}%`
+            }
+        },
+        attributes: ["testPackageId", "name", "price"]
+        // limit: LIMIT_PREVIEW_RECORDS
+    })
+
+    return Promise.all([doctorsPromise, hospitalPromise, testPackages])
 }
 
 export const searchDoctors = async(keyword: string, d: string) => {

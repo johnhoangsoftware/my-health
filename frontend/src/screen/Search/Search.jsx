@@ -3,11 +3,42 @@ import React, { useState } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-export default function Search({navigation}) {
-    const [search, setSearch] = React.useState({
-        inputSearch: null,
-        isSearch: false
-    })
+import useAxios from '../../hooks/useAxios'
+
+const hospitals = [
+    {
+        name: "Bệnh viện Trung ương Quân đội 108",
+        address: "1B Trần Hưng Đạo, Bạch Đằng, Hai Bà Trưng, Hà Nội",
+        imageURL: "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
+    },
+];
+
+const packages = [
+    {
+        title: "Gói xét nghiệm tại nhà",
+        image: require("./../../assets/demo-img/hospital.jpg"),
+        price: "500.000"
+    },
+    {
+        title: "Gói thăm khám tổng quát tại nhà",
+        image: require("./../../assets/demo-img/hospital.jpg"),
+        price: "500.000"
+    },
+    {
+        title: "Gói thăm khám và xét nghiệm tại nhà",
+        image: require("./../../assets/demo-img/hospital.jpg"),
+        price: "700.000"
+    },
+];
+
+export default function Search({navigation, route}) {
+    const [search, setSearch] = React.useState(route.params?.search || {})
+
+    const [doctorList, setDoctorList] = React.useState([])
+    const [hospitalList, setHospitalList] = React.useState([])
+    const [packageList, setPackageList] = React.useState([])
+
+    const axios = useAxios()
 
     const searchChange = (val) => {
         if (val.length != 0) {
@@ -39,52 +70,38 @@ export default function Search({navigation}) {
         navigation.navigate("Chi tiết gói khám");
     };
 
-    const doctors = [
-        {
-            name: "Nguyễn Thị A",
-            department: "Khoa nhi",
-            stars: 5,
-            imageURL: "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
-        },
-        {
-            name: "Nguyễn Thị B",
-            department: "Khoa thần kinh",
-            stars: 3,
-            imageURL: "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
-        },
-        {
-            name: "Nguyễn Thị C",
-            department: "Khoa chẩn đoán ảnh - chức năng",
-            stars: 4,
-            imageURL: "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
-        },
-    ];
+    React.useEffect(() => {
+        if (!search.inputSearch || !search.inputSearch.trim())
+            return;
+        axios.get(`/search-preview/${search.inputSearch.trim()}`)
+            .then(res => res.data.data)
+            .then(data => {
+                setDoctorList(data.doctors.map(d => ({
+                    id: d.userId,
+                    name: d.name,
+                    department: d.doctor.department.name,
+                    stars: 4,
+                    imageURL: d.avatar || "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
+                })) || [])
 
-    const hospitals = [
-        {
-            name: "Bệnh viện Trung ương Quân đội 108",
-            address: "1B Trần Hưng Đạo, Bạch Đằng, Hai Bà Trưng, Hà Nội",
-            imageURL: "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
-        },
-    ];
+                setHospitalList(data.hospitals.map(h => ({
+                    id: h.hospitalId,
+                    name: h.name,
+                    address: h.address,
+                    imageURL: h.avatar || "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
+                })) || [])
 
-    const packages = [
-        {
-            title: "Gói xét nghiệm tại nhà",
-            image: require("./../../assets/demo-img/hospital.jpg"),
-            price: "500.000"
-        },
-        {
-            title: "Gói thăm khám tổng quát tại nhà",
-            image: require("./../../assets/demo-img/hospital.jpg"),
-            price: "500.000"
-        },
-        {
-            title: "Gói thăm khám và xét nghiệm tại nhà",
-            image: require("./../../assets/demo-img/hospital.jpg"),
-            price: "700.000"
-        },
-    ];
+                setPackageList(data.testPackages.map(p => ({
+                    id: p.testPackageId,
+                    title: p.name,
+                    image: require("./../../assets/demo-img/hospital.jpg"),
+                    price: p.price
+                })) || [])
+
+            }).catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }, [search.inputSearch])
 
     const DoctorBrief = (props) => {
         return (
@@ -155,21 +172,6 @@ export default function Search({navigation}) {
             </>
         )
     }
-    
-    const doctorList=[];
-    doctors.forEach((item) => {
-        doctorList.push(<DoctorBrief key={item.name} name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>)
-    })
-       
-    const hospitalList=[];
-    hospitals.forEach((item) => {
-        hospitalList.push(<HospitalBrief key={item.name} name={item.name} address={item.address} image={item.imageURL}/>)
-    })
-
-    const packageList=[];
-    packages.forEach((item) => {
-        packageList.push(<PackageBrief key={item.title} name={item.title} price={item.price} image={item.image}/>)
-    })
 
     return (
         <>
@@ -182,6 +184,7 @@ export default function Search({navigation}) {
 
                 <TextInput
                     className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
+                    defaultValue={search.inputSearch}
                     onChangeText={(val) => searchChange(val)}
                     onEndEditing={() => searchInfo()}
                 />
@@ -199,21 +202,33 @@ export default function Search({navigation}) {
                     <Text style={styles.textColor} className="ml-2.5 mb-1 text-slate-900 text-lg font-bold">
                         Bác sĩ
                     </Text>
-                    {doctorList}                    
+                        {
+                            doctorList.map((item, index) => {
+                                return <DoctorBrief key={`doctor-${index}-${item.id}`} name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>
+                            })
+                        }                    
                 </View>
                 
                 <View className="mb-2 mx-2 pt-2 bg-white rounded-xl w-fit max-w-s shadow-sm">
                     <Text style={styles.textColor} className="ml-2.5 mb-1 text-slate-900 text-lg font-bold">
                         Bệnh viện
                     </Text>
-                    {hospitalList}                    
+                        {
+                            hospitalList.map((item, index) => {
+                                return <HospitalBrief key={`hospital-${index}-${item.id}`} name={item.name} address={item.address} image={item.imageURL}/>
+                            })
+                        }                    
                 </View>
                 
                 <View className="mb-2 mx-2 pt-2 bg-white rounded-xl w-fit max-w-s shadow-sm">
                     <Text style={styles.textColor} className="ml-2.5 mb-1 text-slate-900 text-lg font-bold">
                         Gói khám
                     </Text>
-                    {packageList}                    
+                        {
+                            packageList.map((item, index) => {
+                                return <PackageBrief key={`package-${index}-${item.id}`} name={item.title} price={item.price} image={item.image}/>
+                            })
+                        }                    
                 </View>
 
             </ScrollView>

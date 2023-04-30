@@ -12,10 +12,10 @@ export class Comment extends Model{
   public content!: string;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
+  public readonly updatedAt!: Date;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.STRING })

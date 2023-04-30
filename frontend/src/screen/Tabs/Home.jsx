@@ -3,8 +3,52 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-// import { AppointmentContext } from "../../component/context";
 
+const hospitals = [
+    {
+        name: "Bệnh viện Trung ương Quân đội 108",
+        address: "1B Trần Hưng Đạo, Bạch Đằng, Hai Bà Trưng, Hà Nội",
+        imageURL: "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg"
+    },
+    {
+        name: "Bệnh viện Bạch Mai",
+        address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội",
+        imageURL: "https://bcp.cdnchinhphu.vn/Uploaded/hoangtrongdien/2020_02_18/kh%C3%A1m-b%E1%BB%87nh-%E1%BB%9F-b%E1%BB%87nh-vi%E1%BB%87n-B%E1%BA%A1ch-Mai-1-1024x449.jpg"
+    },
+    {
+        name: "Bệnh viện E Hà Nội",
+        address: "89 Trần Cung, Nghĩa Tân, Cầu Giấy, Hà Nội",
+        imageURL: "https://image.congan.com.vn/thumbnail/CATP-480-2020-8-19/bv-e.jpg"
+    },
+    {
+        name: "Bệnh viện Răng Hàm Mặt Trung ương Hà Nội",
+        address: "40B Tràng Thi, Hoàn Kiếm, Hà Nội",
+        imageURL: "https://thuocdantoc.vn/wp-content/uploads/2019/07/benh-vien-rang-ham-mat-trung-uong-ha-noi.jpg"
+    },
+    {
+        name: "Bệnh viện Đa khoa Y học cổ truyền",
+        address: "Số 8 đường Phạm Hùng, Cầu Giấy, Hà Nội",
+        imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLPvRsbo3PT_vfP2ITEPhc3HuObPosxH0BkHK3BXRgAK5ctccIqf23kM8lwdDhzI0_8gc&usqp=CAU"
+    },
+];
+
+const items = [
+    {
+        title: "Xét nghiệm tại nhà",
+        image: require("./../../assets/home-icon/blood-test.png"),
+        onPress: () => { navigation.navigate("Xét nghiệm tại nhà") }
+    },
+    {
+        title: "Xem lịch khám",
+        image: require("./../../assets/home-icon/calendar.png"),
+        onPress: () => {navigation.navigate("Xem lịch khám")}
+    },
+    {
+        title: "Danh sách bác sĩ",
+        image: require("./../../assets/home-icon/shortlist.png"),
+        onPress: () => { navigation.navigate("Danh sách bác sĩ") }
+    },
+];
 
 export default function Home({ navigation }) {
     // const { setHospital } = React.useContext(AppointmentContext)
@@ -48,56 +92,14 @@ export default function Home({ navigation }) {
         isSearch: false
     })
 
-    const hospitals = [
-        {
-            name: "Bệnh viện Trung ương Quân đội 108",
-            address: "1B Trần Hưng Đạo, Bạch Đằng, Hai Bà Trưng, Hà Nội",
-            imageURL: "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg"
-        },
-        {
-            name: "Bệnh viện Bạch Mai",
-            address: "Số 78 đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội",
-            imageURL: "https://bcp.cdnchinhphu.vn/Uploaded/hoangtrongdien/2020_02_18/kh%C3%A1m-b%E1%BB%87nh-%E1%BB%9F-b%E1%BB%87nh-vi%E1%BB%87n-B%E1%BA%A1ch-Mai-1-1024x449.jpg"
-        },
-        {
-            name: "Bệnh viện E Hà Nội",
-            address: "89 Trần Cung, Nghĩa Tân, Cầu Giấy, Hà Nội",
-            imageURL: "https://image.congan.com.vn/thumbnail/CATP-480-2020-8-19/bv-e.jpg"
-        },
-        {
-            name: "Bệnh viện Răng Hàm Mặt Trung ương Hà Nội",
-            address: "40B Tràng Thi, Hoàn Kiếm, Hà Nội",
-            imageURL: "https://thuocdantoc.vn/wp-content/uploads/2019/07/benh-vien-rang-ham-mat-trung-uong-ha-noi.jpg"
-        },
-        {
-            name: "Bệnh viện Đa khoa Y học cổ truyền",
-            address: "Số 8 đường Phạm Hùng, Cầu Giấy, Hà Nội",
-            imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLPvRsbo3PT_vfP2ITEPhc3HuObPosxH0BkHK3BXRgAK5ctccIqf23kM8lwdDhzI0_8gc&usqp=CAU"
-        },
-    ];
+   
     const hospitalList = [];
     hospitals.forEach((hospital) => {
         hospitalList.push(
             <InfoHospital key={hospital.name} name={hospital.name} address={hospital.address} imageURL={hospital.imageURL} />)
     })
 
-    const items = [
-        {
-            title: "Xét nghiệm tại nhà",
-            image: require("./../../assets/home-icon/blood-test.png"),
-            onPress: () => { navigation.navigate("Xét nghiệm tại nhà") }
-        },
-        {
-            title: "Xem lịch khám",
-            image: require("./../../assets/home-icon/calendar.png"),
-            onPress: () => {navigation.navigate("Xem lịch khám")}
-        },
-        {
-            title: "Danh sách bác sĩ",
-            image: require("./../../assets/home-icon/shortlist.png"),
-            onPress: () => { navigation.navigate("Danh sách bác sĩ") }
-        },
-    ];
+    
     const itemList = [];
 
     items.forEach((item) => {
@@ -119,12 +121,22 @@ export default function Home({ navigation }) {
     }
 
     const searchInfo = () => {
-        navigation.navigate("Tìm kiếm");
+        navigation.navigate("Tìm kiếm", {search});
     }
 
     const notification = () => {
         navigation.navigate("Thông báo");
     }
+
+    React.useEffect(() => {
+        if (!search.inputSearch?.trim()) {
+            return
+        }
+        setSearch({
+            inputSearch: "",
+            isSearch: false
+        })
+    }, [])
 
     return (<>
         <StatusBar />
@@ -138,7 +150,7 @@ export default function Home({ navigation }) {
                 <TextInput
                     className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
                     onChangeText={(val) => searchChange(val)}
-                    onEndEditing={() => searchInfo()}
+                    onEndEditing={() => searchInfo(search)}
                 />
             </View>
             <TouchableOpacity
