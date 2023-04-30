@@ -4,9 +4,9 @@ import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { chatService, postService, userService } from '../services';
 import { CreateMessageDTO } from '../dtos/message.dto';
 
-// [GET] /user/profile
+// [GET] /user/profile/:id
 export const profile = ErrorWrapperHandler(async (req: Request, res: Response) => {
-    const userId = req.auth?.id
+    const userId = req.params.id
     const data = await userService.profile(userId)
     return res.status(StatusCodes.OK).json({
         data: data

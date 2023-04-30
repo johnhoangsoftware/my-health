@@ -50,7 +50,11 @@ export const searchPreview = async(keyword :string) => {
                 [Op.like]: `%${keyword}%`
             }
         },
-        attributes: ["testPackageId", "name", "price"]
+        attributes: ["testPackageId", "name", "price"],
+        include: {
+            model: Hospital,
+            attributes: ["name"]
+        }
         // limit: LIMIT_PREVIEW_RECORDS
     })
 

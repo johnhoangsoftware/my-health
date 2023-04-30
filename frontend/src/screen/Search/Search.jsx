@@ -5,32 +5,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import useAxios from '../../hooks/useAxios'
 
-const hospitals = [
-    {
-        name: "Bệnh viện Trung ương Quân đội 108",
-        address: "1B Trần Hưng Đạo, Bạch Đằng, Hai Bà Trưng, Hà Nội",
-        imageURL: "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
-    },
-];
-
-const packages = [
-    {
-        title: "Gói xét nghiệm tại nhà",
-        image: require("./../../assets/demo-img/hospital.jpg"),
-        price: "500.000"
-    },
-    {
-        title: "Gói thăm khám tổng quát tại nhà",
-        image: require("./../../assets/demo-img/hospital.jpg"),
-        price: "500.000"
-    },
-    {
-        title: "Gói thăm khám và xét nghiệm tại nhà",
-        image: require("./../../assets/demo-img/hospital.jpg"),
-        price: "700.000"
-    },
-];
-
 export default function Search({navigation, route}) {
     const [search, setSearch] = React.useState(route.params?.search || {})
 
@@ -58,16 +32,16 @@ export default function Search({navigation, route}) {
         navigation.navigate("Tìm kiếm");
     }
 
-    const goToDoctorDetails = () => {
-        navigation.navigate("Thông tin bác sĩ");
+    const goToDoctorDetails = (id) => {
+        navigation.navigate("Thông tin bác sĩ", {id});
     };
 
-    const goToHospitalDetails = () => {
-        navigation.navigate("Thông tin bệnh viện");
+    const goToHospitalDetails = (id) => {
+        navigation.navigate("Thông tin bệnh viện", {id});
     };
 
-    const goToPackageDetails = () => {
-        navigation.navigate("Chi tiết gói khám");
+    const goToPackageDetails = (id) => {
+        navigation.navigate("Chi tiết gói khám", {id});
     };
 
     React.useEffect(() => {
@@ -95,7 +69,8 @@ export default function Search({navigation, route}) {
                     id: p.testPackageId,
                     title: p.name,
                     image: require("./../../assets/demo-img/hospital.jpg"),
-                    price: p.price
+                    price: p.price,
+                    hospital: p.hospital
                 })) || [])
 
             }).catch(err => {
@@ -107,7 +82,7 @@ export default function Search({navigation, route}) {
         return (
             <>
             <View className="h-0.5 w-full bg-gray-200" />
-            <TouchableOpacity onPress={() => goToDoctorDetails()} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
+            <TouchableOpacity onPress={() => goToDoctorDetails(props.id)} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
                     <Image src={props.image} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
@@ -135,7 +110,7 @@ export default function Search({navigation, route}) {
         return (
             <>
             <View className="h-0.5 w-full bg-gray-200" />
-            <TouchableOpacity onPress={() => goToHospitalDetails()} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
+            <TouchableOpacity onPress={() => goToHospitalDetails(props.id)} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-lg items-center justify-center">
                     <Image src={props.image} className='object-scale-down h-16 w-16 rounded-lg' />
                 </View>
@@ -156,13 +131,14 @@ export default function Search({navigation, route}) {
         return (
             <>
             <View className="h-0.5 w-full bg-gray-200" />
-            <TouchableOpacity onPress={() => goToPackageDetails()} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
+            <TouchableOpacity onPress={() => goToPackageDetails(props.id)} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-lg items-center justify-center">
                     <Image source={props.image} className='object-scale-down h-16 w-16 rounded-lg' />
                 </View>
                 <View className="left-3 w-full">
                     <Text className="w-2/3 text-left break-normal font-semibold justify-center">{props.name}</Text>
                     <Text className="w-2/3 text-left break-normal font-normal justify-center">{props.price}</Text>
+                    <Text className="w-2/3 text-left break-normal font-normal justify-center">{props.hospital.name}</Text>
                     <View className="w-1/5 absolute ml-60 mt-1">
                         <Ionicons name="caret-forward" size={24} color="#24DCE2" />
                     </View>
@@ -204,7 +180,7 @@ export default function Search({navigation, route}) {
                     </Text>
                         {
                             doctorList.map((item, index) => {
-                                return <DoctorBrief key={`doctor-${index}-${item.id}`} name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>
+                                return <DoctorBrief key={`doctor-${index}-${item.id}`} id={item.id} name={item.name} department={item.department} stars={item.stars} image={item.imageURL}/>
                             })
                         }                    
                 </View>
@@ -215,7 +191,7 @@ export default function Search({navigation, route}) {
                     </Text>
                         {
                             hospitalList.map((item, index) => {
-                                return <HospitalBrief key={`hospital-${index}-${item.id}`} name={item.name} address={item.address} image={item.imageURL}/>
+                                return <HospitalBrief key={`hospital-${index}-${item.id}`} id={item.id} name={item.name} address={item.address} image={item.imageURL}/>
                             })
                         }                    
                 </View>
@@ -226,7 +202,7 @@ export default function Search({navigation, route}) {
                     </Text>
                         {
                             packageList.map((item, index) => {
-                                return <PackageBrief key={`package-${index}-${item.id}`} name={item.title} price={item.price} image={item.image}/>
+                                return <PackageBrief key={`package-${index}-${item.id}`} id={item.id} name={item.title} price={item.price} image={item.image} hospital={item.hospital} />
                             })
                         }                    
                 </View>

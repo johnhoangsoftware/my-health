@@ -20,7 +20,7 @@ module.exports = {
       {
         hospitalId: "cca2c6dc-f9dc-4560-ab75-154fcfeb529c",
         name: "Phòng khám Bệnh Viện Quốc Tế Hà Nội",
-        address: "Thành phố Hồ Chí Minh",
+        address: "Thành phố Hà Nội",
         avatar: '',
         description: 'Phòng khám Đa khoa Quốc Tế Hà Nội số 152 Xã Đàn là cơ sở y tế chuyên khoa bệnh phụ khoa trực thuộc sự quản lý của Sở Y Tế, tiền thân của Trung tâm Chăm Sóc Sức Khỏe Sinh Sản Hà Nội hiện là Bệnh Viện Phụ Sản Hà Nội Cơ Sở 2, nhận được nhiều bằng khen, giấy khen vì những đóng góp trong ngành Y tế.'
       },

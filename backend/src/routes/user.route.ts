@@ -5,6 +5,6 @@ const router = express.Router()
 router.route("/posts")
     .get(userController.allPosts)
 
-router.route("/profile")
+router.route("/profile/:id")
     .get(userController.profile)
 export default router;
