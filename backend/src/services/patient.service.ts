@@ -4,7 +4,7 @@ import CustomError from "../error/CustomError";
 import { User, Patient, MedicalRecord, Appointment } from "../models";
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
-import { CreateAppointmentDTO } from '../dtos/Appointment.dto';
+import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 import { convertDateTime } from '../utils/converter';
 import { validateCreateAppointment } from '../validator/appointment';
 
@@ -88,8 +88,28 @@ export const makeAnAppointment = async (userId: string, apm: CreateAppointmentDT
         status: 'PENDING',
         dateTime: dateApm,
         medicalRecordId: apm.medicalRecordId,
-        testPackageId: apm.testPackageId,
-        departmentId: apm.departmentId
+        testPackageId: apm.testPackageId || null,
+        departmentId: apm.departmentId || null
     }
     return await Appointment.create({ ...appointment })
+}
+
+export const getAllAppointments = async(userId : string) => {
+    const user = await User.findByPk(userId)
+    if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
+    }
+    return await Appointment.findAll({
+        include: [{
+            model: MedicalRecord,
+            attributes: {
+                exclude: ["createdAt", "updatedAt"]
+            },
+            include: [{
+                model: Patient,
+                where: { userId },
+                attributes: []
+            }]
+        }]
+    })
 }

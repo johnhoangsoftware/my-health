@@ -9,10 +9,13 @@ export class Message extends Model {
   public messageId!: string;
 
   @Column({ type: DataType.STRING })
+  public content?: string;
+
+  @Column({ type: DataType.STRING })
   public type?: string;
 
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
   public readonly updatedAt!: Date;

@@ -22,7 +22,10 @@ export default function App() {
 
   const initialLoginState = {
     isLoading: true,
-    username: null,
+    user: {
+      id: null,
+      role: null
+    },
     userToken: null,
   }
 
@@ -38,22 +41,21 @@ export default function App() {
         return {
           ...prevState,
           username: action.id,
+          user: action.user,
           userToken: action.token,
           isLoading: false,
         };
       case 'SIGNUP':
         return {
-          ...prevState,
-          username: action.id,
-          userToken: action.token,
-          isLoading: false,
+          // ...prevState,
+          // username: action.id,
+          // userToken: action.token,
+          // isLoading: false,
         };
       case 'LOGOUT':
         return {
-          ...prevState,
-          username: null,
-          userToken: null,
-          isLoading: false,
+          ...initialLoginState,
+          isLoading: false
         };
     }
   }
@@ -61,33 +63,29 @@ export default function App() {
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState)
 
   const authContext = React.useMemo(() => ({
-    login: async (username, password) => {
+    login: async (userId, userRole, userToken) => {
       setTimeout(() => {
         setIsLogin(true);
       }, 500);
       setIsLogin(false);
 
-      let userToken;
-      if (username == "user" && password == "pass") {
       try {
-        userToken = "ok";
         await AsyncStorage.setItem('userToken', userToken)
-        await AsyncStorage.setItem('username', username)
+        await AsyncStorage.setItem('user', JSON.stringify({id: userId, role: userRole}))
       } catch (e) {
         console.log(e);
       }
-      }
-      dispatch({ type: 'LOGIN', id: username, token: userToken })
+      dispatch({ type: 'LOGIN', user: {id: userId, role: userRole}, token: userToken })
     },
     signup: async () => {
-      let userToken
-      try {
-        userToken = "signup";
-        await AsyncStorage.setItem('userToken', userToken)
-      } catch (e) {
-        console.log(e)
-      }
-      dispatch({ type: 'SIGNUP', id: username, token: userToken })
+      // let userToken
+      // try {
+      //   userToken = "signup";
+      //   await AsyncStorage.setItem('userToken', userToken)
+      // } catch (e) {
+      //   console.log(e)
+      // }
+      // dispatch({ type: 'SIGNUP', id: username, token: userToken })
     },
     logout: async () => {
       try {
@@ -118,31 +116,6 @@ export default function App() {
       </View>
     );
   }
-
-  // const Stack = createStackNavigator();
-  // const HomeStack = () => {    
-  //     return (
-  //       <Stack.Navigator initialRoutName="Home">
-  //         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
-  //         <Stack.Screen name="Tìm kiếm" component={Search} options={{headerShown: false, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         <Stack.Screen name="Thông báo" component={Notification} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         <Stack.Screen name="Xét nghiệm tại nhà" component={Packages}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         <Stack.Screen name="Xem lịch khám" component={ViewSchedules} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         {/* // navigationOptions={({ navigation, route }) => ({headerLeft: 
-  //         //   (<Ionicons labelVisible={false} title="Trở về" style={styles.Color} // color={'#24dce2'} size={30} name={'arrow-back-outline'}
-  //         //     onPress={() => {
-  //         //       navigation.goBack();
-  //         //     }}
-  //         //   />)
-  //         // })} /> */}
-  //         <Stack.Screen name="Chi tiết gói khám" component={PackageDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         <Stack.Screen name="Đặt lịch xét nghiệm" component={Scheduling}  options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}}/>
-  //         <Stack.Screen name="Danh sách bác sĩ" component={DoctorList} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-  //         <Stack.Screen name="Thông tin bác sĩ" component={DoctorDetails} options={{headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'}/>}}/>
-  //         <Stack.Screen name="Thông tin bệnh viện" component={HospitalDetails} options={{tabBarButton: () => null, headerLeft: () => <Ionicons title="Trở về" size={30} color={'#24dce2'} name={'arrow-back-outline'} />}} />
-  //       </Stack.Navigator>
-  //     )
-  // }
 
   return (
     <AuthContext.Provider value={authContext}>

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { FontAwesome, Feather } from '@expo/vector-icons'
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { AuthContext } from '../../component/context';
+import useAxios from '../../hooks/useAxios';
 
 export default function Login({navigation}) {
   const [data, setData] = React.useState({
@@ -14,8 +15,9 @@ export default function Login({navigation}) {
   })
 
   const [checkLogin, setCheckLogin] = React.useState(true);
-
-  const { login } = React.useContext(AuthContext);
+  const { login } = useContext(AuthContext)
+  
+  const axios = useAxios()
 
   const userChange = (val) => {
     if (val.length != 0) {
@@ -50,12 +52,19 @@ export default function Login({navigation}) {
   }
 
   const loginHandle = (username, password) => {
-    if (username == 'user' && password == 'pass') {
-      login(username, password);
-    } else {
+    axios.post(`/auth/login`, {
+      email: username,
+      password: password
+    }).then(res => {
+      console.log(res.data.data)
+      if (res.status === 200) {
+        const {userId, role, token} =  res.data.data
+        login(userId, role, token) 
+      }
+    }).catch(err => {
+      console.log(JSON.stringify(err))
       setCheckLogin(false);
-    }
-    
+    })
   }
 
   return (

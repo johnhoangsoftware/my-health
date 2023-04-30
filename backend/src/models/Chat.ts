@@ -1,6 +1,7 @@
-import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, BeforeCreate } from 'sequelize-typescript';
+import { Model,  PrimaryKey, Column, Table, ForeignKey, CreatedAt, UpdatedAt, DataType, BelongsTo, BeforeCreate, HasMany } from 'sequelize-typescript';
 import { generateUUID } from '../utils/uuid';
 import { User } from './User';
+import { Message } from './Message';
 
 @Table({ tableName: 'Chats' })
 export class Chat extends Model {
@@ -8,33 +9,32 @@ export class Chat extends Model {
   @Column({ type: DataType.STRING })
   public chatId!: string;
 
+  @PrimaryKey
+  @Column({ type: DataType.STRING })
+  @ForeignKey(() => User)
+  public userId!: string;
+  
   @CreatedAt
-  public readonly created_at!: Date;
+  public readonly createdAt!: Date;
 
   @UpdatedAt
-  public readonly updated_at!: Date;
-
-  @Column({ type: DataType.STRING })
-  @ForeignKey(() => User)
-  public member_one!: string;
-  
-  @ForeignKey(() => User)
-  @Column({ type: DataType.STRING })
-  public member_two!: string;
+  public readonly updatedAt!: Date;
 
   // association
-  @BelongsTo(() => User)
-  private memberOne!: User
+  @HasMany(() => Message)
+  private messages!: Message[]
 
   @BelongsTo(() => User)
-  private memberTwo!: User
+  private user!: User
 
-  public getMembers(): User[] {
-    return [this.memberOne, this.memberTwo]
+  public getMessages() {
+    return this.messages
   }
 
   @BeforeCreate
   static generateID(instance: Chat) {
-    instance.chatId = generateUUID()
+    if (!instance.chatId) {
+      instance.chatId = generateUUID()
+    }
   }
 }
