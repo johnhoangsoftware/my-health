@@ -6,7 +6,6 @@ import { GiftedChat, InputToolbar, Bubble, Send } from "react-native-gifted-chat
 
 export default function ChatDetail({ navigation, route }) {
     const { user } = route.params;
-    const [message, setMessage] = React.useState("h");
     const [messages, setMessages] = React.useState([]);
 
     const mess = [
@@ -128,14 +127,13 @@ export default function ChatDetail({ navigation, route }) {
                     </TouchableOpacity>
                     <View className="my-3 flex-row items-center">
                         <Image
-                            src={user.avatar || `https://cdn-icons-png.flaticon.com/512/147/147133.png`}
+                            src={user.avatar || `https://cdn-icons-png.flaticon.com/512/3607/3607444.png`}
                             className="w-10 h-10 rounded-full mr-3"
                         />
                         <Text className="text-lg font-bold">{user.name}</Text>
                     </View>
                 </View>
             </View>
-            <Text>{message}</Text>
             <GiftedChat
                 messages={messages}
                 user={{
