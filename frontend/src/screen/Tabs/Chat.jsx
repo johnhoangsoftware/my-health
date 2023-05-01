@@ -4,7 +4,7 @@ import { Ionicons, FontAwesome5 } from "@expo/vector-icons"
 import useAxios from '../../hooks/useAxios'
 import useAuth from '../../hooks/useAuth'
 
-export default function Chat() {
+export default function Chat({ navigation }) {
     const [search, setSearch] = React.useState({
         inputSearch: null,
         isSearch: false
@@ -66,17 +66,24 @@ export default function Chat() {
                         chatList.length > 0 &&
                         chatList.map((c, index) => {
                             return (
-                                <ChatItem
-                                    key={`chat-item-${index}-${c.chatId}`}
-                                    chatItem={{
-                                        chatId: c.chatId,
-                                        user: c.user,
-                                        lastMessage: c.messages[0]
-                                    }}
-                                />
+                                <TouchableOpacity onPress={() => navigation.navigate("Chat Detail", { user: c.user })}
+                                >
+                                    <ChatItem
+                                        key={`chat-item-${index}-${c.chatId}`}
+                                        chatItem={{
+                                            chatId: c.chatId,
+                                            user: c.user,
+                                            lastMessage: c.messages[0]
+                                        }}
+                                    />
+                                </TouchableOpacity>
                             )
                         })
                     }
+                    {/* test chat detail */}
+                    <TouchableOpacity className="bg-red-500 p-5" onPress={() => navigation.navigate("Chat Detail", { user: {_id: "2d683fbb-39aa-4428-8b44-c09394f8641d", name: "Vu Van T"}})}>
+                        <Text>Click</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -89,12 +96,12 @@ const ChatItem = ({ chatItem }) => {
     React.useEffect(() => {
         (async function () {
             const u = await useAuth()
-           setAuth(u) 
+            setAuth(u)
         })()
     }, [])
-    
+
     return (
-        <TouchableOpacity className="mx-4 my-2 flex-col ">
+        <View className="mx-4 my-2 flex-col ">
             <View className="flex-row items-center w-screen px-3">
                 <Image
                     src={chatItem.user.avatar || `https://cdn-icons-png.flaticon.com/512/147/147133.png`}
@@ -113,6 +120,6 @@ const ChatItem = ({ chatItem }) => {
                     </Text>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
