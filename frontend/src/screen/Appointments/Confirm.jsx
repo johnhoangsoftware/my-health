@@ -7,7 +7,7 @@ export default function Confirm({ navigation, route }) {
 
     const Info = (props) => {
         return (
-            <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-md shadow-gray-500">
+            <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-sm">
                 <View className="my-3">
                     <View className="flex-row py-1 border-b border-gray-200">
                         <Text>Bệnh viện</Text>
@@ -70,7 +70,7 @@ export default function Confirm({ navigation, route }) {
                 }}>
                 <View className="w-screen h-screen items-center justify-center">
                     <View className="w-screen h-screen bg-black opacity-25 absolute"></View>
-                    <View className="bg-white items-center justify-center w-2/3 p-4 rounded-md">
+                    <View className="bg-white items-center justify-center w-2/3 p-4 rounded-md shadow-sm">
                         <Text className="font-bold text-lg">Đặt lịch khám thành công!</Text>
                         <Pressable
                             className="mt-4 p-2 rounded"

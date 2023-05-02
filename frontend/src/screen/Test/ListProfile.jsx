@@ -61,7 +61,7 @@ export default function ListProfileTest({ navigation, route }) {
 
     return (
         <View>
-            <TouchableOpacity className="flex-row m-4 mb-2 p-5 rounded-md bg-white shadow-md shadow-gray-500">
+            <TouchableOpacity className="flex-row m-4 mb-2 p-5 rounded-md bg-white shadow-sm">
                 <Text className="text-base font-bold w-11/12" style={{ color: "#24DCE2" }}>Thêm hồ sơ</Text>
                 <Ionicons name="add-circle" size={24} color="#24DCE2" />
             </TouchableOpacity>

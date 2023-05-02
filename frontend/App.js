@@ -12,6 +12,7 @@ import Community from './src/screen/Tabs/Community';
 import Chat from './src/screen/Tabs/Chat';
 import Account from './src/screen/Tabs/Account';
 import HomeStack from './src/screen/HomeStack';
+import ChatStack from './src/screen/ChatStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -145,7 +146,7 @@ export default function App() {
           >
               <Tab.Screen name="Trang chủ" component={HomeStack} />
               <Tab.Screen name="Cộng đồng" component={Community} />
-              <Tab.Screen name="Chat" component={Chat} />
+              <Tab.Screen name="Chat" component={ChatStack} />
               <Tab.Screen name="Tài khoản" component={Account} />
           </Tab.Navigator> 
         )
