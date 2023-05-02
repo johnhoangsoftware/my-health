@@ -41,11 +41,11 @@ export const searchAllDoctors = ErrorWrapperHandler(async (req: Request, res: Re
 // [GET] /search-hospital/:k
 export const searchAllHospitals = ErrorWrapperHandler(async (req: Request, res: Response, next: NextFunction) => {
     const k = req.params.k.trim()
-    const doctors = await homeService.searchHospitals(k)
+    const hospitals = await homeService.searchHospitals(k)
     return res.status(StatusCodes.OK).json({
         data: {
             keyword: k,
-            doctors,
+            hospitals,
         }
     })
 })

@@ -38,7 +38,7 @@ export default function useAxios() {
             instance.interceptors.request.eject(requestIntercept)
             instance.interceptors.response.eject(responseIntercept)
         }
-    })
+    }, [])
 
     return instance
 }

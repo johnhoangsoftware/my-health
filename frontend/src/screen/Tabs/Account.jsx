@@ -1,40 +1,48 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native"
 import { AuthContext } from "../../component/context";
 import React, { useEffect, useRef } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons, FontAwesome, Feather, AntDesign, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
 
 export default function Account() {
     const { logout } = React.useContext(AuthContext);
-    const [username, setUsername] = React.useState(null)
+    const [user, setUser] = React.useState({})
+    const [auth, setAuth] = React.useState({})
+    const axios = useAxios()
 
-    const logoutClick = () => {
-        logout();
-    }
+    React.useEffect(() => {
+        (async function () {
+            const u = await useAuth()
+           setAuth(u) 
+        })()
+    }, [])
 
     useEffect(() => {
-        setTimeout(async () => {
-            let username
-            try {
-                username = await AsyncStorage.getItem("username");
-            } catch (error) {
-                console.log(error)
-            }
-            setUsername(username)
-        }, 500);
-    }, []);
-
+        if(Object.keys(auth).length === 0 || !auth.id) {
+            return
+        }
+        axios.get(`/user/profile/${auth.id}`)
+            .then(res => res.data.data)
+            .then(info => {
+                setUser(info)
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }, [auth]);
 
     return (
         <View className="flex-1 items-center bg-white">
             <View className="w-full h-60">
                 <Image
-                    src="https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-abstract-medical-wallpaper-template-design-banner-background-image_519861.jpg"
+                    src={user.avatar || "https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-abstract-medical-wallpaper-template-design-banner-background-image_519861.jpg"}
                     className="object-cover w-full h-full overflow-hidden"
                 />
             </View>
             <View className="-mt-2 p-4 bg-white rounded-t-xl w-full max-w-s shadow-sm">
-                <Text className="pt-24 text-center mb-2 text-slate-900 text-2xl font-bold">{username}</Text>
+                <Text className="pt-24 text-center mb-2 text-slate-900 text-2xl font-bold">{user.name}</Text>
                 <View className="m-auto flex-row space-x-5">
                     <TouchableOpacity style={styles.bg} className="p-3 rounded-lg flex-row items-center justify-center w-40">
                         <Feather name="edit" size={24} color={"white"} />

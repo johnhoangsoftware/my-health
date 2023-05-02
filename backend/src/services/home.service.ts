@@ -97,9 +97,9 @@ export const searchHospitals = async (keyword: string) => {
     return Hospital.findAll({
         where: {
             name: {
-                [Op.like]: `%${keyword}%`
+                [Op.like]: `%${keyword.trim()}%`
             }
         },
-        attributes: ["hospitalId", "name", "avatar"],
+        attributes: ["hospitalId", "name", "avatar", "description"],
     })
 }

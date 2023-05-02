@@ -15,6 +15,11 @@ module.exports =  {
                 allowNull: false,
             },
 
+            avatar: {
+                type: DataTypes.STRING(255),
+                defaultValue: null
+            },
+
             createdAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
