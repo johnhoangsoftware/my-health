@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'rea
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStackScreen from './src/screen/RootStackScreen'
-import { AuthContext } from './src/component/context';
+import { AuthContext, SocketContext } from './src/component/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons'
 
@@ -146,7 +146,7 @@ export default function App() {
           >
               <Tab.Screen name="Trang chủ" component={HomeStack} />
               <Tab.Screen name="Cộng đồng" component={Community} />
-              <Tab.Screen name="Chat" component={ChatStack} />
+              <Tab.Screen name="Chat" component={Chat} />
               <Tab.Screen name="Tài khoản" component={Account} />
           </Tab.Navigator> 
         )

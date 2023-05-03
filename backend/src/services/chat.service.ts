@@ -75,7 +75,7 @@ export const inbox = async(userId: string , partnerId: string) => {
 
     const chatId = await findChat(userId, partnerId)
     if (!chatId) {
-        throw new CustomError(StatusCodes.NOT_FOUND, `Could not find chat`)
+        return {chatId: '', messages: []}
     }
 
     const messages = await Message.findAll({
@@ -85,7 +85,7 @@ export const inbox = async(userId: string , partnerId: string) => {
             attributes: ["userId", "name", "avatar"]
         }],
         order: [
-            [Sequelize.literal('createdAt'), 'ASC']
+            [Sequelize.literal('createdAt'), 'DESC']
         ]
     })
 
@@ -109,7 +109,12 @@ export const sendMessage = async (userId: string, partnerId: string, msg: Create
     }
 
     msg = validateCreateMessage(msg)
-    
+    console.log({
+        content: msg.content,
+        type: msg.type || "TEXT",
+        chatId: chatId,
+        senderId: userId
+    })
     const message = await Message.create({
         content: msg.content,
         type: msg.type || "TEXT",

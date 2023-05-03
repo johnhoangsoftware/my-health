@@ -38,6 +38,9 @@ export const updateByID = async (id: string, updateUser: UpdateUserDTO): Promise
 
 export const profile = async (id: string) => {
     const user = await User.findByPk(id, {
+        attributes: {
+            exclude: ["password", "createdAt", "updatedAt"]
+        },
         include: [
             {
                 model: Doctor,

@@ -4,13 +4,24 @@ import { Application, NextFunction, Request, Response } from 'express'
 import { chatService } from "../services";
 import { CreateMessageDTO } from "../dtos/message.dto";
 
+let uid: {[key:string]: string} = {}
+
 export const socketSetup = (io: any, app: Application) => {
-    app.set("io", io)
     io.on("connection", (socket: any) => {
-        socket.on("join room", (rooms: string[]) => {
-            rooms.forEach(r => {
-                socket.join(r)
-            })
+        app.set("socket.io", {io, socket})
+        console.log("An user connected:", socket.id)
+        socket.emit("handshake", socket.id)
+        socket.on("handshake", ({userId, socketId}: {[key: string]: string}) => {
+            uid[userId] = socketId
+            console.log("JOIN: ", userId, socketId)
+        })
+        
+        socket.on("disconnect", () => {
+            console.log("Disconnect from", socket.id)
+            const k = Object.keys(uid).find(k => uid[k] === socket.id)
+            if (k) {
+                delete uid[k]
+            }
         })
     })
 }
@@ -40,6 +51,10 @@ export const sendMessage = ErrorWrapperHandler(async (req: Request, res: Respons
     const userId = req.auth?.id
     const partnerId = req.params.id
     const d = await chatService.sendMessage(userId, partnerId, req.body as CreateMessageDTO)
+    const { socket } = req.app.get("socket.io")
+    if (uid[partnerId]) {
+        socket.in(uid[partnerId]).emit("message", d)
+    }
     return res.status(StatusCodes.OK).json({
         data: d
     });

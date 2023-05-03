@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 const Details = (props) => {
     const navigation = useNavigation()
 
-    const goToChat = () => {
-        navigation.navigate("Chat");
+    const goToChat = (doctor) => {
+        navigation.navigate("Chat Detail", { user: doctor });
     };
 
     return (
@@ -32,7 +32,11 @@ const Details = (props) => {
                 </View>    
 
                 <TouchableOpacity style={styles.bgColor} className="w-full mt-4 p-2 text-center rounded-lg border"
-                    onPress={goToChat}
+                    onPress={() => goToChat({
+                        id: props.id,
+                        name: props.name,
+                        avatar: props.imageURL
+                    })}
                     >
                     <Text className="text-white text-base text-center font-bold">Liên hệ</Text>
                 </TouchableOpacity>
@@ -72,6 +76,7 @@ const Details = (props) => {
 )}
 
 export default function DoctorDetails({ navigation, route }) {
+    console.log("PARAMS:", route.params)
     const id = route.params.id
     const [doctor, setDoctor] = React.useState({})
     const axios = useAxios()
@@ -80,7 +85,6 @@ export default function DoctorDetails({ navigation, route }) {
         axios.get(`/user/profile/${id}`)
             .then(res => res.data.data)
             .then(doctor => {
-                console.log(doctor)
                 setDoctor({
                     id: doctor.userId,
                     name: doctor.name,
@@ -100,7 +104,7 @@ export default function DoctorDetails({ navigation, route }) {
     return (
         <KeyboardAwareScrollView>
             <ScrollView pagingEnabled={true}>
-                <Details key={`doctor-${doctor.id}-detail`} id={doctor.id} name={doctor.name} title={doctor.title} address={doctor.address} unit={doctor.unit} department={doctor.department} stars={doctor.star} hospital={doctor.hospital} imageURL={doctor.imageURL} price={doctor.price} />
+                <Details key={`doctor-${doctor.id}-detail`} id={doctor.id} name={doctor.name} title={doctor.title} address={doctor.address} unit={doctor.unit} department={doctor.department} stars={doctor.star} hospital={doctor.hospital} imageURL={doctor.imageURL} />
             </ScrollView>
         </KeyboardAwareScrollView>  
 

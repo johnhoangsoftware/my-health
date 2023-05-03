@@ -18,6 +18,7 @@ import ListProfileTest from "./Test/ListProfile";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
+import ChatDetail from "./Chat/ChatDetail";
 
 const Stack = createStackNavigator();
 export default function HomeStack() {
@@ -28,7 +29,11 @@ export default function HomeStack() {
         component={Home}
         options={{ headerShown: false }}
       />
-
+      <Stack.Screen
+        name="Chat Detail"
+        component={ChatDetail}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Tìm kiếm"
         component={Search}

@@ -56,17 +56,24 @@ export default function Chat({ navigation }) {
                         : <Ionicons name='search' size={20} color="gray" />
                     }
                     <TextInput
-                        className="pl-2" placeholder='Nhập tên bác sĩ'
+                        className="pl-2" placeholder='Nhập tên bác sĩ đã liên hệ'
                         onChangeText={(val) => searchChange(val)}
                         onEndEditing={() => searchInfo()}
                     />
                 </View>
                 <View>
                     {
-                        chatList.length > 0 &&
-                        chatList.map((c, index) => {
+                        chatList.length > 0 ?
+                            chatList.map((c, index) => {
                             return (
-                                <TouchableOpacity onPress={() => navigation.navigate("Chat Detail", { user: c.user })}
+                                <TouchableOpacity
+                                    key={`chat-list-item-${index}-${c.chatId}`}
+                                    onPress={() => navigation.navigate("Chat Detail", {
+                                        user: {
+                                            id: c.user.userId,
+                                            name: c.user.name,
+                                            avatar: c.user.avatar
+                                    } })}
                                 >
                                     <ChatItem
                                         key={`chat-item-${index}-${c.chatId}`}
@@ -79,11 +86,9 @@ export default function Chat({ navigation }) {
                                 </TouchableOpacity>
                             )
                         })
+                            :
+                        <Text>Bạn chưa có cuộc hội thoại nào</Text>
                     }
-                    {/* test chat detail */}
-                    <TouchableOpacity className="bg-red-500 p-5" onPress={() => navigation.navigate("Chat Detail", { user: {_id: "2d683fbb-39aa-4428-8b44-c09394f8641d", name: "Vu Van T"}})}>
-                        <Text>Click</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -104,7 +109,7 @@ const ChatItem = ({ chatItem }) => {
         <View className="mx-4 my-2 flex-col ">
             <View className="flex-row items-center w-screen px-3">
                 <Image
-                    src={chatItem.user.avatar || `https://cdn-icons-png.flaticon.com/512/147/147133.png`}
+                    src={chatItem.user.avatar || "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"}
                     className="w-16 h-16 rounded-full"
                 />
                 <View className="w-72">

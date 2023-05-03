@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 
 import { AuthContext } from '../../component/context';
 import useAxios from '../../hooks/useAxios';
+import useSocket from '../../hooks/useSocket'
 
 export default function Login({navigation}) {
   const [data, setData] = React.useState({
@@ -18,6 +19,7 @@ export default function Login({navigation}) {
   const { login } = useContext(AuthContext)
   
   const axios = useAxios()
+  const socket = useSocket()
 
   const userChange = (val) => {
     if (val.length != 0) {
@@ -58,8 +60,9 @@ export default function Login({navigation}) {
     }).then(res => {
       console.log(res.data.data)
       if (res.status === 200) {
-        const {userId, role, token} =  res.data.data
-        login(userId, role, token) 
+        const { userId, role, token } = res.data.data
+        socket.emit("join room", userId)
+        login(userId, role, token)
       }
     }).catch(err => {
       console.log(JSON.stringify(err))

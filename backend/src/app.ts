@@ -17,10 +17,10 @@ export class App {
 
     constructor(private port?: number | string) {
         this.app = express()
+        this.server = http.createServer(this.app)
         this.setting();
         this.middleware();
         this.routes();
-        this.server = http.createServer(this.app)
     }
 
     setting() {
@@ -34,7 +34,12 @@ export class App {
         this.app.use(cors({
             origin: [process.env.CLIENT!]
         }))
-        socketSetup(new socketio.Server(this.server), this.app)
+        console.log("socket origin:",process.env.CLIENT)
+        socketSetup(new socketio.Server(this.server, {
+            cors: {
+                origin: [process.env.CLIENT!]
+            }
+        }), this.app)
     }
 
     routes() {
