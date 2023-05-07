@@ -8,11 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Community from './src/screen/Tabs/Community';
-import Chat from './src/screen/Tabs/Chat';
 import Account from './src/screen/Tabs/Account';
 import HomeStack from './src/screen/HomeStack';
 import ChatStack from './src/screen/ChatStack';
+import CommunityStack from './src/screen/CommunityStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,11 +71,11 @@ export default function App() {
 
       try {
         await AsyncStorage.setItem('userToken', userToken)
-        await AsyncStorage.setItem('user', JSON.stringify({id: userId, role: userRole}))
+        await AsyncStorage.setItem('user', JSON.stringify({ id: userId, role: userRole }))
       } catch (e) {
         console.log(e);
       }
-      dispatch({ type: 'LOGIN', user: {id: userId, role: userRole}, token: userToken })
+      dispatch({ type: 'LOGIN', user: { id: userId, role: userRole }, token: userToken })
     },
     signup: async () => {
       // let userToken
@@ -144,11 +143,11 @@ export default function App() {
               });
             }}
           >
-              <Tab.Screen name="Trang chủ" component={HomeStack} />
-              <Tab.Screen name="Cộng đồng" component={Community} />
-              <Tab.Screen name="Chat" component={Chat} />
-              <Tab.Screen name="Tài khoản" component={Account} />
-          </Tab.Navigator> 
+            <Tab.Screen name="Trang chủ" component={HomeStack} />
+            <Tab.Screen name="Cộng đồng" component={CommunityStack} />
+            <Tab.Screen name="Chat" component={ChatStack} />
+            <Tab.Screen name="Tài khoản" component={Account} />
+          </Tab.Navigator>
         )
           : <RootStackScreen />}
       </NavigationContainer>

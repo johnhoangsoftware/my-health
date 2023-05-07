@@ -3,41 +3,43 @@ import { Ionicons } from "@expo/vector-icons"
 import Post from "../../component/Post/Post"
 import { StatusBar } from "expo-status-bar";
 
-export default function Community() {
+export default function Community({ navigation }) {
     const posts = [
         {
-            post_id: 3,
-            user_id: "Nguyễn Văn An",
-            createdAt: "9:30 10/4/2023",
-            avatar: "https://cdn-icons-png.flaticon.com/512/147/147133.png",
-            content: "Người bị bệnh tiểu đường type 1 có sử dụng insulin có nhất thiết phải giảm lượng carbohydrat ko? Người tiểu đường type 1 bị thiếu cân, cần tăng cân thì cần ăn nhưng gì?"
+            postId: "8c5fdcd4-1a5b-4029-bcd1-087bcd5cccdd",
+            topic: "eye",
+            content: "Em chào mọi người, mọi người cho em hỏi bệnh nhân tiểu đường cần kiêng những gì ạ? ",
+            media: "https://exploratory.io/note/kanaugust/Rename-Multiple-Columns-2613369153527243/note_content/libs/exploratory/images/p1.png",
+            authId: "2764319f-7d99-43e7-a4d5-850380b1fd77",
+            createdAt: "2023-04-15T03:51:38.000Z",
+            updatedAt: "2023-04-15T03:51:38.000Z",
+            numberOfComments: 3,
+            auth: {
+                userId: "2764319f-7d99-43e7-a4d5-850380b1fd77",
+                firstName: "Vu Hoang",
+                lastName: "Anh",
+                avatar: null
+            }
         },
-        {
-            post_id: 2,
-            user_id: "Hoàng Thu Hương",
-            createdAt: "15:35 9/4/2023",
-            avatar: "https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png",
-            content: "Chào mọi người, con em được gần 5 tháng mà thóp sau vẫn chưa đóng hẳn, sờ vẫn còn mềm. Như vậy có bình thường không ạ, có cần phải đi khám bác sĩ không ạ, cháu hiện được 9kg, do vậy cháu lại nằm ngửa nhiều nên đầu hơi bẹp, điều đó có ảnh hưởng gì đến sự phát triển của não không ạ?"
-        },
-        {
-            post_id: 1,
-            user_id: "Nguyễn Thị Lan",
-            createdAt: "10:21 9/4/2023",
-            avatar: "https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_person_people_avatar_icon_159366.png",
-            content: "Mọi người cho em hỏi, bố em hay đau thắt ở ngực, cảm giác lồng ngực cứ như có ai đó bóp chặt, đè nén với một áp lực rất lớn. Các bác sĩ cho em hỏi, triệu chứng như vậy có phải bố em bị bệnh mạch vành không? Bố em nên đi kiểm tra những gì?"
-        },
-
     ];
+
+    const dateToString = (d) => {
+        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    }
+
     const postList = [];
     posts.forEach((post) => {
         postList.push(
-            <Post
-                key={post.post_id}
-                user_id={post.user_id}
-                createdAt={post.createdAt}
-                avatar={post.avatar}
-                content={post.content}
-            />
+            <TouchableOpacity onPress={() => { navigation.navigate("Post Detail", { post: post }) }}>
+                <Post
+                    key={post.post_id}
+                    user_id={post.auth.firstName + " " + post.auth.lastName}
+                    createdAt={dateToString(new Date(post.createdAt))}
+                    avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
+                    content={post.content}
+                    numberOfComments={post.numberOfComments}
+                />
+            </TouchableOpacity>
         )
     })
 
@@ -58,7 +60,10 @@ export default function Community() {
                 </View>
             </View>
             <ScrollView className="flex-1">
-                <TouchableOpacity className="flex-row items-center bg-white py-5 w-screen">
+                <TouchableOpacity
+                    className="flex-row items-center bg-white py-5 w-screen"
+                    onPress={() => navigation.navigate("New Post")}
+                >
                     <Image
                         src="https://i.etsystatic.com/isla/28f779/58119197/isla_fullxfull.58119197_gwg8k1wg.jpg?version=0"
                         className="w-10 h-10 rounded-full ml-3"

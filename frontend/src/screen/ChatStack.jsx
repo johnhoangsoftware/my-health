@@ -16,18 +16,6 @@ export default function ChatStack() {
                 name="Chat Detail"
                 component={ChatDetail}
                 options={{ headerShown: false }}
-                // navigationOptions={({ navigation, route }) => ({
-                //     headerLeft: (
-                //         <Ionicons
-                //             labelVisible={false}
-                //             title="Trở về"
-                //             style={{ color: "#24dce2" }}
-                //         />
-                //     ),
-                //     header: (
-                //         <Text>Huong</Text>
-                //     )
-                // })}
             />
         </Stack.Navigator>
     )
