@@ -40,6 +40,12 @@ module.exports =  {
                 allowNull: false,
             },
 
+            content: {
+                type: DataTypes.TEXT,
+                allowNull: true,
+            },
+
+
             createdAt: {
                 type: DataTypes.DATE,
                 allowNull: false,

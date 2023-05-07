@@ -7,7 +7,7 @@ export const getMedicalRecords = async (doctorId: string) => {
     if (!doctor) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Doctor with ID: ${doctorId} not found.`)
     }
-    const listMedicalRecords = await Appointment.findAll({
+    const listAppointment = await Appointment.findAll({
         where: {
             deparmentId: doctor.departmentId
         },
@@ -18,12 +18,22 @@ export const getMedicalRecords = async (doctorId: string) => {
     })
     console.log(doctor?.toJSON())
     
-    if (listMedicalRecords.length === 0) {
+    if (listAppointment.length === 0) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Doctor with ID: ${doctorId} not found.`)
     }
 
 
-    return listMedicalRecords
+    let listMedicalRecords
+    listAppointment.map(async (appointment) => {
+        listMedicalRecords = await Appointment.findAll({
+            where: {
+                medicalRecordId: appointment.medicalRecordId
+            },
+        })
+    })
+
+
+    return listMedicalRecords //listMedicalRecords
 }
 
 export const medicalNotes = async (doctorId: string, medicalRecordId: string, data: { [key: string]: any }) => {
@@ -44,8 +54,8 @@ export const medicalNotes = async (doctorId: string, medicalRecordId: string, da
     if (!appointment) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Appointment with medical record ID: ${medicalRecordId} not found.`)
     }
-    //medicalRecord.content = data
-    //medicalRecord.save()
-    const updatedMedicalRecord = await medicalRecord.update(data)
-    return updatedMedicalRecord
+    medicalRecord.content = data.toJSON()
+    medicalRecord.save()
+    //const updatedMedicalRecord = await medicalRecord.update(data)
+    return medicalRecord//updatedMedicalRecord
 }

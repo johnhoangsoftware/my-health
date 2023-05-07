@@ -75,4 +75,25 @@ export const deleteAppointment = ErrorWrapperHandler(async (req: Request, res: R
     });
 })
 
+// // [UPDATE] /patient/schedule_appointment/:id
+// export const updateScheduleAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
+//     const appointmentId = req.params.id
+//     const apm = req.body as UpdateAppointmentDTO
+//     const appointment = await patientService.updateScheduleAppointment(appointmentId, apm)
+//     return res.status(StatusCodes.OK).json({
+//         message: "Update appointment successfully",
+//         data: appointment
+//     });
+// })
+
+// // [POST] /patient/schedule_appointment
+// export const scheduleAnAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
+//     const userId = req.auth?.id
+//     const apm = req.body as CreateAppointmentDTO
+//     const appointment = await patientService.makeAnAppointment(userId, apm)
+//     return res.status(StatusCodes.OK).json({
+//         data: appointment
+//     });
+// })
+
 

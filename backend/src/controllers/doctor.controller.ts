@@ -31,7 +31,7 @@ export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: R
 export const medicalNotes = ErrorWrapperHandler(async (req:Request, res: Response) => {
     const idDoctor = req.auth?.id
     const idMedicalRecord = req.params.id
-    const data = req.body
+    const data = req.body // Content
     const medicalRecord = await doctorService.medicalNotes(idDoctor, idMedicalRecord, data)
     return res.status(StatusCodes.OK).json({
         message: `Doctor notes medical record for ${req.auth?.id}.`,
