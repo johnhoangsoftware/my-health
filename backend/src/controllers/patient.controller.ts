@@ -86,14 +86,14 @@ export const deleteAppointment = ErrorWrapperHandler(async (req: Request, res: R
 //     });
 // })
 
-// // [POST] /patient/schedule_appointment
-// export const scheduleAnAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
-//     const userId = req.auth?.id
-//     const apm = req.body as CreateAppointmentDTO
-//     const appointment = await patientService.makeAnAppointment(userId, apm)
-//     return res.status(StatusCodes.OK).json({
-//         data: appointment
-//     });
-// })
+// [POST] /patient/schedule_appointment
+export const scheduleAnAppointment = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const userId = req.auth?.id
+    const apm = req.body as CreateAppointmentDTO
+    const appointment = await patientService.scheduleAppointment(userId, apm)
+    return res.status(StatusCodes.OK).json({
+        data: appointment
+    });
+})
 
 
