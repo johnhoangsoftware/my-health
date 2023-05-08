@@ -126,3 +126,36 @@ export async function deleteAppointment(appointmentId: string) {
         }
     })
 }
+
+export const scheduleAppointment = async (userId: string, apm: CreateAppointmentDTO) => {
+    const user = await User.findByPk(userId)
+    if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
+    }
+    const birthDay = user.birthDay?.getDay() + "/" + user.birthDay?.getMonth() + "/" + user.birthDay?.getFullYear()
+    apm = validateCreateAppointment(apm)
+    const existingMedicalRecord = await MedicalRecord.findByPk(apm.medicalRecordId)
+    if (!existingMedicalRecord) {
+         //TODO: create medical record
+        const medicalRecordDTO: CreateMedicalRecordDTO = {   
+                name: user.name||"",
+                gender: "",
+                birthDay: birthDay,
+                relationship: "",
+                phone: user.phone||"",
+                address: user.address||"",
+                patientId:userId
+            }
+        const medical_record = await createMedicalRecord(userId, medicalRecordDTO)
+        apm.medicalRecordId = medical_record.medicalRecordId
+    }
+    const dateApm = convertDateTime(apm.date, apm.time)
+    const appointment = {
+        status: 'PENDING',
+        dateTime: dateApm,
+        medicalRecordId: apm.medicalRecordId,
+        testPackageId: apm.testPackageId,
+        departmentId: apm.departmentId
+    }
+    return await Appointment.create({ ...appointment })
+}
