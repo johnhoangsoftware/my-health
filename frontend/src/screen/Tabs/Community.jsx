@@ -23,10 +23,6 @@ export default function Community({ navigation }) {
         },
     ];
 
-    const dateToString = (d) => {
-        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    }
-
     const postList = [];
     posts.forEach((post) => {
         postList.push(
@@ -34,7 +30,7 @@ export default function Community({ navigation }) {
                 <Post
                     key={post.post_id}
                     user_id={post.auth.firstName + " " + post.auth.lastName}
-                    createdAt={dateToString(new Date(post.createdAt))}
+                    createdAt={post.createdAt}
                     avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
                     content={post.content}
                     numberOfComments={post.numberOfComments}
@@ -51,7 +47,9 @@ export default function Community({ navigation }) {
                     <Text className="font-bold text-2xl">Cộng đồng</Text>
                 </View>
                 <View className="space-x-2 flex-row mx-3 right-3 bottom-2 absolute">
-                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                    <TouchableOpacity className="bg-slate-100 rounded-full p-2"
+                        onPress={() => navigation.navigate("Tìm kiếm bài viết")}
+                    >
                         <Ionicons name="search" size={24} />
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-slate-100 rounded-full p-2">

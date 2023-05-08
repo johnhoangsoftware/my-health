@@ -9,30 +9,6 @@ const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"
 export default function PostDetail({ navigation, route }) {
     const { post } = route.params;
 
-    const dateToString = (d) => {
-        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    }
-
-    const Comment = (props) => {
-        return (
-            <View className=" flex-row m-3">
-                <Image
-                    src={props.comment.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
-                    className="aspect-square rounded-full"
-                    style={{ width: "12%" }}
-                />
-                <View
-                    className="bg-gray-100 ml-3 rounded-lg w-11/12 px-3 py-1"
-                    style={{ width: "85%" }}
-                >
-                    <Text className="font-bold">{props.comment.auth.firstName + " " + props.comment.auth.lastName}</Text>
-                    <Text>{props.comment.content}</Text>
-                </View>
-
-            </View>
-        )
-    }
-
     const comments = [
         {
             commentId: "becf5b6a-da9e-4d1b-81a4-65f2b2ca042e",
@@ -118,7 +94,7 @@ export default function PostDetail({ navigation, route }) {
                 <Post
                     key={post.post_id}
                     user_id={post.auth.firstName + " " + post.auth.lastName}
-                    createdAt={dateToString(new Date(post.createdAt))}
+                    createdAt={post.createdAt}
                     avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
                     content={post.content}
                     numberOfComments={post.numberOfComments}
@@ -153,5 +129,25 @@ export default function PostDetail({ navigation, route }) {
                 </View>
             </KeyboardAvoidingView>
         </KeyboardAvoidingView>
+    )
+}
+
+const Comment = (props) => {
+    return (
+        <View className=" flex-row m-3">
+            <Image
+                src={props.comment.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
+                className="aspect-square rounded-full"
+                style={{ width: "12%" }}
+            />
+            <View
+                className="bg-gray-100 ml-3 rounded-lg w-11/12 px-3 py-1"
+                style={{ width: "85%" }}
+            >
+                <Text className="font-bold">{props.comment.auth.firstName + " " + props.comment.auth.lastName}</Text>
+                <Text>{props.comment.content}</Text>
+            </View>
+
+        </View>
     )
 }
