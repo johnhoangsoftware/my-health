@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { FontAwesome, Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome, Feather, MaterialCommunityIcons, AntDesign, Octicons } from '@expo/vector-icons'
 
 import { AuthContext } from '../../component/context';
 import React from 'react';
@@ -9,10 +9,16 @@ export default function Signup({navigation}) {
     const [data, setData] = React.useState({
         username: '',
         email: '',
+        birthDay: '',
+        phone: '',
+        address: '',
         password: '',
         rePassword: '',
         check_userChange: false,
         check_emailChange: false,
+        check_birthDayChange: false,
+        check_phoneChange: false,
+        check_addressChange: false,
         check_pwChange: false,
         check_rePwChange: false,
       })
@@ -34,6 +40,38 @@ export default function Signup({navigation}) {
           });
         }
       }
+      
+      const dobChange = (val) => {
+        if (val.length != 0) {
+          setData({
+            ... data,
+            birthDay: val,
+            check_birthDayChange: true
+          });
+        } else {
+          setData({
+            ... data,
+            birthDay: val,
+            check_birthDayChange: false
+          });
+        }
+      }
+      
+      const addressChange = (val) => {
+        if (val.length != 0) {
+          setData({
+            ... data,
+            address: val,
+            check_addressChange: true
+          });
+        } else {
+          setData({
+            ... data,
+            address: val,
+            check_addressChange: false
+          });
+        }
+      }
 
       const emailChange = (val) => {
         if (val.length != 0) {
@@ -47,6 +85,22 @@ export default function Signup({navigation}) {
             ... data,
             email: val,
             check_emailChange: false
+          });
+        }
+      }
+    
+      const phoneChange = (val) => {
+        if (val.length != 0) {
+          setData({
+            ... data,
+            phoneChange: val,
+            check_phoneChange: true
+          });
+        } else {
+          setData({
+            ... data,
+            phoneChange: val,
+            check_phoneChange: false
           });
         }
       }
@@ -103,8 +157,30 @@ export default function Signup({navigation}) {
                     }
                     
                     <TextInput 
-                        className="pl-2" placeholder='Tên đăng nhập'
+                        className="pl-2" placeholder='Họ và tên' autoComplete='name'
                         onChangeText={(val) => userChange(val)}
+                        />
+                </View>  
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
+                    {data.check_birthDayChange ? 
+                    <MaterialCommunityIcons name='calendar-week' size={20} color="black" />
+                    : <MaterialCommunityIcons name='calendar-week' size={20} color="gray" />
+                    }
+                    
+                    <TextInput 
+                        className="pl-2" placeholder='Ngày sinh (YYYY-MM-DD)' autoComplete='birthdate-full' keyboardType='numbers-and-punctuation'
+                        onChangeText={(val) => dobChange(val)}
+                        />
+                </View> 
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
+                    {data.check_phoneChange ? 
+                    <AntDesign name='phone' size={20} color="black" />
+                    : <AntDesign name='phone' size={20} color="gray" />
+                    }
+                    
+                    <TextInput 
+                        className="pl-2" placeholder='Số điện thoại' autoComplete='tel' keyboardType='numeric'
+                        onChangeText={(val) => phoneChange(val)}
                         />
                 </View>  
                 <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
@@ -114,8 +190,19 @@ export default function Signup({navigation}) {
                     }
                     
                     <TextInput 
-                        className="pl-2" placeholder='Email'
+                        className="pl-2" placeholder='Email' autoComplete='email'
                         onChangeText={(val) => emailChange(val)}
+                        />
+                </View>  
+                <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
+                    {data.check_addressChange ? 
+                    <Octicons name='home' size={20} color="black" />
+                    : <Octicons name='home' size={20} color="gray" />
+                    }
+                    
+                    <TextInput 
+                        className="pl-2" placeholder='Địa chỉ'
+                        onChangeText={(val) => addressChange(val)}
                         />
                 </View>   
                 <View className='bg-gray-200 rounded-full mx-5 px-3 mt-3 py-2 w-80 flex-row items-center'>
