@@ -1,47 +1,30 @@
+import React from 'react'
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import Post from "../../component/Post/Post"
 import { StatusBar } from "expo-status-bar";
+import useAxios from '../../hooks/useAxios'
+
+const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg";
 
 export default function Community({ navigation }) {
-    const posts = [
-        {
-            postId: "8c5fdcd4-1a5b-4029-bcd1-087bcd5cccdd",
-            topic: "eye",
-            content: "Em chào mọi người, mọi người cho em hỏi bệnh nhân tiểu đường cần kiêng những gì ạ? ",
-            media: "https://exploratory.io/note/kanaugust/Rename-Multiple-Columns-2613369153527243/note_content/libs/exploratory/images/p1.png",
-            authId: "2764319f-7d99-43e7-a4d5-850380b1fd77",
-            createdAt: "2023-04-15T03:51:38.000Z",
-            updatedAt: "2023-04-15T03:51:38.000Z",
-            numberOfComments: 3,
-            auth: {
-                userId: "2764319f-7d99-43e7-a4d5-850380b1fd77",
-                firstName: "Vu Hoang",
-                lastName: "Anh",
-                avatar: null
-            }
-        },
-    ];
+    const [posts, setPosts] = React.useState([])
+    const axios = useAxios()
 
-    const dateToString = (d) => {
+    const dateToString = React.useMemo(() => (d) => {
         return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    }
+    }, [])
 
-    const postList = [];
-    posts.forEach((post) => {
-        postList.push(
-            <TouchableOpacity onPress={() => { navigation.navigate("Post Detail", { post: post }) }}>
-                <Post
-                    key={post.post_id}
-                    user_id={post.auth.firstName + " " + post.auth.lastName}
-                    createdAt={dateToString(new Date(post.createdAt))}
-                    avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
-                    content={post.content}
-                    numberOfComments={post.numberOfComments}
-                />
-            </TouchableOpacity>
-        )
-    })
+    React.useEffect(() => {
+        axios.get("/post")
+            .then(res => res.data.data)
+            .then(res => {
+                setPosts(res.posts)
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }, [])
 
     return (
         <>
@@ -75,10 +58,27 @@ export default function Community({ navigation }) {
                 </TouchableOpacity>
 
                 <View>
-                    {postList}
+                    {
+                        posts.map((post, index) => {
+                            return (
+                                <TouchableOpacity
+                                    key={`post-${post.post_id}-${index}`}
+                                    onPress={() => { navigation.navigate("Post Detail", { post: post }) }}
+                                >
+                                    <Post
+                                        key={post.post_id}
+                                        user_id={post.auth.name}
+                                        createdAt={dateToString(new Date(post.createdAt))}
+                                        avatar={post.auth.avatar || DEFAULT_AVATAR}
+                                        content={post.content}
+                                        numberOfComments={post.numberOfComments}
+                                    />
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
                 </View>
             </ScrollView>
         </>
-
     )
 }

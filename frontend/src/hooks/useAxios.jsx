@@ -25,7 +25,7 @@ export default function useAxios() {
         })
 
         const responseIntercept = instance.interceptors.response.use((response) => {
-            if (response.status === 403 || response.status === 400) {
+            if (response.status === 401) {
                 navigation.navigate("LoginScreen")
                 return 
             }

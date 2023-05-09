@@ -84,13 +84,16 @@ export const getComments = async(postId: string):Promise<Comment[]> => {
                 model: User,
                 attributes: ["userId", "name", "avatar"]
             }
+        ],
+        order: [
+            [Sequelize.literal('createdAt'), 'DESC']
         ]
     })
 }
 
-export const comment = async (authId: string, postId: string, cmt: CreateCommentDTO): Promise<Comment> => {
+export const comment = async (authId: string, postId: string, cmt: CreateCommentDTO) => {
     const user = await User.findByPk(authId, {
-        attributes: ["userId"]
+        attributes: ["userId", "name", "avatar"]
     })
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find user: ${authId}`)
@@ -103,7 +106,10 @@ export const comment = async (authId: string, postId: string, cmt: CreateComment
     cmt.authId = authId
     cmt.postId = postId
     const newCmt = await Comment.create({ ...cmt })
-    return newCmt
+    return {
+        ...newCmt.dataValues,
+        auth: user
+    }
 }
 
 export const deleteComment = async (id: string): Promise<Comment> => {

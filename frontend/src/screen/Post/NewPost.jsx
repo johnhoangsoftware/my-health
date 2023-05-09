@@ -1,14 +1,28 @@
+import React from "react";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import useAxios from "../../hooks/useAxios";
 
 export default function NewPost({ navigation }) {
-    const [content, setContent] = React.useState(null);
+    const [content, setContent] = React.useState("");
+    const axios = useAxios()
 
     const post = () => {
-        // ghep api
-        setContent(null)
-        navigation.navigate("Cộng đồng ")
+        if (!content || !content.trim()) {
+            return
+        }
+        axios.post(`/post`, {
+            content: content,
+            topic: 'any',
+        }).then(res => {
+            if (res.status === 200) {
+                console.log(res.data)
+                setContent("")
+                navigation.navigate("Cộng đồng ")
+            }
+        }).catch(err => {
+            console.log(JSON.stringify(err))
+        })
     }
 
     return (
