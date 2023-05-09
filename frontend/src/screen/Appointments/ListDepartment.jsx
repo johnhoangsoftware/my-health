@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import * as Animatable from 'react-native-animatable';
 import React from "react";
 
 export default function ListDepartment({ route, navigation }) {
@@ -18,12 +19,13 @@ export default function ListDepartment({ route, navigation }) {
                     className="m-2 p-2 h-20 w-2/5 flex-row items-center text-center rounded-lg float-left bg-white shadow-sm"
                     style={(selected != null && selected.title == props.title) ? styles.focus : styles.none}
                 >
-                    <View className="ml-2 bg-slate-100 h-16 w-16 rounded-full items-center justify-center">
-                        <Image source={props.image} className='object-scale-down h-16 w-16 rounded-full' />
+                    <View className="ml-1 bg-slate-50 h-16 w-16 rounded-full items-center justify-center">
+                        <Animatable.View className="bg-gray-100 h-16 w-16 rounded-full items-center justify-center" animation="fadeIn" easing="ease-in-out-quad" iterationCount={10}></Animatable.View>
+                        <Image source={props.image} className='object-scale-down h-16 w-16 rounded-full absolute' />
                     </View>
                     <Text
                         style={(selected != null && selected.title == props.title) ? styles.textColor : styles.none}
-                        className="left-3 w-14 text-left break-normal font-medium justify-center"
+                        className="left-2 w-16 text-left break-normal font-medium justify-center"
                         numberOfLines={3}
                     >
                         {props.name}
