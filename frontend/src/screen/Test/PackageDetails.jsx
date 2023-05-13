@@ -8,14 +8,14 @@ const Details = (props) => {
     const navigation = useNavigation()
 
     const goToSchedulings = () => {
-        navigation.navigate("Chọn hồ sơ xét nghiệm", {testPackage: pack});
+        navigation.navigate("Chọn hồ sơ xét nghiệm", {testPackage: props});
     };
 
     return (
         <View className="items-center w-full min-h-full">
             <View className="w-full h-60">
                 <Image
-                    src={props.imageURL}
+                    src={props.image}
                     className="object-cover w-full h-full overflow-hidden"
                     alt={props.title}
                 />
@@ -34,7 +34,7 @@ const Details = (props) => {
                 </Text>
                 
                 <TouchableOpacity style={styles.bgColor} className="w-full mt-2 p-2 text-center rounded-lg border"
-                    onPress={goToSchedulings}
+                    onPress={() => goToSchedulings(props)}
                     >
                     <Text className="text-white text-base text-center font-bold">Đặt lịch hẹn</Text>
                 </TouchableOpacity>
@@ -50,16 +50,16 @@ const Details = (props) => {
 )}
 
 export default function PackageDetails({navigation, route}) {
-    const id = route.params.id
-    const [pack, setPackage] = React.useState({})
+    const {testPackage} = route.params;
+    const [pack, setPackage] = React.useState({});
     const axios = useAxios()
 
     React.useEffect(() => {
-        console.log("ID:", id)
-        if (!id) {
+        console.log("View package detal ID:", testPackage.id)
+        if (!testPackage.id) {
             return
         }
-        axios.get(`/test_package/${id}`)
+        axios.get(`/test_package/${testPackage.id}`)
             .then(res => res.data.data)
             .then(p => {
                 setPackage({
@@ -67,7 +67,7 @@ export default function PackageDetails({navigation, route}) {
                     title: p.name,
                     hospital: p.hospital.name,
                     address: p.hospital.address,
-                    imageURL: p.avatar || "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
+                    imageURL: require("./../../assets/demo-img/hospital.jpg"),//p.avatar || "https://insmart.com.vn/wp-content/uploads/2021/05/BV-108-2.jpg",
                     price: p.price,
                     description: p.description
                 })
@@ -75,12 +75,13 @@ export default function PackageDetails({navigation, route}) {
             .catch(err => {
                 console.log(JSON.stringify(err))
             })
-    }, [id])
+        //setPackage(testPackage)
+    }, []);
 
     return (
         <KeyboardAwareScrollView>
             <ScrollView pagingEnabled={true}>
-                <Details key={`package-detail-${pack.id}`} id={pack.id}  title={pack.title} address={pack.address} hospital={pack.hospital} imageURL={pack.imageURL} price={pack.price} description={pack.description} />
+                <Details key={`package-detail-${pack.id}`} id={pack.id}  title={pack.title} address={pack.address} hospital={pack.hospital} image={pack.image} price={pack.price} description={pack.description} />
             </ScrollView>
         </KeyboardAwareScrollView>  
 
