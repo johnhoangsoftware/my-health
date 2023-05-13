@@ -5,25 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import useAxios from '../../hooks/useAxios'
 
-const InfoHospital = (props) => {
-    return (
-        <View className="bg-white rounded-xl w-40 h-full mr-4 mb-3">
-            <Image
-                src={props.imageURL}
-                className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
-            />
-            <View className="px-2 py-1 space-y-1 mb-3">
-                <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
-                <Text className="text-gray-500 text-xs h-14" numberOfLines={3}>{props.address}</Text>
-                <TouchableOpacity className="rounded-full mb-3" style={{ backgroundColor: "#24DCE2" }}
-                    onPress={() => { navigation.navigate("Chọn hồ sơ", { hospital: props }) }}
-                >
-                    <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    )
-}
+
 
 const Item = (props) => {
     return (
@@ -63,7 +45,26 @@ export default function Home({ navigation }) {
             })
     }, [])
    
-
+    const InfoHospital = (props) => {
+        return (
+            <View className="bg-white rounded-xl w-40 h-full mr-4 mb-3">
+                <Image
+                    src={props.imageURL}
+                    className="object-scale-down w-40 h-28 rounded-t-xl overflow-hidden"
+                />
+                <View className="px-2 py-1 space-y-1 mb-3">
+                    <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
+                    <Text className="text-gray-500 text-xs h-14" numberOfLines={3}>{props.address}</Text>
+                    <TouchableOpacity className="rounded-full mb-3" style={{ backgroundColor: "#24DCE2" }}
+                        onPress={() => { navigation.navigate("Chọn hồ sơ", { hospital: props }) }}
+                    >
+                        <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+    
 const items = [
     {
         title: "Xét nghiệm tại nhà",
