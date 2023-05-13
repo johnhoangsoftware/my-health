@@ -1,31 +1,35 @@
 import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
 import Profile from "../../component/Utils/Profile";
 import React from "react";
+import useAxios from "../../hooks/useAxios";
 
 export default function Confirm({ navigation, route }) {
     const { profile, hospital, department, date, hour } = route.params;
-    const { appointmentStatus, setAppointmentStatus } = React.useState(false);
-    const { message, setMessage } = React.useState("");
+    const [appointmentStatus, setAppointmentStatus] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+    React.useEffect(() => {
+        console.log("Date: ", date, " Hour: ", hour, " Hospital: ", hospital, " Department: ", department, " Profile: ", profile);
+    }, [])
     const axios = useAxios();
     const handleAppoinment = () => {
         axios.post(`/patient/appointment`, {
             date: date.shortDate,
-            hour: hour,
-            testPackageId: testPackage.id,
-            medicalRecordId: profile.medicalRecordId
-        }
-        )
-            .then(res => {
-                if (res.status < 400) {
+            time: hour,
+            medicalRecordId: profile.id,
+            departmentId: department.id
+        }).then(res => {
+            if (res.status < 400) {
                     setAppointmentStatus(true);
                     setModalVisible(true)
-                } else {
+            } else {
                     setMessage(res.message)
-                }
-            })
-            .catch(err => {
+                    alert(res.message)
+            }
+        })
+        .catch(err => {
                 console.log(JSON.stringify(err))
-            })
+                Alert.alert(res.message)
+        })
     }
 
     const Info = (props) => {
