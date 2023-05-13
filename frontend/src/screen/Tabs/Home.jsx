@@ -159,7 +159,7 @@ const items = [
                 >
                     {
                         hospitalList.map((h, index) => {
-                            return <InfoHospital key={`hospital-home-${h.id}-${index}`} name={h.name} address={h.address} imageURL={h.imageURL} />
+                            return <InfoHospital key={`hospital-home-${h.id}-${index}`} id={h.id} name={h.name} address={h.address} imageURL={h.imageURL} />
                         })
                     }
                 </ScrollView>
