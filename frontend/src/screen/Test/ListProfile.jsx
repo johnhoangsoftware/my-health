@@ -3,10 +3,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from "react-native-gesture-handler";
 import Profile from "../../component/Utils/Profile";
 import React, { useEffect } from "react";
+import useAxios from "../../hooks/useAxios";
 
 export default function ListProfileTest({ navigation, route }) {
     const [selected, setSelected] = React.useState(null);
-    const [profiles, setProfiles] = React.useState([])
+    const [profiles, setProfiles] = React.useState([]);
+
+    const axios = useAxios();
 
     const { testPackage } = route.params;
 
@@ -16,17 +19,18 @@ export default function ListProfileTest({ navigation, route }) {
 
     React.useEffect(() => {
         axios.get("/patient/medical_record")
-        .then(res => res.data.data)
-        .then(data => {
-            setProfiles(data.map(profile => ({
-                id: profile.id,
-                fullname : profile.name,
-                sex : profile.gender,
-                dateOfBirth: profile.birthDay.split('T')[0],
-                relationship : profile.relationship,
-                numberphone: profile.phone,
-                address: profile.address
-        })))})
+            .then(res => res.data.data)
+            .then(data => {
+                setProfiles(data.map(profile => ({
+                    id: profile.medicalRecordId,
+                    fullname: profile.name,
+                    sex: profile.gender,
+                    dateOfBirth: profile.birthDay.split('T')[0],
+                    relationship: profile.relationship,
+                    numberphone: profile.phone,
+                    address: profile.address
+                })))
+            })
     }, [])
 
     // const profiles = [
@@ -64,6 +68,7 @@ export default function ListProfileTest({ navigation, route }) {
             <TouchableOpacity key={profile.id} onPress={() => { setSelected(profile) }}>
                 <Profile
                     selected={selected != null && profile.id == selected.id}
+                    id={profile.id}
                     fullname={profile.fullname}
                     sex={profile.sex}
                     dateOfBirth={profile.dateOfBirth}
@@ -95,5 +100,6 @@ export default function ListProfileTest({ navigation, route }) {
 
             </ScrollView>
         </View>
+
     )
 }

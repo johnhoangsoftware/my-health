@@ -32,6 +32,7 @@ export default function ListProfile({ navigation, route }) {
             <TouchableOpacity key={profile.id} onPress={() => { setSelected(profile) }}>
                 <Profile
                     selected={selected != null && profile.id == selected.id}
+                    id={profile.id}
                     fullname={profile.fullname}
                     sex={profile.sex}
                     dateOfBirth={profile.dateOfBirth}
