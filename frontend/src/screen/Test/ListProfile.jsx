@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 
 export default function ListProfileTest({ navigation, route }) {
     const [selected, setSelected] = React.useState(null);
+    const [profiles, setProfiles] = React.useState([])
 
     const { testPackage } = route.params;
 
@@ -13,35 +14,50 @@ export default function ListProfileTest({ navigation, route }) {
         navigation.navigate("Chọn lịch xét nghiệm", { profile: selected, testPackage: testPackage })
     }
 
-    const profiles = [
-        {
-            id: 2,
-            fullname: "Nguyễn Văn An",
-            sex: "Nam",
-            dateOfBirth: "30/4/1975",
-            relationship: "Bố",
-            numberphone: "0982978510",
-            address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-        },
-        {
-            id: 3,
-            fullname: "Vũ Thanh Thủy",
-            sex: "Nữ",
-            dateOfBirth: "19/8/1979",
-            relationship: "Mẹ",
-            numberphone: "0982974858",
-            address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-        },
-        {
-            id: 1,
-            fullname: "Nguyễn Văn Thương",
-            sex: "Nam",
-            dateOfBirth: "5/8/1997",
-            relationship: "Bản thân",
-            numberphone: "0982978508",
-            address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-        },
-    ]
+    React.useEffect(() => {
+        axios.get("/patient/medical_record")
+        .then(res => res.data.data)
+        .then(data => {
+            setProfiles(data.map(profile => ({
+                id: profile.id,
+                fullname : profile.name,
+                sex : profile.gender,
+                dateOfBirth: profile.birthDay.split('T')[0],
+                relationship : profile.relationship,
+                numberphone: profile.phone,
+                address: profile.address
+        })))})
+    }, [])
+
+    // const profiles = [
+    //     {
+    //         id: 2,
+    //         fullname: "Nguyễn Văn An",
+    //         sex: "Nam",
+    //         dateOfBirth: "30/4/1975",
+    //         relationship: "Bố",
+    //         numberphone: "0982978510",
+    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
+    //     },
+    //     {
+    //         id: 3,
+    //         fullname: "Vũ Thanh Thủy",
+    //         sex: "Nữ",
+    //         dateOfBirth: "19/8/1979",
+    //         relationship: "Mẹ",
+    //         numberphone: "0982974858",
+    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
+    //     },
+    //     {
+    //         id: 1,
+    //         fullname: "Nguyễn Văn Thương",
+    //         sex: "Nam",
+    //         dateOfBirth: "5/8/1997",
+    //         relationship: "Bản thân",
+    //         numberphone: "0982978508",
+    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
+    //     },
+    // ]
     const listProfile = []
     profiles.forEach((profile) => {
         listProfile.push(
