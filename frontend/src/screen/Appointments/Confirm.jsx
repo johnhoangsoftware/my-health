@@ -4,6 +4,29 @@ import React from "react";
 
 export default function Confirm({ navigation, route }) {
     const { profile, hospital, department, date, hour } = route.params;
+    const { appointmentStatus, setAppointmentStatus } = React.useState(false);
+    const { message, setMessage } = React.useState("");
+    const axios = useAxios();
+    const handleAppoinment = () => {
+        axios.post(`/patient/appointment`, {
+            date: date.shortDate,
+            hour: hour,
+            testPackageId: testPackage.id,
+            medicalRecordId: profile.medicalRecordId
+        }
+        )
+            .then(res => {
+                if (res.status < 400) {
+                    setAppointmentStatus(true);
+                    setModalVisible(true)
+                } else {
+                    setMessage(res.message)
+                }
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }
 
     const Info = (props) => {
         return (
@@ -56,7 +79,7 @@ export default function Confirm({ navigation, route }) {
             />
             <TouchableOpacity
                 className="m-auto w-1/3 p-2 mt-4 mb-8 rounded" style={{ backgroundColor: "#24DCE2" }}
-                onPress={() => setModalVisible(true)}
+                onPress={() => handleAppoinment()}
             >
                 <Text className="text-white font-bold text-center">Xác nhận</Text>
             </TouchableOpacity>
