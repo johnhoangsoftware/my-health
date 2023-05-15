@@ -26,6 +26,9 @@ export class MedicalRecord extends Model {
     @Column({ type: DataType.STRING })
     public address!: string
 
+    @Column({ type: DataType.STRING })
+    public content!: string
+
     @CreatedAt
     public readonly createdAt!: Date;
   

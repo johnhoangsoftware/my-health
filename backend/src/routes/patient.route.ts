@@ -14,4 +14,10 @@ router.route("/appointment")
     .post(patientController.makeAnAppointment)
     .get(patientController.getAllAppointments)
 
+router.route("/appointment/:id")
+    .patch(patientController.updateAppointment)
+    .delete(patientController.deleteAppointment)
+
+router.route("/patient/schedule_appointment")
+    .post(patientController.scheduleAnAppointment)
 export default router;

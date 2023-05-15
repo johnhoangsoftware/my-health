@@ -10,6 +10,14 @@ export const findByID = async (id: string): Promise<User | null> => {
     return Promise.resolve(user)
 }
 
+export const findByUsername = async (username: string): Promise<User | null> => {
+    const user = await User.findOne({})
+    if (!user) {
+        return Promise.resolve(null)
+    }
+    return Promise.resolve(user)
+}
+
 export const deleteByID = async (id: string): Promise<User> => {
     const user  = await findByID(id)
     if (!user) {

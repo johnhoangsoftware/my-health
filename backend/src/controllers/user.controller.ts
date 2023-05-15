@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { chatService, postService, userService } from '../services';
 import { CreateMessageDTO } from '../dtos/message.dto';
+import * as notifyService from '../services/notify.service';
 
 // [GET] /user/profile/:id
 export const profile = ErrorWrapperHandler(async (req: Request, res: Response) => {
@@ -22,3 +23,13 @@ export const allPosts = ErrorWrapperHandler(async (req: Request, res: Response) 
         data: posts
     });
 })
+
+// [GET] /user/:id/notify
+export const allNotify = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id
+    const notifications = await notifyService.getNotify(userId)
+    return res.status(StatusCodes.OK).json({
+        data: notifications
+    });
+}
+

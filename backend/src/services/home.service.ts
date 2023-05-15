@@ -71,7 +71,7 @@ export const searchDoctors = async(keyword: string, d: string) => {
                         [Op.like]: `%${keyword}%`
                     }
                 }
-            ]
+            ] 
             
         },
         attributes: ["userId", "name", "avatar"],

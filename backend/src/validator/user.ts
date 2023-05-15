@@ -6,6 +6,7 @@ import { isValidEmail, isValidDate, isValidPhoneNumber } from "./other"
 
 export const validateCreateUser = (user: CreateUserDTO): CreateUserDTO => {
     const results = trimObject(user) as CreateUserDTO
+    console.log(results)
 
     if (!results.email || !results.password || !results.name || !results.birthDay || !results.phone || !results.address) {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Missing value. Must fill out all information")
