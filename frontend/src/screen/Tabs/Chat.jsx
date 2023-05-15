@@ -31,6 +31,13 @@ export default function Chat({ navigation }) {
 
     }
 
+    const filterChat = (chat) => {
+        if (!search.inputSearch || !search.inputSearch.trim()) return chat
+        return chat.filter(c => {
+            return c.user.name.toLowerCase().includes(search.inputSearch.trim().toLowerCase())
+        })
+    }
+
     React.useEffect(() => {
         console.log("Fetch chat")
         axios.get("/chat")
@@ -63,8 +70,12 @@ export default function Chat({ navigation }) {
                 </View>
                 <View>
                     {
+                        filterChat(chatList).length === 0 &&
+                        <Text>Không có cuộc hội thoại nào của bác sĩ tên: "{search.inputSearch}"</Text>
+                    }
+                    {
                         chatList.length > 0 ?
-                            chatList.map((c, index) => {
+                        filterChat(chatList).map((c, index) => {
                             return (
                                 <TouchableOpacity
                                     key={`chat-list-item-${index}-${c.chatId}`}

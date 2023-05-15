@@ -1,10 +1,7 @@
 import io from "socket.io-client/dist/socket.io.js";
-//import { BACKEND_HOST, BACKEND_PORT } from '@env'
+import { BACKEND_HOST, BACKEND_PORT } from '@env'
 import React from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const BACKEND_HOST = "192.168.1.10";
-const BACKEND_PORT = 8080;
 
 const endpoint = `http://${BACKEND_HOST}:${BACKEND_PORT}`
 console.log("Socket endpoint", endpoint)
