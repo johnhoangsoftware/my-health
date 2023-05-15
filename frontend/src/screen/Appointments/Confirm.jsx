@@ -1,9 +1,36 @@
 import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
 import Profile from "../../component/Utils/Profile";
 import React from "react";
+import useAxios from "../../hooks/useAxios";
 
 export default function Confirm({ navigation, route }) {
     const { profile, hospital, department, date, hour } = route.params;
+    const [appointmentStatus, setAppointmentStatus] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+    React.useEffect(() => {
+        console.log("Date: ", date, " Hour: ", hour, " Hospital: ", hospital, " Department: ", department, " Profile: ", profile);
+    }, [])
+    const axios = useAxios();
+    const handleAppoinment = () => {
+        axios.post(`/patient/appointment`, {
+            date: date.shortDate,
+            time: hour,
+            medicalRecordId: profile.id,
+            departmentId: department.id
+        }).then(res => {
+            if (res.status < 400) {
+                    setAppointmentStatus(true);
+                    setModalVisible(true)
+            } else {
+                    setMessage(res.message)
+                    alert(res.message)
+            }
+        })
+        .catch(err => {
+                console.log(JSON.stringify(err))
+                Alert.alert(res.message)
+        })
+    }
 
     const Info = (props) => {
         return (
@@ -56,7 +83,7 @@ export default function Confirm({ navigation, route }) {
             />
             <TouchableOpacity
                 className="m-auto w-1/3 p-2 mt-4 mb-8 rounded" style={{ backgroundColor: "#24DCE2" }}
-                onPress={() => setModalVisible(true)}
+                onPress={() => handleAppoinment()}
             >
                 <Text className="text-white font-bold text-center">Xác nhận</Text>
             </TouchableOpacity>
