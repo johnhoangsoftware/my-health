@@ -5,6 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import useAxios from '../../hooks/useAxios'
 import { useNavigation } from '@react-navigation/native';
 
+const AVATAR_DEFAULT = "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
+
 const DoctorBrief = (props) => {
     const navigation = useNavigation()
 
@@ -15,7 +17,7 @@ const DoctorBrief = (props) => {
                 id: props.id
             })} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
-                    <Image src={props.image} className='object-scale-down h-16 w-16 rounded-full' />
+                    <Image src={props.image || AVATAR_DEFAULT} className='object-scale-down h-16 w-16 rounded-full' />
                 </View>
                 <View className="left-3 w-full">
                     <Text className="w-2/3 text-left break-normal font-semibold justify-center">{props.name}</Text>
@@ -94,7 +96,7 @@ export default function DoctorList({navigation}) {
                     id: item.userId,
                     name: item.name,
                     department: item.doctor.department.name,
-                    imageURL: item.avatar || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg",
+                    imageURL: item.avatar,
                     star: 4
                 })))
             })

@@ -11,7 +11,7 @@ export default function Packages({ navigation }) {
     };
 
     const goToSchedulings = (pack) => {
-        navigation.navigate("Chọn hồ sơ xét nghiệm", { testPackage: pack });
+        navigation.navigate("Hồ sơ xét nghiệm", { testPackage: pack });
     };
 
 

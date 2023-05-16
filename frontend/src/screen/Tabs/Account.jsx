@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 
 
-export default function Account() {
+export default function Account({navigation}) {
     const { logout } = React.useContext(AuthContext);
     const [user, setUser] = React.useState({})
     const [auth, setAuth] = React.useState({})
@@ -48,10 +48,10 @@ export default function Account() {
                         <Feather name="edit" size={24} color={"white"} />
                         <Text className="w-20 ml-3 font-bold text-white">Chỉnh sửa thông tin</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.bg} className="p-3 rounded-lg flex-row items-center justify-center w-40">
+                    {/* <TouchableOpacity style={styles.bg} className="p-3 rounded-lg flex-row items-center justify-center w-40">
                         <Feather name="eye" size={24} color={"white"} />
                         <Text className="w-20 ml-3 font-bold text-white">Xem trang cá nhân</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             <View className="top-28 p-1.5 w-56 h-56 rounded-full absolute items-center justify-center bg-white">
@@ -62,7 +62,10 @@ export default function Account() {
             </View>
 
             <View className="border-t border-slate-300 w-screen items-center">
-                <TouchableOpacity className="w-screen items-center">
+                <TouchableOpacity
+                    className="w-screen items-center"
+                    onPress={() => navigation.navigate("Hồ sơ", {onlyShow: true})}
+                >
                     <Item title="Hồ sơ khám bệnh" />
                 </TouchableOpacity>
                 <TouchableOpacity className="w-screen items-center">

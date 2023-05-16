@@ -70,7 +70,7 @@ export default function Chat({ navigation }) {
                 </View>
                 <View>
                     {
-                        filterChat(chatList).length === 0 &&
+                        search.inputSearch?.trim() && filterChat(chatList).length === 0 &&
                         <Text>Không có cuộc hội thoại nào của bác sĩ tên: "{search.inputSearch}"</Text>
                     }
                     {

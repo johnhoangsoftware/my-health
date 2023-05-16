@@ -56,7 +56,7 @@ export default function Home({ navigation }) {
                     <Text className="font-semibold h-9" numberOfLines={2}>{props.name}</Text>
                     <Text className="text-gray-500 text-xs h-14" numberOfLines={3}>{props.address}</Text>
                     <TouchableOpacity className="rounded-full mb-3" style={{ backgroundColor: "#24DCE2" }}
-                        onPress={() => { navigation.navigate("Chọn hồ sơ", { hospital: props }) }}
+                        onPress={() => { navigation.navigate("Hồ sơ", { hospital: props }) }}
                     >
                         <Text className="font-semibold text-base text-center text-white p-1">Đặt khám</Text>
                     </TouchableOpacity>
@@ -151,7 +151,7 @@ const items = [
                 end={{ x: 0, y: 1 }}
                 className="w-100 min-h-screen"
             >
-                <Text className="font-bold mx-5 mt-5 text-xl" >Đặt khám</Text>
+                <Text className="font-bold mx-5 text-xl" >Đặt khám</Text>
                 <ScrollView
                     className="flex-1 m-5 mt-3 h-fit"
                     horizontal={true}

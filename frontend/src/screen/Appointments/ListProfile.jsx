@@ -4,11 +4,14 @@ import { ScrollView } from "react-native-gesture-handler";
 import Profile from "../../component/Utils/Profile";
 import useAxios from "../../hooks/useAxios";
 import React, { useEffect } from "react";
+import useSocket from "../../hooks/useSocket";
 
 export default function ListProfile({ navigation, route }) {
+    const onlyShow = route.params.onlyShow || false
     const [selected, setSelected] = React.useState(null);
     const [profiles, setProfiles] = React.useState([])
     const axios = useAxios()
+    const socket = useSocket()
 
     useEffect(() => {
         axios.get("/patient/medical_record")
@@ -24,25 +27,18 @@ export default function ListProfile({ navigation, route }) {
                     address: profile.address
                 })))
             })
-    },[])
+    }, [])
+    
+    useEffect(() => {
+        const deleteMedicalRecordListener = (id) => {
+            setProfiles(prev => prev.filter(i => i.id !== id))
+        }
 
-    const listProfile = []
-    profiles.forEach((profile) => {
-        listProfile.push(
-            <TouchableOpacity key={profile.id} onPress={() => { setSelected(profile) }}>
-                <Profile
-                    selected={selected != null && profile.id == selected.id}
-                    id={profile.id}
-                    fullname={profile.fullname}
-                    sex={profile.sex}
-                    dateOfBirth={profile.dateOfBirth}
-                    relationship={profile.relationship}
-                    numberphone={profile.numberphone}
-                    address={profile.address}
-                />
-            </TouchableOpacity>
-        )
-    })
+        socket.on('delete medical record', deleteMedicalRecordListener)
+        return () => {
+            socket.off('delete medical record',deleteMedicalRecordListener)
+        }
+    }, [socket])
 
     const { hospital } = route.params;
 
@@ -57,9 +53,41 @@ export default function ListProfile({ navigation, route }) {
                 <Ionicons name="add-circle" size={24} color="#24DCE2" />
             </TouchableOpacity>
             <ScrollView className="mb-20">
-                {listProfile}
                 {
-                    selected &&
+                    profiles.map(profile => {
+                        return (
+                            onlyShow ?
+                                <Profile
+                                    key={profile.id}
+                                    selected={selected != null && profile.id == selected.id}
+                                    id={profile.id}
+                                    fullname={profile.fullname}
+                                    sex={profile.sex}
+                                    dateOfBirth={profile.dateOfBirth}
+                                    relationship={profile.relationship}
+                                    numberphone={profile.numberphone}
+                                    address={profile.address}
+                                    onlyShow={onlyShow}
+                                />
+                                :
+                                <TouchableOpacity key={profile.id} onPress={() => { setSelected(profile) }}>
+                                    <Profile
+                                        selected={selected != null && profile.id == selected.id}
+                                        id={profile.id}
+                                        fullname={profile.fullname}
+                                        sex={profile.sex}
+                                        dateOfBirth={profile.dateOfBirth}
+                                        relationship={profile.relationship}
+                                        numberphone={profile.numberphone}
+                                        address={profile.address}
+                                        onlyShow={onlyShow}
+                                    />
+                                </TouchableOpacity>
+                        )
+                    })
+                }
+                {
+                    !onlyShow && selected &&
                     <TouchableOpacity
                         className="m-auto w-1/3 p-2 mt-4 mb-8 rounded" style={{ backgroundColor: "#24DCE2" }}
                         onPress={chooseNext}

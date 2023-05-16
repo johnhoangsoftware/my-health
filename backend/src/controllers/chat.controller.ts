@@ -15,6 +15,10 @@ export const socketSetup = (io: any, app: Application) => {
             uid[userId] = socketId
             console.log("JOIN: ", userId, socketId)
         })
+
+        socket.on('delete medical record', (id: string) => {
+            socket.emit('delete medical record', id)
+        })
         
         socket.on("disconnect", () => {
             console.log("Disconnect from", socket.id)

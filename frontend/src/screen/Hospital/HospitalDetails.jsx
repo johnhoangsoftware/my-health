@@ -8,7 +8,7 @@ const Details = (props) => {
     const navigation = useNavigation()
 
     const goToScheduling = () => {
-        navigation.navigate("Chọn hồ sơ", { hospital: hospital });
+        navigation.navigate("Hồ sơ", { hospital: hospital });
     };
 
     return (

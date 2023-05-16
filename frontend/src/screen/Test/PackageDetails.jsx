@@ -4,18 +4,20 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import useAxios from '../../hooks/useAxios';
 
+const HOSPITAL_AVATAR_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/myhealth-3d3d4.appspot.com/o/hospital.jpg?alt=media&token=83c7a59c-e1ba-46dc-97b0-94935479c09d"
+
 const Details = (props) => {
     const navigation = useNavigation()
 
     const goToSchedulings = () => {
-        navigation.navigate("Chọn hồ sơ xét nghiệm", {testPackage: props});
+        navigation.navigate("Hồ sơ xét nghiệm", {testPackage: props});
     };
 
     return (
         <View className="items-center w-full min-h-full">
             <View className="w-full h-60">
                 <Image
-                    src={props.image}
+                    src={props.image || HOSPITAL_AVATAR_DEFAULT}
                     className="object-cover w-full h-full overflow-hidden"
                     alt={props.title}
                 />

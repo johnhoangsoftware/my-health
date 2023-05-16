@@ -1,92 +1,143 @@
-import { View, Text, TouchableOpacity, Modal, Pressable, ScrollView } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import Profile from "../../component/Utils/Profile";
 import React from "react";
+import { View, Text, ScrollView , StyleSheet} from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-export default function ViewSchedules({ navigation, route }) {
-    // const { profile, hospital, department, date, hour } = route.params;
+import useAxios from "../../hooks/useAxios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-    const profile = {
-        id: 2,
-        fullname: "Nguyễn Văn An",
-        sex: "Nam",
-        dateOfBirth: "30/4/1975",
-        relationship: "Bố",
-        numberphone: "0982978510",
-        address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-    };
-
-    const schedule = {
-        hospital: "Bệnh viện Trung ương Quân đội 108",
-        department: "Khoa nội tổng quát",
-        date: "23/4/2023",
-        hour: "09:30",
-    }
-
-    const Info = (props) => {
-        return (
-            <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-sm">
-                <View className="my-3">
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Họ tên</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.fullname}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Giới tính</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.sex}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Ngày sinh</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.dateOfBirth}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Mối quan hệ</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.relationship}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Số điện thoại</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.numberphone}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Chuyên khoa</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.department}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Ngày khám</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.date}</Text>
-                    </View>
-                    <View className="flex-row py-1 border-b border-gray-200">
-                        <Text>Giờ khám</Text>
-                        <Text className="right-0 bottom-1 absolute">{props.hour}</Text>
-                    </View>
-                    <View className="flex-row py-1">
-                        <Text>Bệnh viện</Text>
-                        <Text className="right-0 top-1 absolute w-2/3 text-right">{props.hospital}</Text>
-                    </View>
+const ScheduleItem = ({ data }) => {
+    return (
+        <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-sm"
+            style={
+                data.status === 'PENDING' ? styles.pending : styles.done
+            }
+        >
+            <View className="my-3">
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Họ tên</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.fullname}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Giới tính</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.sex}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Ngày sinh</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.dateOfBirth}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Mối quan hệ</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.relationship}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Số điện thoại</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.numberphone}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Chuyên khoa</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.department?.name || 'Chưa có thông tin'}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Ngày khám</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.date}</Text>
+                </View>
+                <View className="flex-row py-1 border-b border-gray-200">
+                    <Text>Giờ khám</Text>
+                    <Text className="right-0 bottom-1 absolute">{data.hour}</Text>
+                </View>
+                <View className="flex-row py-1">
+                    <Text>Bệnh viện</Text>
+                    <Text className="right-0 top-1 absolute w-2/3 text-right">{data.hospital}</Text>
+                </View>
+                <View className="flex-row py-1 mt-4">
+                    {/* <TouchableOpacity
+                        onPress={() => console.log("OK")}
+                    >
+                        <Text
+                            className="font-bold left-0 top-1 absolute text-right p-1"
+                            style={{
+                                backgroundColor: '#23f8df',
+                            }}
+                        >
+                            Đánh dấu đã xong
+                        </Text>
+                    </TouchableOpacity> */}
+                    <Text className="font-bold right-0 top-1 absolute w-2/3 text-right text-decoration-line: underline">
+                        {data.status === "PENDING" && "Đang chờ"}
+                        {data.status === "DONE" && "Đã xong"}
+                    </Text>
                 </View>
             </View>
-        )
-    }
+        </View>
+    )
+}
 
-    const [modalVisible, setModalVisible] = React.useState(false);
+export default function ViewSchedules({ navigation, route }) {
+    const [schedules, setSchedules] = React.useState([])
+    const axios = useAxios()
+
+    const getDate = React.useMemo(() => (d) => {
+        return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    }, [])
+
+    const getTime = React.useMemo(() => (d) => {
+        return d.getHours() + ":" + d.getMinutes();
+    }, [])
+
+
+    React.useEffect(() => {
+        axios.get('/patient/appointment')
+            .then(res => res.data.data)
+            .then(d => {
+                setSchedules(d)
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }, [])
 
     return (
         <KeyboardAwareScrollView>
             <ScrollView pagingEnabled={true}>
-            <Text className="text-lg font-bold ml-4 mt-4" style={{ color: "#24DCE2" }}>Thông tin lịch khám</Text>
-            <Info
-                fullname={profile.fullname}
-                sex={profile.sex}
-                dateOfBirth={profile.dateOfBirth}
-                relationship={profile.relationship}
-                numberphone={profile.numberphone}
-                address={profile.address}
-                hospital={schedule.hospital}
-                department={schedule.department}
-                date={schedule.date}
-                hour={schedule.hour}
-            />
+                {
+                    schedules.length === 0 &&
+                        <Text className="text-lg m-auto mt-4" style={{ color: "#000" }}>Chưa có lịch khám</Text>
+                }
+                {
+                    schedules.map((schedule, index) => {
+                        return <ScheduleItem
+                            key={`schedule-${schedule.appointmentId}-${index}`}
+                            data={{
+                                fullname: schedule.medicalRecord.name,
+                                sex: schedule.medicalRecord.gender,
+                                dateOfBirth: getDate(new Date(schedule.medicalRecord.birthDay)),
+                                relationship: schedule.medicalRecord.relationship,
+                                numberphone: schedule.medicalRecord.phone,
+                                address: schedule.medicalRecord.address,
+                                hospital: schedule.department?.hospital.name || schedule.testPackage?.hospital.name,
+                                department: schedule.department,
+                                date: getDate(new Date(schedule.dateTime)),
+                                hour: getTime(new Date(schedule.dateTime)),
+                                status: schedule.status
+                            }}
+                        />
+                    })
+                }
             </ScrollView>
-        </KeyboardAwareScrollView> 
+        </KeyboardAwareScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    pending: {
+        borderColor: "yellow",
+        borderWidth: "2px",
+        shadowColor: "2px"
+    },
+    
+    done: {
+        borderColor: "green",
+        borderWidth: "2px",
+        shadowColor: "2px"
+    }
+});

@@ -1,7 +1,7 @@
 
 import { StatusCodes } from 'http-status-codes';
 import CustomError from "../error/CustomError";
-import { User, Patient, MedicalRecord, Appointment } from "../models";
+import { User, Patient, MedicalRecord, Appointment, Department, Hospital, TestPackage } from "../models";
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { validateCreateMedicalRecord, validateUpdateMedicalRecord } from '../validator/patient';
 import { CreateAppointmentDTO } from '../dtos/appointment.dto';
@@ -74,6 +74,7 @@ export const deleteMedicalRecord = async (id: string) =>{
 }
 
 export const makeAnAppointment = async (userId: string, apm: CreateAppointmentDTO) => {
+    console.log(apm)
     const user = await User.findByPk(userId)
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
@@ -100,16 +101,38 @@ export const getAllAppointments = async(userId : string) => {
         throw new CustomError(StatusCodes.NOT_FOUND, `User with ID: ${userId} not found.`)
     }
     return await Appointment.findAll({
-        include: [{
-            model: MedicalRecord,
-            attributes: {
-                exclude: ["createdAt", "updatedAt"]
+        include: [
+            {
+                model: MedicalRecord,
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                },
+                include: [{
+                    model: Patient,
+                    where: { userId },
+                    attributes: []
+                }]
             },
-            include: [{
-                model: Patient,
-                where: { userId },
-                attributes: []
-            }]
-        }]
+            {
+                model: Department,
+                attributes: ["departmentId", "HospitalId", "name"],
+                include: [
+                    {
+                        model: Hospital,
+                        attributes: ["name"]
+                    }
+                ]
+            },
+            {
+                model: TestPackage,
+                attributes: ["testPackageId", "hospitalId"],
+                include: [
+                    {
+                        model: Hospital,
+                        attributes: ["name"]
+                    }
+                ]
+            }
+        ]
     })
 }

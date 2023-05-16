@@ -120,7 +120,7 @@ export default function HomeStack() {
         })}
       />
       <Stack.Screen
-        name="Chọn hồ sơ xét nghiệm"
+        name="Hồ sơ xét nghiệm"
         component={ListProfileTest}
         options={{
           headerTintColor: "#24dce2",
@@ -228,7 +228,7 @@ export default function HomeStack() {
         })}
       />
       <Stack.Screen
-        name="Chọn hồ sơ"
+        name="Hồ sơ"
         component={ListProfile}
         options={{
           headerTintColor: "#24dce2",

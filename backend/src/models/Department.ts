@@ -16,6 +16,9 @@ export class Department  extends Model{
   @Column({ type: DataType.STRING })
   public name!: string
 
+  @Column({ type: DataType.STRING })
+  public avatar!: string
+
   @ForeignKey(() => Hospital)
   @Column({ type: DataType.STRING })
   public hospitalId!: string;

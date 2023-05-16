@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import useAxios from "../../hooks/useAxios";
 
 export default function ListProfileTest({ navigation, route }) {
+    const onlyShow = route.onlyShow
     const [selected, setSelected] = React.useState(null);
     const [profiles, setProfiles] = React.useState([]);
 
@@ -33,35 +34,7 @@ export default function ListProfileTest({ navigation, route }) {
             })
     }, [])
 
-    // const profiles = [
-    //     {
-    //         id: 2,
-    //         fullname: "Nguyễn Văn An",
-    //         sex: "Nam",
-    //         dateOfBirth: "30/4/1975",
-    //         relationship: "Bố",
-    //         numberphone: "0982978510",
-    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-    //     },
-    //     {
-    //         id: 3,
-    //         fullname: "Vũ Thanh Thủy",
-    //         sex: "Nữ",
-    //         dateOfBirth: "19/8/1979",
-    //         relationship: "Mẹ",
-    //         numberphone: "0982974858",
-    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-    //     },
-    //     {
-    //         id: 1,
-    //         fullname: "Nguyễn Văn Thương",
-    //         sex: "Nam",
-    //         dateOfBirth: "5/8/1997",
-    //         relationship: "Bản thân",
-    //         numberphone: "0982978508",
-    //         address: "Số 67, ngõ 10, đường Tôn Thất Tùng, Đống Đa, Hà Nội"
-    //     },
-    // ]
+    
     const listProfile = []
     profiles.forEach((profile) => {
         listProfile.push(
@@ -89,7 +62,7 @@ export default function ListProfileTest({ navigation, route }) {
             <ScrollView className="mb-20">
                 {listProfile}
                 {
-                    selected &&
+                    !onlyShow && selected &&
                     <TouchableOpacity
                         className="m-auto w-1/3 p-2 mt-4 mb-8 rounded" style={{ backgroundColor: "#24DCE2" }}
                         onPress={chooseNext}

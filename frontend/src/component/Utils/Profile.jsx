@@ -2,7 +2,27 @@ import { View, Text } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { Feather, AntDesign } from '@expo/vector-icons';
 
+import useAxios from "../../hooks/useAxios";
+import useSocket from "../../hooks/useSocket";
+
 export default function Profile(props) {
+    const onlyShow = props.onlyShow
+
+    const axios = useAxios()
+    const socket = useSocket()
+
+    const deleteProfile = (id) => {
+        axios.delete(`/patient/medical_record/${id}`)
+            .then(res => {
+                if (res.status === 200) {
+                        socket.emit("delete medical record", id)
+                }   
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
+            })
+    }
+
     return (
         <View className="mx-4 my-2 p-5 rounded-md bg-white shadow-sm">
             <View className="flex-row">
@@ -33,6 +53,35 @@ export default function Profile(props) {
                     <Text>Địa chỉ</Text>
                     <Text className="right-0 top-1 absolute w-2/3 text-right">{props.address}</Text>
                 </View>
+                {
+                    onlyShow &&
+                    <View className="flex-row py-1">
+                        <TouchableOpacity
+                            className="p-2 py-1"
+                            style={{
+                                backgroundColor: "#24DCE2",
+                                borderRadius: '10px'
+                            }}
+                            onPress={() => { console.log("Update", props.id) }}
+                        >
+                            <Text className="text-white font-bold text-center">Cập nhật</Text>
+                        </TouchableOpacity>
+                        <Text className="text-white">---</Text>
+                        <TouchableOpacity
+                            className="p-2 py-1"
+                            style={{
+                                backgroundColor: "#24DCE2",
+                                borderRadius: '10px'
+                            }}
+                            onPress={() => {
+                                console.log("DELETE medical record: ", props.id)
+                                deleteProfile(props.id)
+                            }}
+                        >
+                            <Text className="text-white font-bold text-center">Xóa</Text>
+                        </TouchableOpacity>
+                    </View>
+                }
             </View>
         </View>
     )
