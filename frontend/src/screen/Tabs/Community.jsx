@@ -25,6 +25,21 @@ export default function Community({ navigation }) {
                 console.log(JSON.stringify(err))
             })
     }, [])
+    // const postList = [];
+    // posts.forEach((post) => {
+    //     postList.push(
+    //         <TouchableOpacity onPress={() => { navigation.navigate("Post Detail", { post: post }) }}>
+    //             <Post
+    //                 key={post.post_id}
+    //                 user_id={post.auth.firstName + " " + post.auth.lastName}
+    //                 createdAt={post.createdAt}
+    //                 avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
+    //                 content={post.content}
+    //                 numberOfComments={post.numberOfComments}
+    //             />
+    //         </TouchableOpacity>
+    //     )
+    // })
 
     return (
         <>
@@ -34,7 +49,9 @@ export default function Community({ navigation }) {
                     <Text className="font-bold text-2xl">Cộng đồng</Text>
                 </View>
                 <View className="space-x-2 flex-row mx-3 right-3 bottom-2 absolute">
-                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                    <TouchableOpacity className="bg-slate-100 rounded-full p-2"
+                        onPress={() => navigation.navigate("Tìm kiếm bài viết")}
+                    >
                         <Ionicons name="search" size={24} />
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-slate-100 rounded-full p-2">

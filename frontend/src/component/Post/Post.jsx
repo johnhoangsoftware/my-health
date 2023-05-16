@@ -2,6 +2,10 @@ import { View, Image, Text, TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 
 export default function (props) {
+    const dateToString = (d) => {
+        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    }
+
     return (
         <View className="bg-white mt-3">
             <View className="flex-row items-center w-screen px-3 mt-3">
@@ -11,7 +15,7 @@ export default function (props) {
                 />
                 <View>
                     <Text className="font-semibold text-lg ml-3">{props.user_id}</Text>
-                    <Text className="text-gray-400 ml-3 text-sm">{props.createdAt}</Text>
+                    <Text className="text-gray-400 ml-3 text-sm">{dateToString(new Date(props.createdAt))}</Text>
                 </View>
             </View>
             <View className="my-3 px-3">

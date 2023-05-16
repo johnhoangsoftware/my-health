@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Image, TextInput, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import useAxios from "../../hooks/useAxios";
 
@@ -64,15 +64,27 @@ export default function NewPost({ navigation }) {
                     </View>
                 </View>
                 <View className="w-full">
-                    <TextInput
-                        className="text-base p-3"
-                        numberOfLines={10}
-                        maxLength={1000}
-                        multiline={true}
-                        value={content}
-                        onChangeText={(val) => { setContent(val) }}
-                        placeholder="Chia sẻ thông tin của bạn"
-                    />
+                    {Platform.OS === "android" ?
+                        <TextInput
+                            className="text-base p-3"
+                            style={{ textAlignVertical: "top" }}
+                            numberOfLines={10}
+                            maxLength={1000}
+                            multiline={true}
+                            value={content}
+                            onChangeText={(val) => { setContent(val) }}
+                            placeholder="Chia sẻ thông tin của bạn"
+                        /> :
+                        <TextInput
+                            className="text-base p-3"
+                            numberOfLines={10}
+                            maxLength={1000}
+                            multiline={true}
+                            value={content}
+                            onChangeText={(val) => { setContent(val) }}
+                            placeholder="Chia sẻ thông tin của bạn"
+                        />
+                    }
                 </View>
             </View>
         </View>

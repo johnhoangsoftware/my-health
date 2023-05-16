@@ -8,10 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Account from './src/screen/Tabs/Account';
 import HomeStack from './src/screen/HomeStack';
 import ChatStack from './src/screen/ChatStack';
 import CommunityStack from './src/screen/CommunityStack';
+import AccountDoctorStack from './src/screen/AccountDoctorStack';
+import AccountStack from './src/screen/AccountStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -123,30 +124,58 @@ export default function App() {
         {loginState.userToken != null ? (
           <Tab.Navigator
             screenOptions={({ route }) => {
-              return ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
-                  if (route.name === "Trang chủ") {
-                    iconName = focused ? 'home' : 'home-outline';
-                  } else if (route.name == 'Cộng đồng') {
-                    iconName = focused ? 'md-people' : 'people-outline';
-                  } else if (route.name == 'Chat') {
-                    iconName = focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline';
-                  } else {
-                    iconName = focused ? 'person-circle' : 'person-circle-outline';
-                  }
-                  return <Ionicons name={iconName} size={size} color={color} />;
-                },
-                tabBarActiveTintColor: '#24dce2',
-                tabBarInactiveTintColor: 'gray',
-                headerShown: false,
-              });
+              if (loginState.user.role == "PATIENT") {
+                return ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === "Trang chủ") {
+                      iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name == 'Cộng đồng') {
+                      iconName = focused ? 'md-people' : 'people-outline';
+                    } else if (route.name == 'Chat') {
+                      iconName = focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline';
+                    } else {
+                      iconName = focused ? 'person-circle' : 'person-circle-outline';
+                    }
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                  },
+                  tabBarActiveTintColor: '#24dce2',
+                  tabBarInactiveTintColor: 'gray',
+                  headerShown: false,
+                });
+              } else {
+                return ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name == 'Cộng đồng') {
+                      iconName = focused ? 'md-people' : 'people-outline';
+                    } else if (route.name == 'Chat') {
+                      iconName = focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline';
+                    } else {
+                      iconName = focused ? 'person-circle' : 'person-circle-outline';
+                    }
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                  },
+                  tabBarActiveTintColor: '#24dce2',
+                  tabBarInactiveTintColor: 'gray',
+                  headerShown: false,
+                });
+              }
             }}
           >
-            <Tab.Screen name="Trang chủ" component={HomeStack} />
-            <Tab.Screen name="Cộng đồng" component={CommunityStack} />
-            <Tab.Screen name="Chat" component={ChatStack} />
-            <Tab.Screen name="Tài khoản" component={Account} />
+            {loginState.user.role == "PATIENT" ?
+              <>
+                <Tab.Screen name="Trang chủ" component={HomeStack} />
+                <Tab.Screen name="Cộng đồng" component={CommunityStack} />
+                <Tab.Screen name="Chat" component={ChatStack} />
+                <Tab.Screen name="Tài khoản" component={AccountStack} />
+              </> 
+              : <>
+                <Tab.Screen name="Cộng đồng" component={CommunityStack} />
+                <Tab.Screen name="Chat" component={ChatStack} />
+                <Tab.Screen name="Tài khoản" component={AccountDoctorStack} />
+              </>}
+
           </Tab.Navigator>
         )
           : <RootStackScreen />}

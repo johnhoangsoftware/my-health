@@ -19,6 +19,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import ChatDetail from "./Chat/ChatDetail";
+import CreateMedicalRecord from "./Appointments/CreateMedicalRecord";
 
 const Stack = createStackNavigator();
 export default function HomeStack() {
@@ -284,6 +285,26 @@ export default function HomeStack() {
       <Stack.Screen
         name="Xác nhận"
         component={Confirm}
+        options={{
+          headerTintColor: "#24dce2",
+          headerTitleStyle: { color: "#000000" },
+        }}
+        navigationOptions={({ navigation, route }) => ({
+          headerLeft: () => {
+            return (
+              <Ionicons
+                labelVisible={false}
+                title="Trở về"
+                style={{ color: "#24dce2" }}
+                name="arrow-back-outline"
+              />
+            );
+          },
+        })}
+      />
+      <Stack.Screen
+        name="Tạo hồ sơ"
+        component={CreateMedicalRecord}
         options={{
           headerTintColor: "#24dce2",
           headerTitleStyle: { color: "#000000" },
