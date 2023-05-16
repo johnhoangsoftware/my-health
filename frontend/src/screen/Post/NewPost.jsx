@@ -2,10 +2,19 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, TextInput, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import useAxios from "../../hooks/useAxios";
+import useAuth from "../../hooks/useAuth";
 
 export default function NewPost({ navigation }) {
     const [content, setContent] = React.useState("");
     const axios = useAxios()
+    const [auth, setAuth] = React.useState({})
+
+    React.useEffect(() => {
+        (async function () {
+            const u = await useAuth()
+            setAuth(u)
+        })()
+    }, [])
 
     const post = () => {
         if (!content || !content.trim()) {
@@ -60,7 +69,7 @@ export default function NewPost({ navigation }) {
                         className="w-10 h-10 rounded-full"
                     />
                     <View className="justify-center">
-                        <Text className="font-semibold text-lg ml-3">Vũ Hoàng Anh</Text>
+                        <Text className="font-semibold text-lg ml-3">Chia sẻ thông tin của bạn</Text>
                     </View>
                 </View>
                 <View className="w-full">

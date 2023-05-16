@@ -15,7 +15,7 @@ module.exports =  {
                 allowNull: false,
             },
 
-            link: {
+            type: {
                 type: DataTypes.STRING(100),
                 allowNull: true,
             },

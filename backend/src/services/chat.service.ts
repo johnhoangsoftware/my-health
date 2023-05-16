@@ -109,12 +109,6 @@ export const sendMessage = async (userId: string, partnerId: string, msg: Create
     }
 
     msg = validateCreateMessage(msg)
-    console.log({
-        content: msg.content,
-        type: msg.type || "TEXT",
-        chatId: chatId,
-        senderId: userId
-    })
     const message = await Message.create({
         content: msg.content,
         type: msg.type || "TEXT",

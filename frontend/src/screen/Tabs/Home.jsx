@@ -21,8 +21,6 @@ export default function Home({ navigation }) {
   const [hospitalList, setHospitalList] = React.useState([]);
   const axios = useAxios();
 
-
-
   const Item = (props) => {
     return (
       <TouchableOpacity

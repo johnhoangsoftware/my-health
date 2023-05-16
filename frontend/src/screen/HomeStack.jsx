@@ -8,7 +8,7 @@ import ListProfile from "./Appointments/ListProfile";
 import ListDepartment from "./Appointments/ListDepartment";
 import Book from "./Appointments/Book";
 import Confirm from "./Appointments/Confirm";
-import Notification from "./Notifications/Notification";
+import Notification from "./Tabs/Notification";
 import Scheduling from "./Test/Scheduling";
 import Search from "./Search/Search";
 import ViewSchedules from "./Schedule/ViewSchedules";

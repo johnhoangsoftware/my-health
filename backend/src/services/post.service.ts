@@ -98,7 +98,12 @@ export const comment = async (authId: string, postId: string, cmt: CreateComment
     if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find user: ${authId}`)
     }
-    const post = await Post.findByPk(postId)
+    const post = await Post.findByPk(postId, {
+        include: {
+            model: User,
+            attributes:["name", "userId"]
+        }
+    })
     if (!post) {
         throw new CustomError(StatusCodes.NOT_FOUND, `Cannot find post: ${postId}`)
     }
@@ -107,8 +112,11 @@ export const comment = async (authId: string, postId: string, cmt: CreateComment
     cmt.postId = postId
     const newCmt = await Comment.create({ ...cmt })
     return {
-        ...newCmt.dataValues,
-        auth: user
+        cmt: {
+            ...newCmt.dataValues,
+            auth: user
+        },
+        post
     }
 }
 

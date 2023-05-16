@@ -4,16 +4,14 @@ import { Ionicons } from "@expo/vector-icons"
 import Post from "../../component/Post/Post"
 import { StatusBar } from "expo-status-bar";
 import useAxios from '../../hooks/useAxios'
+import useSocket from '../../hooks/useSocket';
 
 const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg";
 
 export default function Community({ navigation }) {
     const [posts, setPosts] = React.useState([])
     const axios = useAxios()
-
-    const dateToString = React.useMemo(() => (d) => {
-        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    }, [])
+    const socket = useSocket()
 
     React.useEffect(() => {
         axios.get("/post")
@@ -25,21 +23,17 @@ export default function Community({ navigation }) {
                 console.log(JSON.stringify(err))
             })
     }, [])
-    // const postList = [];
-    // posts.forEach((post) => {
-    //     postList.push(
-    //         <TouchableOpacity onPress={() => { navigation.navigate("Post Detail", { post: post }) }}>
-    //             <Post
-    //                 key={post.post_id}
-    //                 user_id={post.auth.firstName + " " + post.auth.lastName}
-    //                 createdAt={post.createdAt}
-    //                 avatar={post.auth.avatar || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
-    //                 content={post.content}
-    //                 numberOfComments={post.numberOfComments}
-    //             />
-    //         </TouchableOpacity>
-    //     )
-    // })
+
+    React.useEffect(() => {
+        const newPostListener = (post) => {
+            setPosts(prev => [...prev, post])
+        }
+
+        socket.on('new post', newPostListener)
+        return () => {
+            socket.off('new post', newPostListener)
+        }
+    }, [socket])
 
     return (
         <>
@@ -54,7 +48,12 @@ export default function Community({ navigation }) {
                     >
                         <Ionicons name="search" size={24} />
                     </TouchableOpacity>
-                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                    <TouchableOpacity
+                        className="bg-slate-100 rounded-full p-2"
+                        onPress={() => {
+                            navigation.navigate("Thông báo");
+                        }}
+                    >
                         <Ionicons name="notifications" size={24} />
                     </TouchableOpacity>
                 </View>
@@ -85,7 +84,7 @@ export default function Community({ navigation }) {
                                     <Post
                                         key={post.post_id}
                                         user_id={post.auth.name}
-                                        createdAt={dateToString(new Date(post.createdAt))}
+                                        createdAt={post.createdAt}
                                         avatar={post.auth.avatar || DEFAULT_AVATAR}
                                         content={post.content}
                                         numberOfComments={post.numberOfComments}

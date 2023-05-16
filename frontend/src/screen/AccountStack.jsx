@@ -25,6 +25,7 @@ export default function AccountStack() {
                 name="Đổi mật khẩu"
                 component={ChangePassword}
             />
+            
         </Stack.Navigator>
     )
 }

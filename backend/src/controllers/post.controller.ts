@@ -5,11 +5,16 @@ import {postService, userService} from '../services'
 import { CreatePostDTO } from "../dtos/post.dto";
 import { CreateCommentDTO, UpdateCommentDTO } from "../dtos/comment.dto";
 
+import { uid } from "./chat.controller";
+
 // [POST] /post
 export const newPost = ErrorWrapperHandler(async (req: Request, res: Response, next:NextFunction) => {
     const data = req.body
     const authID = req.auth?.id
     const post = await postService.createPost(authID, data as CreatePostDTO)
+    const { socket } = req.app.get("socket.io")
+    const auth = await userService.findUserById((data as CreateCommentDTO).authId)
+    socket.emit("new post", {...post, auth: auth.dataValues})
     return res.status(StatusCodes.OK).json({
         message: `Create user successfully.`,
         data: post
@@ -59,11 +64,24 @@ export const comment = ErrorWrapperHandler(async (req: Request, res: Response) =
     const cmtDto = req.body
     const postId = req.params.id
     const authId = req.auth?.id
-    const cmt = await postService.comment(authId, postId, cmtDto as CreateCommentDTO )
+    const { cmt, post } = await postService.comment(authId, postId, cmtDto as CreateCommentDTO)
+
+    const { socket } = req.app.get("socket.io")
+    if (authId !== post.authId) {
+        const noti = await userService.createNotification({
+            userId: post.authId,
+            content: `${post.getAuth().name} vừa bình luận bài viết của bạn`,
+            type: 'POST',
+        })
+        if (uid[post.authId]) {
+            socket.in(uid[post.authId]).emit("notification", {...noti, post})
+        }
+    }
+
     return res.status(StatusCodes.OK).json({
         data: cmt
     });
-}) 
+})
 
 // [DELETE] /post/comments/:id
 export const deleteComment = ErrorWrapperHandler(async (req: Request, res: Response) => {

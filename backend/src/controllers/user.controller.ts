@@ -22,3 +22,19 @@ export const allPosts = ErrorWrapperHandler(async (req: Request, res: Response) 
         data: posts
     });
 })
+
+// [GET] /user/notification
+export const allNotifications = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const userId = req.auth?.id
+    const notis = await userService.getAllNotifications(userId)
+    return res.status(StatusCodes.OK).json({
+        data: notis
+    });
+}) 
+
+// [PUT] /user/notification/read/:id
+export const readNotification = ErrorWrapperHandler(async (req: Request, res: Response) => {
+    const { id } = req.params
+    await userService.readNotification(id)
+    return res.status(StatusCodes.OK).json(id);
+}) 

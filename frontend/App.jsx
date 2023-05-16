@@ -13,22 +13,22 @@ import ChatStack from './src/screen/ChatStack';
 import CommunityStack from './src/screen/CommunityStack';
 import AccountDoctorStack from './src/screen/AccountDoctorStack';
 import AccountStack from './src/screen/AccountStack';
+import Account from './src/screen/Tabs/Account'
 
 const Tab = createBottomTabNavigator();
+const initialLoginState = {
+  isLoading: true,
+  user: {
+    id: null,
+    role: null
+  },
+  userToken: null,
+}
 
 export default function App() {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setUserToken] = React.useState(null);
   const [isLogin, setIsLogin] = React.useState(false);
+  const [role, setRole]  = React.useState("")
 
-  const initialLoginState = {
-    isLoading: true,
-    user: {
-      id: null,
-      role: null
-    },
-    userToken: null,
-  }
 
   const loginReducer = (prevState, action) => {
     switch (action.type) {
@@ -73,6 +73,7 @@ export default function App() {
       try {
         await AsyncStorage.setItem('userToken', userToken)
         await AsyncStorage.setItem('user', JSON.stringify({ id: userId, role: userRole }))
+        setRole(userRole)
       } catch (e) {
         console.log(e);
       }
@@ -123,7 +124,7 @@ export default function App() {
       <NavigationContainer>
         {loginState.userToken != null ? (
           <Tab.Navigator
-            screenOptions={({ route }) => {
+             screenOptions={({ route }) => {
               if (loginState.user.role == "PATIENT") {
                 return ({
                   tabBarIcon: ({ focused, color, size }) => {
@@ -168,14 +169,13 @@ export default function App() {
                 <Tab.Screen name="Trang chủ" component={HomeStack} />
                 <Tab.Screen name="Cộng đồng" component={CommunityStack} />
                 <Tab.Screen name="Chat" component={ChatStack} />
-                <Tab.Screen name="Tài khoản" component={AccountStack} />
+                <Tab.Screen name="Tài khoản" component={Account} />
               </> 
               : <>
                 <Tab.Screen name="Cộng đồng" component={CommunityStack} />
                 <Tab.Screen name="Chat" component={ChatStack} />
                 <Tab.Screen name="Tài khoản" component={AccountDoctorStack} />
               </>}
-
           </Tab.Navigator>
         )
           : <RootStackScreen />}

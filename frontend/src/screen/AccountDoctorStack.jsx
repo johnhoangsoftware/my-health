@@ -6,6 +6,7 @@ import HospitalDetails from "./Hospital/HospitalDetails";
 import ListDoctor from "./Account/ListDoctor";
 import DoctorDetails from "./Doctors/DoctorDetails";
 import ChangePassword from "./Account/ChangePassword";
+import Notification from "./Tabs/Notification";
 
 const Stack = createStackNavigator();
 export default function AccountDoctorStack() {
@@ -66,6 +67,7 @@ export default function AccountDoctorStack() {
                 name="Đổi mật khẩu"
                 component={ChangePassword}
             />
+            
         </Stack.Navigator>
     )
 }
