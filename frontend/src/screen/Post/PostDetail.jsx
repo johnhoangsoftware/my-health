@@ -35,6 +35,7 @@ const Comment = (props) => {
 }
 
 export default function PostDetail({ navigation, route }) {
+    console.log("is MINE::", route.params.isMine)
     const [post, setPost] = React.useState(route.params.post || {})
     const [comments, setComments] = React.useState([])
     const [comment, setComment] = React.useState("");

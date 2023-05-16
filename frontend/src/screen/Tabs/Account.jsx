@@ -68,8 +68,10 @@ export default function Account({navigation}) {
                 >
                     <Item title="Hồ sơ khám bệnh" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen items-center">
-                    <Item title="Tạo lịch nhắc" />
+                <TouchableOpacity className="w-screen items-center"
+                    onPress= {() => {navigation.navigate("Xem lịch khám")}}
+                >
+                    <Item title="Lịch khám của tôi" />
                 </TouchableOpacity>
                 <TouchableOpacity className="w-screen items-center">
                     <Item title="Đổi mật khẩu" />
@@ -92,7 +94,7 @@ const Item = (props) => {
                     && <AntDesign name="profile" size={24} color="orange" />
                 }
                 {
-                    props.title == "Tạo lịch nhắc"
+                    props.title == "Lịch khám của tôi"
                     && <FontAwesome name="calendar-plus-o" size={24} color="green" />
                 }
                 {

@@ -52,16 +52,16 @@ const Details = (props) => {
 )}
 
 export default function PackageDetails({navigation, route}) {
-    const {testPackage} = route.params;
+    const {id} = route.params;
     const [pack, setPackage] = React.useState({});
     const axios = useAxios()
 
     React.useEffect(() => {
-        console.log("View package detal ID:", testPackage.id)
-        if (!testPackage.id) {
+        console.log("View package detal ID:", id)
+        if (!id) {
             return
         }
-        axios.get(`/test_package/${testPackage.id}`)
+        axios.get(`/test_package/${id}`)
             .then(res => res.data.data)
             .then(p => {
                 setPackage({
