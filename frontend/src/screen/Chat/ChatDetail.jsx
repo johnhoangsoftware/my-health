@@ -64,7 +64,7 @@ export default function ChatDetail({ navigation, route }) {
 
     React.useEffect(() => {
         const receiveMessageListener = (msg) => {
-            console.log("receive message => ",msg)
+            console.log("receive message => ", msg)
             setMessages(previousMessages => GiftedChat.append(previousMessages, msg))
         }
 
@@ -77,8 +77,8 @@ export default function ChatDetail({ navigation, route }) {
 
     const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-        console.log("send:::",messages)
-        
+        console.log("send:::", messages)
+
         axios.post(`/chat/${user.id}/message`, {
             content: messages[0].text
         })
@@ -121,13 +121,13 @@ export default function ChatDetail({ navigation, route }) {
     const customBubble = props => {
         return (
             <Bubble
-            {...props}
-            wrapperStyle={{
-              left: {
-                backgroundColor: '#DCDCDC',
-              },
-            }}
-          />
+                {...props}
+                wrapperStyle={{
+                    left: {
+                        backgroundColor: '#DCDCDC',
+                    },
+                }}
+            />
         )
     }
 
@@ -153,7 +153,10 @@ export default function ChatDetail({ navigation, route }) {
             </View>
             {
                 messages.length === 0 &&
-                <Text>Chưa có tin nhắn nào!</Text>
+                <View className='items-center pt-5'>
+                    <Text className="text-gray-500">Chưa có tin nhắn nào!</Text>
+                </View>
+
             }
             <GiftedChat
                 messages={messages}

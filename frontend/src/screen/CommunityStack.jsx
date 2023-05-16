@@ -3,6 +3,7 @@ import React from "react";
 import Community from "./Tabs/Community";
 import PostDetail from "./Post/PostDetail";
 import NewPost from "./Post/NewPost";
+import SearchPost from "./Search/SearchPost";
 
 const Stack = createStackNavigator();
 export default function CommunityStack() {
@@ -17,13 +18,18 @@ export default function CommunityStack() {
                 name="Post Detail"
                 component={PostDetail}
                 options={{ headerShown: false }}
-                
+
             />
             <Stack.Screen
                 name="New Post"
                 component={NewPost}
                 options={{ headerShown: false }}
-                
+
+            />
+            <Stack.Screen
+                name="Tìm kiếm bài viết"
+                component={SearchPost}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     )

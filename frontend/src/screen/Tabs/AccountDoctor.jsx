@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 
 
-export default function Account({navigation}) {
+export default function AccountDoctor({ navigation }) {
     const { logout } = React.useContext(AuthContext);
     const [user, setUser] = React.useState({})
     const [auth, setAuth] = React.useState({})
@@ -15,12 +15,12 @@ export default function Account({navigation}) {
     React.useEffect(() => {
         (async function () {
             const u = await useAuth()
-           setAuth(u) 
+            setAuth(u)
         })()
     }, [])
 
     useEffect(() => {
-        if(Object.keys(auth).length === 0 || !auth.id) {
+        if (Object.keys(auth).length === 0 || !auth.id) {
             return
         }
         axios.get(`/user/profile/${auth.id}`)
@@ -48,10 +48,10 @@ export default function Account({navigation}) {
                         <Feather name="edit" size={24} color={"white"} />
                         <Text className="w-20 ml-3 font-bold text-white">Chỉnh sửa thông tin</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.bg} className="p-3 rounded-lg flex-row items-center justify-center w-40">
+                    <TouchableOpacity style={styles.bg} className="p-3 rounded-lg flex-row items-center justify-center w-40">
                         <Feather name="eye" size={24} color={"white"} />
                         <Text className="w-20 ml-3 font-bold text-white">Xem trang cá nhân</Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </View>
             </View>
             <View className="top-28 p-1.5 w-56 h-56 rounded-full absolute items-center justify-center bg-white">
@@ -62,16 +62,17 @@ export default function Account({navigation}) {
             </View>
 
             <View className="border-t border-slate-300 w-screen items-center">
-                <TouchableOpacity
+                <TouchableOpacity 
                     className="w-screen items-center"
-                    onPress={() => navigation.navigate("Hồ sơ", {onlyShow: true})}
+                    onPress={() => {navigation.navigate("Danh sách bệnh viện")}}
                 >
-                    <Item title="Hồ sơ khám bệnh" />
+                    <Item title="Danh sách bệnh viện" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen items-center"
-                    onPress= {() => {navigation.navigate("Xem lịch khám")}}
+                <TouchableOpacity 
+                    className="w-screen items-center"
+                    onPress={() => {navigation.navigate("Danh sách bác sĩ")}}
                 >
-                    <Item title="Lịch khám của tôi" />
+                    <Item title="Danh sách bác sĩ" />
                 </TouchableOpacity>
                 <TouchableOpacity 
                     className="w-screen items-center"
@@ -93,12 +94,12 @@ const Item = (props) => {
         <View className="flex-row w-11/12 p-4 border-b border-gray-300 items-center">
             <View className>
                 {
-                    props.title == "Hồ sơ khám bệnh"
-                    && <AntDesign name="profile" size={24} color="orange" />
+                    props.title == "Danh sách bệnh viện"
+                    && <FontAwesome name="hospital-o" size={24} color="green" />
                 }
                 {
-                    props.title == "Lịch khám của tôi"
-                    && <FontAwesome name="calendar-plus-o" size={24} color="green" />
+                    props.title == "Danh sách bác sĩ"
+                    && <FontAwesome name="user-md" size={24} color="orange" />
                 }
                 {
                     props.title == "Đổi mật khẩu"
