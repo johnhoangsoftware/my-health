@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
 import useAxios from "../../hooks/useAxios";
+import * as Animatable from 'react-native-animatable';
 
 const DepartmentOption = ({department, choose}) => {
     return (
@@ -10,14 +11,15 @@ const DepartmentOption = ({department, choose}) => {
                 className="m-2 p-2 h-20 w-2/5 flex-row items-center text-center rounded-lg float-left bg-white shadow-sm"
                 style={(department.selected) ? styles.focus : styles.none}
             >
-                <View className="ml-2 bg-slate-100 h-16 w-16 rounded-full items-center justify-center">
+                <View className="ml-1 bg-slate-50 h-16 w-16 rounded-full items-center justify-center">
+                    <Animatable.View className="bg-gray-100 h-16 w-16 rounded-full items-center justify-center" animation="fadeIn" easing="ease-in-out-quad" iterationCount={10}></Animatable.View>
                     <Image source={{
                         uri: department.image
-                    }} className='object-scale-down h-16 w-16 rounded-full' />
+                    }} className='object-scale-down h-16 w-16 rounded-full absolute' />
                 </View>
                 <Text
                     style={(department.selected) ? styles.textColor : styles.none}
-                    className="left-3 w-14 text-left break-normal font-medium justify-center"
+                    className="left-2 w-16 text-left break-normal font-medium justify-center"
                     numberOfLines={3}
                 >
                     {department.name}

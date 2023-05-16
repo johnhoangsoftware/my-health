@@ -1,33 +1,45 @@
-import { View, Text, TouchableOpacity, ScrollView, TextInput, StyleSheet, Image } from "react-native"
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  StyleSheet,
+  Image,
+} from "react-native";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons"
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import useAxios from '../../hooks/useAxios'
-
-
-
-const Item = (props) => {
-    return (
-        <TouchableOpacity className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg" style={styles.item} onPress={props.onPress}>
-            <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
-                <Image source={props.image} className='object-scale-down h-10 w-10' />
-            </View>
-            <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
-            <View className="right-3 absolute">
-                <Ionicons name="caret-forward" size={24} color="#24DCE2" />
-            </View>
-        </TouchableOpacity>
-    )
-}
+import useAxios from "../../hooks/useAxios";
 
 export default function Home({ navigation }) {
-    const [search, setSearch] = React.useState({
-        inputSearch: null,
-        isSearch: false
-    })
-    const [hospitalList, setHospitalList] = React.useState([])
-    const axios = useAxios()
+  const [search, setSearch] = React.useState({
+    inputSearch: null,
+    isSearch: false,
+  });
+  const [hospitalList, setHospitalList] = React.useState([]);
+  const axios = useAxios();
+
+
+
+  const Item = (props) => {
+    return (
+      <TouchableOpacity
+        className="bg-white mx-5 mb-5 h-1/5 flex-row items-center rounded-lg"
+        style={styles.item}
+        onPress={props.onPress}
+      >
+        <View className="ml-2 bg-cyan-100 h-3/4 aspect-square rounded-full items-center justify-center">
+          <Image source={props.image} className="object-scale-down h-10 w-10" />
+        </View>
+        <Text className="ml-3 font-semibold text-lg">{props.title}</Text>
+        <View className="right-3 absolute">
+          <Ionicons name="caret-forward" size={24} color="#24DCE2" />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
     React.useEffect(() => {
         axios.get("/search-hospital/ ")
@@ -67,67 +79,82 @@ export default function Home({ navigation }) {
     
 const items = [
     {
-        title: "Xét nghiệm tại nhà",
-        image: require("./../../assets/home-icon/blood-test.png"),
-        onPress: () => { navigation.navigate("Xét nghiệm tại nhà") }
+      title: "Xét nghiệm tại nhà",
+      image: require("./../../assets/home-icon/blood-test.png"),
+      onPress: () => {
+        navigation.navigate("Xét nghiệm tại nhà");
+      },
     },
     {
-        title: "Xem lịch khám",
-        image: require("./../../assets/home-icon/calendar.png"),
-        onPress: () => {navigation.navigate("Xem lịch khám")}
+      title: "Xem lịch khám",
+      image: require("./../../assets/home-icon/calendar.png"),
+      onPress: () => {
+        navigation.navigate("Xem lịch khám");
+      },
     },
     {
-        title: "Danh sách bác sĩ",
-        image: require("./../../assets/home-icon/shortlist.png"),
-        onPress: () => { navigation.navigate("Danh sách bác sĩ") }
+      title: "Danh sách bác sĩ",
+      image: require("./../../assets/home-icon/shortlist.png"),
+      onPress: () => {
+        navigation.navigate("Danh sách bác sĩ");
+      },
     },
-];
-    
-    const itemList = [];
-    items.forEach((item) => {
-        itemList.push(<Item key={item.title} title={item.title} image={item.image} onPress={item.onPress} />)
-    })
+  ];
 
-    const searchChange = (val) => {
-        if (val.length != 0) {
-            setSearch({
-                inputSearch: val,
-                isSearch: true
-            });
-        } else {
-            setSearch({
-                inputSearch: val,
-                isSearch: false
-            });
-        }
+  const itemList = [];
+  items.forEach((item) => {
+    itemList.push(
+      <Item
+        key={item.title}
+        title={item.title}
+        image={item.image}
+        onPress={item.onPress}
+      />
+    );
+  });
+
+  const searchChange = (val) => {
+    if (val.length != 0) {
+      setSearch({
+        inputSearch: val,
+        isSearch: true,
+      });
+    } else {
+      setSearch({
+        inputSearch: val,
+        isSearch: false,
+      });
     }
+  };
 
-    const searchInfo = () => {
-        navigation.navigate("Tìm kiếm", {search});
+  const searchInfo = () => {
+    navigation.navigate("Tìm kiếm", { search });
+  };
+
+  const notification = () => {
+    navigation.navigate("Thông báo");
+  };
+
+  React.useEffect(() => {
+    if (!search.inputSearch?.trim()) {
+      return;
     }
+    setSearch({
+      inputSearch: "",
+      isSearch: false,
+    });
+  }, []);
 
-    const notification = () => {
-        navigation.navigate("Thông báo");
-    }
-
-    React.useEffect(() => {
-        if (!search.inputSearch?.trim()) {
-            return
-        }
-        setSearch({
-            inputSearch: "",
-            isSearch: false
-        })
-    }, [])
-
-    return (<>
-        <StatusBar />
-        <View className="flex-row pt-10 pb-2 px-5 space-x-2 bg-white">
-            <View className='bg-gray-200 rounded-full px-3 py-2 w-11/12 flex-row items-center'>
-                {search.isSearch ?
-                    <Ionicons name='search' size={20} color="black" />
-                    : <Ionicons name='search' size={20} color="gray" />
-                }
+  return (
+    <>
+      <StatusBar />
+      <View className="flex-row pt-10 pb-2 px-5 space-x-2 bg-white">
+        <View className="bg-gray-200 rounded-full px-3 py-2 w-11/12 flex-row items-center">
+          {search.isSearch ? (
+            <Ionicons name="search" size={20} color="black" />
+          ) : (
+            <Ionicons name="search" size={20} color="gray" />
+          )}
 
                 <TextInput
                     className="pl-2" placeholder='Nhập tên bác sĩ/bệnh viện'
@@ -170,11 +197,11 @@ const items = [
             </LinearGradient>
         </ScrollView>
     </>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
-    item: {
-        minHeight: 96,
-    }
-})
+  item: {
+    minHeight: 96,
+  },
+});

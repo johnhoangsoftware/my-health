@@ -2,8 +2,9 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView } from "rea
 import React, { useState } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import useAxios from '../../hooks/useAxios'
+import useAxios from '../../hooks/useAxios';
 import { useNavigation } from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable';
 
 const AVATAR_DEFAULT = "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg"
 
@@ -17,7 +18,8 @@ const DoctorBrief = (props) => {
                 id: props.id
             })} className="p-2 h-20 w-full flex-row items-center text-center rounded-lg">
                 <View className="ml-2 bg-transparent h-16 w-16 rounded-full items-center justify-center">
-                    <Image src={props.image || AVATAR_DEFAULT} className='object-scale-down h-16 w-16 rounded-full' />
+                    <Animatable.View className="bg-gray-100 h-16 w-16 rounded-full items-center justify-center" animation="fadeIn" easing="ease-in-out-quad" iterationCount={10}></Animatable.View>
+                    <Image src={props.image} className='object-scale-down h-16 w-16 rounded-full absolute' />
                 </View>
                 <View className="left-3 w-full">
                     <Text className="w-2/3 text-left break-normal font-semibold justify-center">{props.name}</Text>
@@ -43,10 +45,11 @@ const DepartmentOption = ({department, choose, isChosen}) => {
     return (
         <>
             <TouchableOpacity onPress={() => choose(department.name)} style={isChosen ? styles.focus : styles.none} className="mt-2 p-2 h-20 w-40 flex-row items-center text-center rounded-lg border float-left">
-                <View className="ml-2 bg-gray-50 h-16 w-16 rounded-full items-center justify-center">
-                    <Image source={{ uri: department.image }} className='object-scale-down h-16 w-16 rounded-full' />
+                <View className="bg-gray-50 ml-1 h-16 w-16 rounded-full items-center justify-center">
+                    <Animatable.View className="bg-gray-100 h-16 w-16 rounded-full items-center justify-center" animation="fadeIn" easing="ease-in-out-quad" iterationCount={10}></Animatable.View>
+                    <Image source={{ uri: department.image }} className='object-scale-down h-16 w-16 rounded-full absolute ease-in' />
                 </View>
-                <Text style={isChosen ? styles.textColor : styles.none} className="left-3 w-14 text-left break-normal font-medium justify-center">{department.name}</Text>
+                <Text style={isChosen ? styles.textColor : styles.none} className="left-1 w-16 text-left break-normal font-medium justify-center">{department.name}</Text>
             </TouchableOpacity>
             <View className="w-3.5"></View>
         </>
