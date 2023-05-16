@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 
 
-export default function Account() {
+export default function Account({ navigation }) {
     const { logout } = React.useContext(AuthContext);
     const [user, setUser] = React.useState({})
     const [auth, setAuth] = React.useState({})
@@ -62,13 +62,19 @@ export default function Account() {
             </View>
 
             <View className="border-t border-slate-300 w-screen items-center">
-                <TouchableOpacity className="w-screen items-center">
+                <TouchableOpacity 
+                    className="w-screen items-center"
+                    onPress={() => {navigation.navigate("Hồ sơ khám bệnh")}}
+                >
                     <Item title="Hồ sơ khám bệnh" />
                 </TouchableOpacity>
                 <TouchableOpacity className="w-screen items-center">
                     <Item title="Tạo lịch nhắc" />
                 </TouchableOpacity>
-                <TouchableOpacity className="w-screen items-center">
+                <TouchableOpacity 
+                    className="w-screen items-center"
+                    onPress={() => {navigation.navigate("Đổi mật khẩu")}}
+                >
                     <Item title="Đổi mật khẩu" />
                 </TouchableOpacity>
                 <TouchableOpacity className="w-screen items-center" onPress={() => { logout() }}>

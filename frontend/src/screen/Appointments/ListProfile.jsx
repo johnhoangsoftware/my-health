@@ -61,7 +61,10 @@ export default function ListProfile({ navigation, route }) {
 
     return (
         <View>
-            <TouchableOpacity className="flex-row m-4 mb-2 p-5 rounded-md bg-white shadow-sm">
+            <TouchableOpacity
+                onPress={() => { navigation.navigate("Tạo hồ sơ") }}
+                className="flex-row m-4 mb-2 p-5 rounded-md bg-white shadow-sm"
+            >
                 <Text className="text-base font-bold w-11/12" style={{ color: "#24DCE2" }}>Thêm hồ sơ</Text>
                 <Ionicons name="add-circle" size={24} color="#24DCE2" />
             </TouchableOpacity>

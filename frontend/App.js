@@ -8,11 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Account from './src/screen/Tabs/Account';
 import HomeStack from './src/screen/HomeStack';
 import ChatStack from './src/screen/ChatStack';
 import CommunityStack from './src/screen/CommunityStack';
 import AccountDoctorStack from './src/screen/AccountDoctorStack';
+import AccountStack from './src/screen/AccountStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -168,7 +168,7 @@ export default function App() {
                 <Tab.Screen name="Trang chủ" component={HomeStack} />
                 <Tab.Screen name="Cộng đồng" component={CommunityStack} />
                 <Tab.Screen name="Chat" component={ChatStack} />
-                <Tab.Screen name="Tài khoản" component={Account} />
+                <Tab.Screen name="Tài khoản" component={AccountStack} />
               </> 
               : <>
                 <Tab.Screen name="Cộng đồng" component={CommunityStack} />
