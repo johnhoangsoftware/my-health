@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
 import { Application, NextFunction, Request, Response } from 'express'
-import { chatService } from "../services";
+import { chatService, userService } from "../services";
 import { CreateMessageDTO } from "../dtos/message.dto";
 
-let uid: {[key:string]: string} = {}
+export let uid: {[key:string]: string} = {}
 
 export const socketSetup = (io: any, app: Application) => {
     io.on("connection", (socket: any) => {
@@ -55,6 +55,7 @@ export const sendMessage = ErrorWrapperHandler(async (req: Request, res: Respons
     const userId = req.auth?.id
     const partnerId = req.params.id
     const d = await chatService.sendMessage(userId, partnerId, req.body as CreateMessageDTO)
+    
     const { socket } = req.app.get("socket.io")
     if (uid[partnerId]) {
         socket.in(uid[partnerId]).emit("message", d)

@@ -135,11 +135,11 @@ const items = [
                     onEndEditing={() => searchInfo(search)}
                 />
             </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 className="w-1/12 justify-center items-center"
                 onPress={() => notification()}>
                 <Ionicons name="notifications-outline" size={28} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
         <ScrollView
             horizontal={false}

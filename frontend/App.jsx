@@ -12,6 +12,7 @@ import Account from './src/screen/Tabs/Account';
 import HomeStack from './src/screen/HomeStack';
 import ChatStack from './src/screen/ChatStack';
 import CommunityStack from './src/screen/CommunityStack';
+import Notification from './src/screen/Tabs/Notification';
 
 const Tab = createBottomTabNavigator();
 
@@ -132,7 +133,10 @@ export default function App() {
                     iconName = focused ? 'md-people' : 'people-outline';
                   } else if (route.name == 'Chat') {
                     iconName = focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline';
-                  } else {
+                  } else if (route.name == 'Thông báo') {
+                    iconName = focused ? 'notifications' : 'notifications-outline';
+                  }
+                  else {
                     iconName = focused ? 'person-circle' : 'person-circle-outline';
                   }
                   return <Ionicons name={iconName} size={size} color={color} />;
@@ -146,6 +150,7 @@ export default function App() {
             <Tab.Screen name="Trang chủ" component={HomeStack} />
             <Tab.Screen name="Cộng đồng" component={CommunityStack} />
             <Tab.Screen name="Chat" component={ChatStack} />
+            <Tab.Screen name="Thông báo" component={Notification} />
             <Tab.Screen name="Tài khoản" component={Account} />
           </Tab.Navigator>
         )

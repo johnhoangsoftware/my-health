@@ -37,9 +37,9 @@ export default function Community({ navigation }) {
                     <TouchableOpacity className="bg-slate-100 rounded-full p-2">
                         <Ionicons name="search" size={24} />
                     </TouchableOpacity>
-                    <TouchableOpacity className="bg-slate-100 rounded-full p-2">
+                    {/* <TouchableOpacity className="bg-slate-100 rounded-full p-2">
                         <Ionicons name="notifications" size={24} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             <ScrollView className="flex-1">

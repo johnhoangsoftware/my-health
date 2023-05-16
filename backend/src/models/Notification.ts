@@ -12,7 +12,7 @@ export class Notification extends Model{
   public content!: string;
 
   @Column({ type: DataType.STRING })
-  public link!: string;
+  public type!: string;
 
   @Column({ type: DataType.BOOLEAN })
   public isRead!: boolean;

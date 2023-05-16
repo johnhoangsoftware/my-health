@@ -5,6 +5,8 @@ import {postService, userService} from '../services'
 import { CreatePostDTO } from "../dtos/post.dto";
 import { CreateCommentDTO, UpdateCommentDTO } from "../dtos/comment.dto";
 
+import { uid } from "./chat.controller";
+
 // [POST] /post
 export const newPost = ErrorWrapperHandler(async (req: Request, res: Response, next:NextFunction) => {
     const data = req.body
@@ -59,11 +61,19 @@ export const comment = ErrorWrapperHandler(async (req: Request, res: Response) =
     const cmtDto = req.body
     const postId = req.params.id
     const authId = req.auth?.id
-    const cmt = await postService.comment(authId, postId, cmtDto as CreateCommentDTO )
+    const { cmt, post } = await postService.comment(authId, postId, cmtDto as CreateCommentDTO)
+    const { socket } = req.app.get("socket.io")
+    const noti = await userService.createNotification({
+        userId: post.authId,
+        content: `${post.getAuth().name} vừa bình luận bài viết của bạn`,
+        type: 'POST',
+    })
+    socket.in(uid[post.authId]).emit("notification", {...noti, post})
+
     return res.status(StatusCodes.OK).json({
         data: cmt
     });
-}) 
+})
 
 // [DELETE] /post/comments/:id
 export const deleteComment = ErrorWrapperHandler(async (req: Request, res: Response) => {

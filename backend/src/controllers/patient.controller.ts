@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from "http-status-codes";
 import ErrorWrapperHandler from "../utils/ErrorWrapperHandler";
-import { patientService } from '../services';
+import { patientService, userService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 
@@ -48,6 +48,15 @@ export const makeAnAppointment = ErrorWrapperHandler(async (req: Request, res: R
     const userId = req.auth?.id
     const apm = req.body as CreateAppointmentDTO
     const appointment = await patientService.makeAnAppointment(userId, apm)
+    
+    const { socket } = req.app.get("socket.io")
+    const noti = await userService.createNotification({
+        userId: userId,
+        content: 'Bạn vừa tạo cuộc hẹn mới',
+        type: 'APPOINTMENT'
+    })
+    socket.emit("notification", noti.dataValues)
+
     return res.status(StatusCodes.OK).json({
         data: appointment
     });
