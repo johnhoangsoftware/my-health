@@ -3,26 +3,29 @@ import { FontAwesome5 } from "@expo/vector-icons"
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import React from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import useAxios from "../../hooks/useAxios";
 
-export default function CreateMedicalRecord() {
+export default function CreateMedicalRecord({navigation}) {
     const [data, setData] = React.useState({
-        fullname: null,
+        name: null,
         gender: "Nam",
-        dateOfBirth: null,
+        birthDay: null,
         relationship: null,
         phone: null,
         address: null
     })
 
     const [checkData, setCheckData] = React.useState({
-        fullname: true,
-        dateOfBirth: true,
+        name: true,
+        birthDay: true,
         relationship: true,
         phone: true,
         address: true
-
     })
-    const checkDateOfBirth = (val) => {
+
+    const axios = useAxios()
+
+    const checkbirthDay = (val) => {
         var d_reg = /^([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])$/;
         if (d_reg.test(val)) {
             console.log("Date follows mm/dd/yyyy format");
@@ -32,16 +35,16 @@ export default function CreateMedicalRecord() {
         }
     }
 
-    const submit = () => {
-        if (data.fullname == null) {
-            setCheckData({ ...data, fullname: false })
+    const submit = (data) => {
+        if (data.name == null) {
+            setCheckData({ ...data, name: false })
         } else {
-            setCheckData({ ...data, fullname: true })
+            setCheckData({ ...data, name: true })
         }
-        if (data.dateOfBirth == null) {
-            setCheckData({ ...data, dateOfBirth: false })
+        if (data.birthDay == null) {
+            setCheckData({ ...data, birthDay: false })
         } else {
-            setCheckData({ ...data, dateOfBirth: true })
+            setCheckData({ ...data, birthDay: true })
         }
         if (data.relationship == null) {
             setCheckData({ ...data, relationship: false })
@@ -58,7 +61,16 @@ export default function CreateMedicalRecord() {
         } else {
             setCheckData({ ...data, address: true })
         }
-        checkDateOfBirth(data.dateOfBirth)
+        checkbirthDay(data.birthDay)
+
+        axios.post("/patient/medical_record", data)
+            .then(res => res.data.data)
+            .then((res) => {
+                console.log(res)
+                navigation.goBack(null)
+            }).catch(err => {
+                console.log(JSON.stringify(err))
+            })
     }
 
     return (
@@ -69,9 +81,9 @@ export default function CreateMedicalRecord() {
                     <TextInput
                         className="rounded-lg border border-gray-400 p-1 my-1 px-3"
                         placeholder="Nhập họ tên"
-                        onChangeText={(val) => setData({ ...data, fullname: val })}
+                        onChangeText={(val) => setData({ ...data, name: val })}
                     />
-                    {!checkData.fullname && <Text className="text-red-500">Vui lòng điền trường này</Text>}
+                    {!checkData.name && <Text className="text-red-500">Vui lòng điền trường này</Text>}
                 </View>
                 <View className="mt-2 mx-2">
                     <Text>Giới tính</Text>
@@ -101,10 +113,10 @@ export default function CreateMedicalRecord() {
                     <Text>Ngày sinh</Text>
                     <TextInput
                         className="rounded-lg border border-gray-400 p-1 my-1 px-3"
-                        placeholder="yyyy/MM/dd"
-                        onChangeText={(val) => setData({ ...data, dateOfBirth: val })}
+                        placeholder="yyyy-MM-dd"
+                        onChangeText={(val) => setData({ ...data, birthDay: val })}
                     />
-                    {!checkData.dateOfBirth && <Text className="text-red-500">Vui lòng điền trường này</Text>}
+                    {!checkData.birthDay && <Text className="text-red-500">Vui lòng điền trường này</Text>}
                 </View>
                 <View className="mt-2 mx-2">
                     <Text>Mối quan hệ</Text>
@@ -137,7 +149,7 @@ export default function CreateMedicalRecord() {
                     <TouchableOpacity
                         className="my-5 py-2 items-center w-3/5 rounded-lg"
                         style={{ backgroundColor: "#24DCE2" }}
-                        onPress={() => submit()}
+                        onPress={() => submit(data)}
                     >
                         <Text className="text-white font-bold">Tạo hồ sơ</Text>
                     </TouchableOpacity>

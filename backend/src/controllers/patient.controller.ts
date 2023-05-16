@@ -5,6 +5,8 @@ import { patientService, userService } from '../services';
 import { CreateMedicalRecordDTO, UpdateMedicalRecordDTO } from '../dtos/medicalRecord.dto';
 import { CreateAppointmentDTO } from '../dtos/appointment.dto';
 
+import { uid } from './chat.controller';
+
 // [GET] /patient/medical_record
 export const getMedicalRecords = ErrorWrapperHandler(async (req: Request, res: Response) => {
     const userId = req.auth?.id
@@ -19,6 +21,10 @@ export const createMedicalRecord = ErrorWrapperHandler(async (req: Request, res:
     const userId = req.auth?.id
     const medicalRecordDTO = req.body as CreateMedicalRecordDTO
     const medicalRecord = await patientService.createMedicalRecord(userId, medicalRecordDTO)
+    const { socket } = req.app.get("socket.io")
+    if (uid[userId]) {
+        socket.emit('medical record', medicalRecord)
+    }
     return res.status(StatusCodes.OK).json({
         data: medicalRecord
     });

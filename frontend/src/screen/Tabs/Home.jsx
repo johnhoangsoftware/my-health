@@ -42,7 +42,7 @@ export default function Home({ navigation }) {
     React.useEffect(() => {
         axios.get("/search-hospital/ ")
             .then(res => res.data.data.hospitals)
-            .then(hs => {
+          .then(hs => {
                 setHospitalList(hs.map(i => ({
                     id: i.hospitalId,
                     name: i.name,
@@ -55,7 +55,8 @@ export default function Home({ navigation }) {
             })
     }, [])
    
-    const InfoHospital = (props) => {
+  const InfoHospital = (props) => {
+      console.log(props)
         return (
             <View className="bg-white rounded-xl w-40 h-full mr-4 mb-3">
                 <Image

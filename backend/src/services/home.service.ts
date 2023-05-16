@@ -100,6 +100,6 @@ export const searchHospitals = async (keyword: string) => {
                 [Op.like]: `%${keyword.trim()}%`
             }
         },
-        attributes: ["hospitalId", "name", "avatar", "description"],
+        attributes: ["hospitalId", "name", "avatar", "description", "address"],
     })
 }

@@ -37,7 +37,7 @@ export default function Account({navigation}) {
         <View className="flex-1 items-center bg-white">
             <View className="w-full h-60">
                 <Image
-                    src={user.avatar || "https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-abstract-medical-wallpaper-template-design-banner-background-image_519861.jpg"}
+                    src={"https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-abstract-medical-wallpaper-template-design-banner-background-image_519861.jpg"}
                     className="object-cover w-full h-full overflow-hidden"
                 />
             </View>
@@ -56,7 +56,7 @@ export default function Account({navigation}) {
             </View>
             <View className="top-28 p-1.5 w-56 h-56 rounded-full absolute items-center justify-center bg-white">
                 <Image
-                    src="https://i.etsystatic.com/isla/28f779/58119197/isla_fullxfull.58119197_gwg8k1wg.jpg?version=0"
+                    src={user.avatar}
                     className="w-full h-full object-cover rounded-full"
                 />
             </View>

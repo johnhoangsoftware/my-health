@@ -32,7 +32,7 @@ module.exports =  {
             },
 
             avatar: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
 

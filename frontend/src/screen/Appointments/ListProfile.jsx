@@ -6,6 +6,18 @@ import useAxios from "../../hooks/useAxios";
 import React, { useEffect } from "react";
 import useSocket from "../../hooks/useSocket";
 
+const toProfile = (profile) => {
+    return {
+        id: profile.medicalRecordId,
+        fullname: profile.name,
+        sex: profile.gender,
+        dateOfBirth: profile.birthDay.split('T')[0],
+        relationship: profile.relationship,
+        numberphone: profile.phone,
+        address: profile.address
+    }
+}
+
 export default function ListProfile({ navigation, route }) {
     const onlyShow = route.params.onlyShow || false
     const [selected, setSelected] = React.useState(null);
@@ -17,15 +29,10 @@ export default function ListProfile({ navigation, route }) {
         axios.get("/patient/medical_record")
             .then(res => res.data.data)
             .then(data => {
-                setProfiles(data.map(profile => ({
-                    id: profile.medicalRecordId,
-                    fullname: profile.name,
-                    sex: profile.gender,
-                    dateOfBirth: profile.birthDay.split('T')[0],
-                    relationship: profile.relationship,
-                    numberphone: profile.phone,
-                    address: profile.address
-                })))
+                setProfiles(data.map(profile => toProfile(profile)))
+            })
+            .catch(err => {
+                console.log(JSON.stringify(err))
             })
     }, [])
     
@@ -34,9 +41,15 @@ export default function ListProfile({ navigation, route }) {
             setProfiles(prev => prev.filter(i => i.id !== id))
         }
 
+        const newMedicalRecord = (data) => {
+            setProfiles(prev => [...prev, toProfile(data)])
+        }
+
         socket.on('delete medical record', deleteMedicalRecordListener)
+        socket.on('medical record', newMedicalRecord)
         return () => {
-            socket.off('delete medical record',deleteMedicalRecordListener)
+            socket.off('delete medical record', deleteMedicalRecordListener)
+            socket.off('medical record', newMedicalRecord)
         }
     }, [socket])
 

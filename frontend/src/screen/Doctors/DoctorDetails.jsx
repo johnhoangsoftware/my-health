@@ -6,6 +6,7 @@ import useAxios from '../../hooks/useAxios'
 import { useNavigation } from '@react-navigation/native';
 
 const Details = (props) => {
+    console.log(props)
     const navigation = useNavigation()
 
     const goToChat = (doctor) => {
@@ -22,14 +23,14 @@ const Details = (props) => {
                 />
             </View>
             <View className="-mt-2 p-4 bg-white rounded-t-xl w-full max-w-s shadow-sm">
-                <Text className="pt-24 text-center mb-2 text-slate-900 text-2xl font-bold">Bác sĩ {props.name}</Text>                
+                <Text className="pt-24 text-center mb-2 text-slate-900 text-2xl font-bold">Bác sĩ {props.name}</Text>
                 <View className="m-auto flex-row">
                     <MaterialIcons name={props.stars >= 1 ? "star" : "star-border"} size={30} style={props.stars >= 1 ? styles.starSelected : styles.starUnselected} />
                     <MaterialIcons name={props.stars >= 2 ? "star" : "star-border"} size={30} style={props.stars >= 2 ? styles.starSelected : styles.starUnselected} />
                     <MaterialIcons name={props.stars >= 3 ? "star" : "star-border"} size={30} style={props.stars >= 3 ? styles.starSelected : styles.starUnselected} />
                     <MaterialIcons name={props.stars >= 4 ? "star" : "star-border"} size={30} style={props.stars >= 4 ? styles.starSelected : styles.starUnselected} />
                     <MaterialIcons name={props.stars == 5 ? "star" : "star-border"} size={30} style={props.stars == 5 ? styles.starSelected : styles.starUnselected} />
-                </View>    
+                </View>
 
                 <TouchableOpacity style={styles.bgColor} className="w-full mt-4 p-2 text-center rounded-lg border"
                     onPress={() => goToChat({
@@ -37,7 +38,7 @@ const Details = (props) => {
                         name: props.name,
                         avatar: props.imageURL
                     })}
-                    >
+                >
                     <Text className="text-white text-base text-center font-bold">Liên hệ</Text>
                 </TouchableOpacity>
             </View>
@@ -53,27 +54,26 @@ const Details = (props) => {
                 <Text className="text-slate-900 text-xl font-bold">Thông tin chi tiết</Text>
                 <View className="p-1">
                     <Text className="text-slate-900 text-base font-normal text-justify">
-                        Chức danh: {props.title}                 
+                        Chức danh: {props.title}
                     </Text>
                     <View className="h-px mb-2 bg-gray-300 block" />
-                    <TouchableOpacity className="w-fit" onPress={() => navigation.navigate("Thông tin bệnh viện")}>
+                    <TouchableOpacity className="w-fit" onPress={() => navigation.navigate("Thông tin bệnh viện", {
+                        id: props.hospital.hospitalId
+                    })}>
                         <Text className="text-slate-900 text-base font-normal text-justify">
-                            Nơi làm việc: {props.hospital}                 
+                            Nơi làm việc: {props.hospital?.name}
                         </Text>
                     </TouchableOpacity>
                     <View className="h-px mb-2 bg-gray-300" />
                     <Text className="text-slate-900 text-base font-normal text-justify">
-                        Chuyên môn: {props.department}                 
+                        Chuyên môn: {props.department}
                     </Text>
                     <View className="h-px mb-2 bg-gray-300" />
-                    <Text className="text-slate-900 text-base font-normal text-justify">
-                        Đơn vị đào tạo: {props.unit}                 
-                    </Text>
-                    <View className="h-px mb-2 bg-gray-300" />
-                </View>   
+                </View>
             </View>
         </View>
-)}
+    )
+}
 
 export default function DoctorDetails({ navigation, route }) {
     console.log("PARAMS:", route.params)
@@ -85,13 +85,13 @@ export default function DoctorDetails({ navigation, route }) {
         axios.get(`/user/profile/${id}`)
             .then(res => res.data.data)
             .then(doctor => {
+                console.log(doctor)
                 setDoctor({
                     id: doctor.userId,
                     name: doctor.name,
                     title: doctor.doctor.rank,
                     department: doctor.doctor.department.name,
-                    hospital: doctor.doctor.department.hospital.name,
-                    unit: "Không có thông tin",
+                    hospital: doctor.doctor.department.hospital,
                     imageURL: doctor.avatar || "https://static.vecteezy.com/system/resources/previews/001/223/214/original/female-doctor-wearing-a-medical-mask-vector.jpg",
                     star: 3,
                 })
@@ -104,7 +104,7 @@ export default function DoctorDetails({ navigation, route }) {
     return (
         <KeyboardAwareScrollView>
             <ScrollView pagingEnabled={true}>
-                <Details key={`doctor-${doctor.id}-detail`} id={doctor.id} name={doctor.name} title={doctor.title} address={doctor.address} unit={doctor.unit} department={doctor.department} stars={doctor.star} hospital={doctor.hospital} imageURL={doctor.imageURL} />
+                <Details key={`doctor-${doctor.id}-detail`} id={doctor.id} name={doctor.name} title={doctor.title} address={doctor.address} department={doctor.department} stars={doctor.star} hospital={doctor.hospital} imageURL={doctor.imageURL} />
             </ScrollView>
         </KeyboardAwareScrollView>  
 

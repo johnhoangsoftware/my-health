@@ -5,9 +5,9 @@ import useAxios from "../../hooks/useAxios";
 
 export default function Packages({ navigation }) {
     const axios = useAxios();
-    const [packages, setPackages] = React.useState([]); // [1]
+    const [packages, setPackages] = React.useState([]);
     const goToPackageDetails = (pack) => {
-        navigation.navigate("Chi tiết gói khám", { testPackage: pack });
+        navigation.navigate("Chi tiết gói khám", pack);
     };
 
     const goToSchedulings = (pack) => {
@@ -30,28 +30,6 @@ export default function Packages({ navigation }) {
                 })))
             })
     }, [])
-    // console.log("Packages:", packages, " sizes:", packages.length)
-
-    // const packages = [
-    //     {
-    //         title: "Gói xét nghiệm tại nhà",
-    //         hospital: "Bệnh viện Trung ương Quân đội 108",
-    //         image: require("./../../assets/demo-img/hospital.jpg"),
-    //         price: "500.000"
-    //     },
-    //     {
-    //         title: "Gói thăm khám tổng quát tại nhà",
-    //         hospital: "Bệnh viện Trung ương Quân đội 108",
-    //         image: require("./../../assets/demo-img/hospital.jpg"),
-    //         price: "500.000"
-    //     },
-    //     {
-    //         title: "Gói thăm khám và xét nghiệm tại nhà",
-    //         hospital: "Bệnh viện Trung ương Quân đội 108",
-    //         image: require("./../../assets/demo-img/hospital.jpg"),
-    //         price: "700.000"
-    //     },
-    // ];
 
     PackageBrief = (props) => {
         return (

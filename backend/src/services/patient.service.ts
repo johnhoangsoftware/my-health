@@ -43,7 +43,7 @@ export const createMedicalRecord = async(userId: string, medicalRecordDTO: Creat
     medicalRecordDTO = validateCreateMedicalRecord(medicalRecordDTO)
     medicalRecordDTO.patientId = user.GetPatient().patientId
     const medicalRecord  = await MedicalRecord.create({...medicalRecordDTO})
-    return medicalRecord
+    return medicalRecord.dataValues
 }
 
 export const updateMedicalRecord = async (id: string, medicalRecordDTO: UpdateMedicalRecordDTO) => {
