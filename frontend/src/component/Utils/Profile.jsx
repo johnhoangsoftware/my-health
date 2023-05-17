@@ -68,9 +68,11 @@ export default function Profile(props) {
                         </TouchableOpacity>
                         <Text className="text-white">---</Text>
                         <TouchableOpacity
-                            className="p-2 py-1"
+                            className="p-2 py-1 -ml-3"
                             style={{
-                                backgroundColor: "#24DCE2",
+                                color: "#24DCE2",
+                                borderColor: "#24DCE2",
+                                backgroundColor: "#ccc",
                                 borderRadius: '10px'
                             }}
                             onPress={() => {

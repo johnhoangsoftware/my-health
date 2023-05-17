@@ -23,6 +23,8 @@ export const createMedicalRecord = ErrorWrapperHandler(async (req: Request, res:
     const medicalRecord = await patientService.createMedicalRecord(userId, medicalRecordDTO)
     const { socket } = req.app.get("socket.io")
     if (uid[userId]) {
+        socket.in(uid[userId]).emit('medical record', medicalRecord)
+    }else {
         socket.emit('medical record', medicalRecord)
     }
     return res.status(StatusCodes.OK).json({

@@ -52,8 +52,8 @@ export default function Chat({ navigation }) {
     }, [])
 
     React.useEffect(() => {
-        const newMsg = (msg) => {
-            console.log(msg)
+        const newMsg = (c) => {
+            console.log("new chat:::",c)
         }
 
         socket.on('message', newMsg)

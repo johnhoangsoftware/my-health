@@ -42,6 +42,7 @@ export default function ListProfile({ navigation, route }) {
         }
 
         const newMedicalRecord = (data) => {
+            console.log(data)
             setProfiles(prev => [...prev, toProfile(data)])
         }
 
