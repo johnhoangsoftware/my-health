@@ -3,9 +3,8 @@ import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BACKEND_HOST, BACKEND_PORT } from '@env'
 import { useNavigation } from '@react-navigation/native'
-console.log(`http://${BACKEND_HOST}:${BACKEND_PORT}/api`)
 const instance = axios.create({
-    baseURL: `http://${BACKEND_HOST}:${BACKEND_PORT}/api`,
+    baseURL: `http://${"172.20.10.5"}:${8080}/api`,
     withCredentials: true,
 })
 

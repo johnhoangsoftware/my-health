@@ -3,7 +3,7 @@ import { BACKEND_HOST, BACKEND_PORT } from '@env'
 import React from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const endpoint = `http://${BACKEND_HOST}:${BACKEND_PORT}`
+const endpoint = `http://172.20.10.5:8080`
 console.log("Socket endpoint", endpoint)
 const socket = io(endpoint, {transports: ['websocket']});
 
