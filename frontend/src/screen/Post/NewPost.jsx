@@ -65,7 +65,7 @@ export default function NewPost({ navigation }) {
             <View>
                 <View className="flex-row m-3">
                     <Image
-                        src={"https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
+                        src={"https://cdn-icons-png.flaticon.com/512/4659/4659027.png"}
                         className="w-10 h-10 rounded-full"
                     />
                     <View className="justify-center">

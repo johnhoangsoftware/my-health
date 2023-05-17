@@ -26,12 +26,20 @@ export default function Community({ navigation }) {
 
     React.useEffect(() => {
         const newPostListener = (post) => {
-            setPosts(prev => [...prev, post])
+            setPosts(prev => [post, ...prev])
+        }
+
+        const newComment = (id) => {
+            setPosts(prev => {
+                return prev
+            })
         }
 
         socket.on('new post', newPostListener)
+        socket.on('new comment', newComment)
         return () => {
             socket.off('new post', newPostListener)
+            socket.off('new comment', newComment)
         }
     }, [socket])
 
@@ -64,7 +72,7 @@ export default function Community({ navigation }) {
                     onPress={() => navigation.navigate("New Post")}
                 >
                     <Image
-                        src="https://i.etsystatic.com/isla/28f779/58119197/isla_fullxfull.58119197_gwg8k1wg.jpg?version=0"
+                        src="https://cdn-icons-png.flaticon.com/512/4659/4659027.png"
                         className="w-10 h-10 rounded-full ml-3"
                     />
                     <Text className="text-base ml-3 text-gray-500">Chia sẻ thông tin của bạn</Text>
@@ -74,6 +82,10 @@ export default function Community({ navigation }) {
                 </TouchableOpacity>
 
                 <View>
+                    {
+                        posts.length === 0 &&
+                        <Text className="text-center mt-4">Chưa có bài viết nào được đăng</Text>
+                    }
                     {
                         posts.map((post, index) => {
                             return (

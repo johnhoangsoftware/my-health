@@ -3,6 +3,7 @@ import { View, TextInput, Text, Image, TouchableOpacity, StatusBar } from "react
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons"
 import useAxios from '../../hooks/useAxios'
 import useAuth from '../../hooks/useAuth'
+import useSocket from "../../hooks/useSocket"
 
 export default function Chat({ navigation }) {
     const [search, setSearch] = React.useState({
@@ -11,7 +12,7 @@ export default function Chat({ navigation }) {
     })
     const [chatList, setChatList] = React.useState([])
     const axios = useAxios()
-
+    const socket = useSocket()
 
     const searchChange = (val) => {
         if (val.length != 0) {
@@ -49,6 +50,17 @@ export default function Chat({ navigation }) {
                 console.log(JSON.stringify(err))
             })
     }, [])
+
+    React.useEffect(() => {
+        const newMsg = (msg) => {
+            console.log(msg)
+        }
+
+        socket.on('message', newMsg)
+        return () => {
+            socket.off('message', newMsg)
+        }
+    }, [socket])
 
     return (
         <View className="bg-white flex-1">

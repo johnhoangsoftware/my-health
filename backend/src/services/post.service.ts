@@ -47,7 +47,7 @@ export const createPost = async (authID: string, post: CreatePostDTO): Promise<P
     post = validateCreatePost(post)
     post.authId = authID
     const newPost = await post_db.create(dtoConverter.toPost(post).dataValues)
-    return newPost
+    return newPost.dataValues
 }
 
 export const updatePost = async (id: string, post: UpdatePostDTO): Promise<Post> => {

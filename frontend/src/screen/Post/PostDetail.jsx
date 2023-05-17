@@ -35,7 +35,7 @@ const Comment = (props) => {
 }
 
 export default function PostDetail({ navigation, route }) {
-    console.log("is MINE::", route.params.isMine)
+    console.log("POST DETAIL:::", route.params.post)
     const [post, setPost] = React.useState(route.params.post || {})
     const [comments, setComments] = React.useState([])
     const [comment, setComment] = React.useState("");
@@ -45,10 +45,6 @@ export default function PostDetail({ navigation, route }) {
     const writeComment = (val) => {
         setComment(val)
     }
-    
-    const dateToString = React.useMemo(() => (d) => {
-        return d.getHours() + ":" + d.getMinutes() + " " + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    }, [])
 
     const sendCommnet = () => {
         axios.post(`/post/${post.postId}/comments`, {
@@ -73,16 +69,16 @@ export default function PostDetail({ navigation, route }) {
     }
 
     React.useEffect(() => {
+        console.log('fetch cmt')
         axios.get(`/post/${post.postId}/comments`)
             .then(res => res.data.data)
             .then(cmt => {
-                console.log(cmt)
                 setComments(cmt)
             })  
             .catch(err => {
                 console.log(JSON.stringify(err))
             })
-    }, [])
+    }, [post.postId])
 
     return (
         <KeyboardAvoidingView

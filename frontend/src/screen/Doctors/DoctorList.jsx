@@ -149,7 +149,7 @@ export default function DoctorList({navigation}) {
                     {
                         filterByDepartment(doctors).length > 0 ?
                             filterByDepartment(doctors).map((item, index) => {
-                                return <DoctorBrief key={`doctors-list=${index}`} id={item.id} name={item.name} department={item.department} stars={item.stars} image={item.imageURL} />
+                                return <DoctorBrief key={`doctors-list=${index}`} id={item.id} name={item.name} department={item.department} stars={item.star} image={item.imageURL} />
                             })
                             :
                             <Text className="ml-2.5 mb-1">Không tìm thấy bác sĩ thuộc khoa "{departmentChosen}"</Text>

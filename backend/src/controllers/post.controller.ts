@@ -14,7 +14,7 @@ export const newPost = ErrorWrapperHandler(async (req: Request, res: Response, n
     const post = await postService.createPost(authID, data as CreatePostDTO)
     const { socket } = req.app.get("socket.io")
     const auth = await userService.findUserById((data as CreateCommentDTO).authId)
-    socket.emit("new post", {...post, auth: auth.dataValues})
+    socket.emit("new post", { ...post, auth: auth.dataValues, numberOfComments: 0 })
     return res.status(StatusCodes.OK).json({
         message: `Create user successfully.`,
         data: post
@@ -67,6 +67,7 @@ export const comment = ErrorWrapperHandler(async (req: Request, res: Response) =
     const { cmt, post } = await postService.comment(authId, postId, cmtDto as CreateCommentDTO)
 
     const { socket } = req.app.get("socket.io")
+    socket.emit('new comment', postId)
     if (authId !== post.authId) {
         const noti = await userService.createNotification({
             userId: post.authId,
@@ -74,7 +75,7 @@ export const comment = ErrorWrapperHandler(async (req: Request, res: Response) =
             type: 'POST',
         })
         if (uid[post.authId]) {
-            socket.in(uid[post.authId]).emit("notification", {...noti, post})
+            socket.in(uid[post.authId]).emit("notification", { ...noti, post })
         }
     }
 

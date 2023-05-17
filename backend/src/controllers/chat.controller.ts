@@ -57,6 +57,7 @@ export const sendMessage = ErrorWrapperHandler(async (req: Request, res: Respons
     const d = await chatService.sendMessage(userId, partnerId, req.body as CreateMessageDTO)
     
     const { socket } = req.app.get("socket.io")
+    socket.emit('message', d)
     if (uid[partnerId]) {
         socket.in(uid[partnerId]).emit("message", d)
     }
